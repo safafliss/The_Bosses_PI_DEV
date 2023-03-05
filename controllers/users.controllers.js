@@ -70,6 +70,6 @@ res.status(404).json(errors)
 }
 
 const Test = (req, res) =>{
-  res.send("Je suis la page test")
+    res.send("Je suis la page test");
 }
 module.exports = { Register, Login, Test };

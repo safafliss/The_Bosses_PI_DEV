@@ -8,6 +8,7 @@ var router = express.Router();
 router.post('/register', Register );
 router.post('/login', Login );
 
+
 /* test router */
 router.get('/test',passport.authenticate('jwt', { session: false}), Test);
 

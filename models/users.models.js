@@ -3,18 +3,47 @@ const Schema = mongoose.Schema;
 
 const UserModel = new Schema(
   {
-    name: "string",
+    firstName: "string",
+    lastName: "string",
+    password: "string",
+    role: "string",
+    phoneNumber:"string",
+    organisationName:"string",
+    address:{
+      street:"string",
+      postalCode:"string",
+      city:"string",
+      state:"string"
+    },
+    banned:{
+      isBanned:"boolean",
+      banDuration:"Number",
+      banExpiresAt:"Date",
+      banNumber:"Number"
+    },
     email: {
       type: "string",
       trim: true,
       unique: true,
     },
-    password: "string",
-    role: "string",
+    image: {
+      public_id: {
+          type: String,
+          // required: true
+      },
+      url: {
+          type: String,
+          // required: true
+      }
+  }
   },
   {
     timestamps: true,
   }
 );
+
+
+
+
 
 module.exports = mongoose.model("users", UserModel);
