@@ -1,4 +1,3 @@
-const { exists } = require("../models/users.models");
 const UserModel = require("../models/users.models");
 const validatorRegister = require("../validation/Register");
 const validateLogin = require("../validation/Login")
@@ -51,13 +50,13 @@ res.status(404).json(errors)
         }else{
           var token = jwt.sign({ 
             id: user._id,
-            name: user.name,
-            email: user.email,
+            // name: user.name,
+            // email: user.email,
             role: user.role
            }, process.env.PRIVATE_KEY,  { expiresIn: '1h' });
            res.status(200).json({
              message: "success",
-             token: "Bearer "+token
+             token: token
            })
         }
       })
@@ -70,6 +69,14 @@ res.status(404).json(errors)
 }
 
 const Test = (req, res) =>{
-  res.send("Je suis la page test")
+  // res.send("Je suis la page test")
+  //res.send(req.user)
+  res.send("Welcome user")
 }
-module.exports = { Register, Login, Test };
+
+const Admin = (req, res) =>{
+  // res.send("Je suis la page test")
+  //res.send(req.user)
+  res.send("Welcome Admin")
+}
+module.exports = { Register, Login, Test, Admin };

@@ -3,17 +3,18 @@ const Schema = mongoose.Schema;
 
 const UserModel = new Schema(
   {
-    name: "string",
+    firstName: "string",
+    lastName: "string",
+    password: "string",
+    role: "string",
     email: {
       type: "string",
       trim: true,
       unique: true,
     },
-    password: "string",
-    role: "string",
   },
   {
-    timestamps: true,
+      timestamps: true,
   }
 );
 
