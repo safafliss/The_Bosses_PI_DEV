@@ -51,8 +51,9 @@ res.status(404).json(errors)
         }else{
           var token = jwt.sign({ 
             id: user._id,
-            name: user.name,
-            email: user.email,
+            // firstName: user.firstName,
+            // lastName: user.firstName,
+            // email: user.email,
             role: user.role
            }, process.env.PRIVATE_KEY,  { expiresIn: '1h' });
            res.status(200).json({
@@ -70,6 +71,24 @@ res.status(404).json(errors)
 }
 
 const Test = (req, res) =>{
-    res.send("Je suis la page test");
+  res.send(req.user);
 }
-module.exports = { Register, Login, Test };
+const Admin = (req, res) =>{
+    res.send(req.user);
+}
+
+const updateProfile = async(req,res)  =>{
+      try {
+        // 
+        if ("password" in req.body){
+          const hash = bcrypt.hashSync(req.body.password, 10)
+          req.body.password = hash
+        }
+        await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+        res.status(200).json(Object.keys(req.body));
+      } catch (error) {
+        res.json(error);
+      }
+}
+
+module.exports = { Register, Login, Test, updateProfile, Admin };
