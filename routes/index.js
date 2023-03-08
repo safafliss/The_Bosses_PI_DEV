@@ -13,7 +13,6 @@ const {
   banProfile,
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
-const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
 var router = express.Router();
 
@@ -48,6 +47,10 @@ router.delete(
   inRole(ROLES.ADMIN.ADMIN),
   deleteUser
 );
+
+
+
+
 
 /* test router */
 router.get(
@@ -84,5 +87,6 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   banProfile
 );
+
 
 module.exports = router;
