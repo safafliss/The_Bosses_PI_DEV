@@ -6,8 +6,10 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 const passport = require('passport')
+const cors = require("cors")
 
 var app = express();
+app.use(cors())
 
 app.use(logger('dev'));
 // app.use(express.json());
