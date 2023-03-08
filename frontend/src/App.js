@@ -1,24 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import Profil from './pages/Profil';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import RegisterPartner from './pages/RegisterPartner';
+import Admin from './pages/Dashboard';
+import PrivateRouter from './components/PrivateRouter';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import NotFound from './pages/NotFound';
+import NoAccess from './pages/NoAccess';
+import AdminRouter from './components/AdminRouter';
+import ForceRedirect from './components/ForceRedirect';
 function App() {
+  const user = {
+    isConnected: true,
+    role: "ADMIN"
+    
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <BrowserRouter>
+    <div className="bg-light" style={{height: "100vh"}}>
+    
+    <Routes>
+     
+          <Route path="/" element={
+          <PrivateRouter user={user}>
+            <Profil />
+            </PrivateRouter>
+       
+        } />
+          <Route path="/login" element={
+            <ForceRedirect user={user}>
+            <Login />
+          </ForceRedirect>
+        
+        } />
+          <Route path="/register" element={
+          
+          <ForceRedirect user={user}>
+          <Register />
+        </ForceRedirect>
+         
+        } />
+        
+         <Route path="/registerPartner" element={
+           <PrivateRouter user={user}>
+          <RegisterPartner />
+          </PrivateRouter>
+      } />
+          <Route path="/admin" element={
+           <AdminRouter user={user}>
+            <Admin />
+            </AdminRouter>
+        } />
+                  <Route path="*" element={
+         
+         <NotFound />
+
+     } />
+               <Route path="/accesDenied" element={
+         
+         <NoAccess />
+
+     } />
+        
+    </Routes>
     </div>
+  </BrowserRouter>
   );
 }
 
