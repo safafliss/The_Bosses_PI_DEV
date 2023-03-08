@@ -1,39 +1,27 @@
 var express = require('express');
-const { Register, Login, Test, Admin } = require('../controllers/users.controllers');
-const passport = require("passport");
+const { Register, Login, Test , updateProfile, Admin,deleteProfile ,uploadImage ,banProfile } = require('../controllers/users.controllers');
+const { ROLES,inRole } = require('../security/RoleMiddleware')
+const passport = require('passport');
 var router = express.Router();
-const { ROLES, inRole } = require("../security/Rolemiddleware");
-const { AddProfile, FindAllProfiles, FindSingleProfile, DeleteProfile } = require('../controllers/profile.controllers');
+
 
 /* users routes. */
 router.post('/register', Register );
 router.post('/login', Login );
 
+
+
+
+
 /* test router */
-// router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Test);
-// router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
+router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULIER), Test);
+router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
+router.put('/updateProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.ASSOCIATION), updateProfile);
+router.delete('/deleteProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.USER), deleteProfile);
+router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
+router.post('/banProfile',passport.authenticate('jwt', { session: false}), banProfile);
 
-/* add profile route */
-router.post("/profiles", 
-passport.authenticate("jwt", { session: false }),
-AddProfile);
 
-/* get all profiles */
-router.get("/profiles", 
-passport.authenticate("jwt", { session: false }),
-inRole(ROLES.ADMIN),
-FindAllProfiles);
-
-/* get one profiles */
-router.get("/profile", 
-passport.authenticate("jwt", { session: false }),
-FindSingleProfile);
-
-/* delete profile */
-router.delete("/profiles/:id", 
-passport.authenticate("jwt", { session: false }),
-inRole(ROLES.ADMIN),
-DeleteProfile);
 
 
 module.exports = router;

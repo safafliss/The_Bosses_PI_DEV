@@ -3,6 +3,10 @@ const validatorRegister = require("../validation/Register");
 const validateLogin = require("../validation/Login")
 const bcrypt = require ('bcryptjs');
 const jwt = require('jsonwebtoken')
+const cloudinary = require("../utils/cloudinary")
+ 
+
+
 const Register = async (req, res) => {
   const { errors, isValid } = validatorRegister(req.body);
   try {
@@ -50,13 +54,14 @@ res.status(404).json(errors)
         }else{
           var token = jwt.sign({ 
             id: user._id,
-            // name: user.name,
+            // firstName: user.firstName,
+            // lastName: user.firstName,
             // email: user.email,
             role: user.role
-           }, process.env.PRIVATE_KEY,  { expiresIn: '1h' });
+           }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
            res.status(200).json({
              message: "success",
-             token: token
+             token: "Bearer "+token
            })
         }
       })
@@ -69,14 +74,72 @@ res.status(404).json(errors)
 }
 
 const Test = (req, res) =>{
-  // res.send("Je suis la page test")
-  //res.send(req.user)
-  res.send("Welcome user")
+  res.send(req.user);
+}
+const Admin = (req, res) =>{
+    res.send(req.user);
 }
 
-const Admin = (req, res) =>{
-  // res.send("Je suis la page test")
-  //res.send(req.user)
-  res.send("Welcome Admin")
+const updateProfile = async(req,res)  =>{
+      try {
+        // 
+        if ("password" in req.body){
+          const hash = bcrypt.hashSync(req.body.password, 10)
+          req.body.password = hash
+        }
+        await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+        res.status(200).json(Object.keys(req.body));
+      } catch (error) {
+        res.json(error);
+      }
 }
-module.exports = { Register, Login, Test, Admin };
+
+const deleteProfile = async(req,res)  =>{
+  try {
+    await UserModel.findByIdAndRemove(req.body.id);
+    res.status(200).json("done");
+  } catch (error) {
+    res.json(error);
+  }
+}
+
+const uploadImage = async(req,res) =>{
+  try {
+    const {image} = req.body;
+    const result = await cloudinary.uploader.upload(image,{
+      folder: "profilePictures",
+    })
+    const profile = await UserModel.findByIdAndUpdate(req.user._id, { image:{
+      public_id:result.public_id,
+      url:result.secure_url
+    }  });
+    res.status(200).json("done");
+  } catch (error) {
+    res.json(error);
+  }
+}
+
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+const banProfile = async (req,res) =>{
+  try {
+    const {user_id,banDuration} = req.body
+    var date = new Date();
+    const profile = await UserModel.findByIdAndUpdate(user_id,{ $inc: { 'banned.banNumber':1} },{
+      banned:{
+        isBanned:true,
+        banDuration:banDuration,
+        banExpiresAt:date.addDays(parseInt(banDuration)) ,
+      }
+    })
+    res.status(200).json("done");
+  } catch (error) {
+    res.json(error);
+  }
+}
+
+module.exports = { Register, Login, Test, updateProfile, Admin, deleteProfile,uploadImage,banProfile };
