@@ -19,7 +19,10 @@ const UserModel = new Schema(
       isBanned:"boolean",
       banDuration:"Number",
       banExpiresAt:"Date",
-      banNumber:"Number"
+      banNumber:{
+        type:"Number",
+        default:0
+      }
     },
     email: {
       type: "string",

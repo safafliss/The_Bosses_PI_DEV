@@ -8,7 +8,11 @@ const {
   getUsers,
   getSingleUser,
   deleteUser,
+  deleteProfile,
+  uploadImage,
+  banProfile,
 } = require('../controllers/users.controllers');
+const { ROLES, inRole } = require('../security/RoleMiddleware');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
 var router = express.Router();
@@ -63,6 +67,22 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   inRole(ROLES.ASSOCIATION),
   updateProfile
+);
+router.delete(
+  '/deleteProfile',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.USER),
+  deleteProfile
+);
+router.post(
+  '/uploadImage',
+  passport.authenticate('jwt', { session: false }),
+  uploadImage
+);
+router.post(
+  '/banProfile',
+  passport.authenticate('jwt', { session: false }),
+  banProfile
 );
 
 module.exports = router;
