@@ -19,7 +19,6 @@ const ROLES = {
 }
 
 const inRole  = (...roles)=>(req, res, next)=>{
-    console.log(req.user.role)
     var role = false    
     for (let check of roles){
         role = role|| (Object.keys(check).indexOf(req.user.role )!=-1)

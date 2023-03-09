@@ -5,6 +5,8 @@ const validateLogin = require("../validation/Login")
 const bcrypt = require ('bcryptjs');
 const jwt = require('jsonwebtoken')
 const cloudinary = require("../utils/cloudinary")
+const crypto = require("crypto");
+const resetPasswordToken = require("../models/resetPasswordToken");
 
 
 
@@ -23,7 +25,8 @@ const Register = async (req, res) => {
           const hash = bcrypt.hashSync(req.body.password, 10)
           req.body.password = hash; 
           req.body.role = "USER";
-          await UserModel.create(req.body);
+          user = await UserModel.create(req.body);
+          generateResetToken(user._id);
           res.status(200).json({ message: "success" });
         }
       })
@@ -34,6 +37,12 @@ const Register = async (req, res) => {
 
   //await res.send('ok')
 };
+
+const generateResetToken = async (userid) =>{
+  tokken = crypto.randomBytes(32).toString("hex")
+  await resetPasswordToken.create({userId:userid,token:tokken});
+  //send email with token url here
+}
 
 const Login = async(req, res) =>{
   const { errors, isValid } = validateLogin(req.body);
@@ -53,6 +62,17 @@ res.status(404).json(errors)
           errors.password = "incorrect password"
           res.status(404).json(errors)
         }else{
+          if (resetPasswordToken.find({userId:user._id})){
+            res.status(403).json({
+              message:"Please Verify your account before loggin (check email)",
+            })
+          }
+          if (user.isValid == false){
+            user.deleteOne();
+            res.status(403).json({
+              message:"user is not found",
+            })
+          }
           var token = jwt.sign({ 
             id: user._id,
             // firstName: user.firstName,
