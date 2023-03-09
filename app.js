@@ -6,8 +6,16 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 const passport = require('passport')
-
+const cors = require('cors') 
+const cookieSession = require("cookie-session");
+const authRouters = require('./routes/auth')
+const session = require('express-session')
 var app = express();
+app.use(session({
+    secret: 'ilovescotchscotchyscotchscotch1'
+}));
+app.use(cors())
+
 
 app.use(logger('dev'));
 // app.use(express.json());
@@ -18,9 +26,13 @@ app.use(express.json({limit: '50mb', extended: true}));
 app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/auth', authRouters);
 app.use(passport.initialize())
+//require('./passport')(passport)
+app.use(passport.session());
 require('./security/passport')(passport)
+
+
 
 /* connect to db */
 mongoose.connect(process.env.MONGO_URI)
@@ -29,6 +41,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 app.use('/api', indexRouter);
+
 
 
 module.exports = app;

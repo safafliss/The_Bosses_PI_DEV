@@ -3,7 +3,7 @@ const { Register, Login, Test , updateProfile, Admin,deleteProfile ,uploadImage 
 const { ROLES,inRole } = require('../security/RoleMiddleware')
 const passport = require('passport');
 var router = express.Router();
-
+const CLIENT_URL = "http://localhost:3000/";
 
 /* users routes. */
 router.post('/register', Register );
@@ -22,6 +22,30 @@ router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uplo
 router.post('/banProfile',passport.authenticate('jwt', { session: false}), banProfile);
 
 
+
+/* authentication with fb && google */
+// router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//     successRedirect: CLIENT_URL,
+//     failureRedirect: "/login/failed",
+//   })
+// );
+
+// router.get(
+//   "/auth/facebook",
+//   passport.authenticate("facebook", { scope: ["profile"] })
+// );
+
+// router.get(
+//   "/auth/facebook/callback",
+//   passport.authenticate("facebook", {
+//     successRedirect: CLIENT_URL,
+//     failureRedirect: "/login/failed",
+//   })
+// );
 
 
 module.exports = router;
