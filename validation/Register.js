@@ -1,5 +1,6 @@
 const isEmpty = require('./isEmpty');
 const validator = require('validator')
+const axios = require('axios');
 
 
 module.exports = function validatorRegister(data){
@@ -10,6 +11,7 @@ module.exports = function validatorRegister(data){
     data.password = !isEmpty(data.password) ? data.password : ""
     data.confirm = !isEmpty(data.confirm) ? data.confirm : ""
 
+    
     if (validator.isEmpty(data.firstName)){
         errors.firstName = "Required firstName";
     }
@@ -21,6 +23,17 @@ module.exports = function validatorRegister(data){
     }
     if (validator.isEmpty(data.email)){
         errors.email = "Required email";
+    }else{
+        axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=bf2c0a7fa84f4172a35e9dc5ca7f378e&email='+data.email)
+            .then(response => {
+                if (response.data["deliverability"]!="DELIVERABLE"){
+                    errors.email = "Email is not found";
+                }
+                
+            })
+            .catch(error => {
+                // console.log(error);
+    });
     }
     if (validator.isEmpty(data.password)){
         errors.password = "Required password";

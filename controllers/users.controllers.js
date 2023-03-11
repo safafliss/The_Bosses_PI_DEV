@@ -1,10 +1,14 @@
-const UserModel = require('../models/users.models');
-const validatorRegister = require('../validation/Register');
-const validateLogin = require('../validation/Login');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const cloudinary = require('../utils/cloudinary');
-const { default: mongoose } = require('mongoose');
+const { exists } = require("../models/users.models");
+const UserModel = require("../models/users.models");
+const validatorRegister = require("../validation/Register");
+const validateLogin = require("../validation/Login")
+const bcrypt = require ('bcryptjs');
+const jwt = require('jsonwebtoken')
+const cloudinary = require("../utils/cloudinary")
+const crypto = require("crypto");
+const resetPasswordToken = require("../models/resetPasswordToken");
+
+
 
 const Register = async (req, res) => {
   const { errors, isValid } = validatorRegister(req.body);
@@ -12,16 +16,18 @@ const Register = async (req, res) => {
     if (!isValid) {
       res.status(404).json(errors);
     } else {
-      UserModel.findOne({ email: req.body.email }).then(async (exist) => {
-        if (exist) {
-          errors.email = 'user exist';
-          res.status(404).json(errors);
-        } else {
-          const hash = bcrypt.hashSync(req.body.password, 10);
-          req.body.password = hash;
-          req.body.role = 'USER';
-          await UserModel.create(req.body);
-          res.status(200).json({ message: 'success' });
+      UserModel.findOne({email: req.body.email})
+      .then(async(exist) =>{
+        if(exist){
+          errors.email = "user exist"
+          res.status(404).json(errors)
+        }else{
+          const hash = bcrypt.hashSync(req.body.password, 10)
+          req.body.password = hash; 
+          req.body.role = "USER";
+          user = await UserModel.create(req.body);
+          generateResetToken(user._id);
+          res.status(200).json({ message: "success" });
         }
       });
     }
@@ -32,45 +38,60 @@ const Register = async (req, res) => {
   //await res.send('ok')
 };
 
-const Login = async (req, res) => {
+const generateResetToken = async (userid) =>{
+  tokken = crypto.randomBytes(32).toString("hex")
+  await resetPasswordToken.create({userId:userid,token:tokken});
+  //send email with token url here
+}
+
+const Login = async(req, res) =>{
   const { errors, isValid } = validateLogin(req.body);
-  try {
-    if (!isValid) {
-      res.status(404).json(errors);
-    } else {
-      UserModel.findOne({ email: req.body.email }).then((user) => {
-        if (!user) {
-          errors.email = 'not found user';
-          res.status(404).json(errors);
-        } else {
-          bcrypt.compare(req.body.password, user.password).then((isMatch) => {
-            if (!isMatch) {
-              errors.password = 'incorrect password';
-              res.status(404).json(errors);
-            } else {
-              var token = jwt.sign(
-                {
-                  id: user._id,
-                  // firstName: user.firstName,
-                  // lastName: user.firstName,
-                  // email: user.email,
-                  role: user.role,
-                },
-                process.env.PRIVATE_KEY,
-                { expiresIn: '90h' }
-              );
-              res.status(200).json({
-                message: 'success',
-                token: 'Bearer ' + token,
-              });
-            }
-          });
+try{
+if(!isValid){a
+res.status(404).json(errors)
+}else{
+  UserModel.findOne({email: req.body.email})
+  .then(user =>{
+    if(!user){
+      errors.email = "not found user"
+      res.status(404).json(errors)
+    }else{
+      bcrypt.compare(req.body.password, user.password)
+      .then(isMatch=>{
+        if(!isMatch){
+          errors.password = "incorrect password"
+          res.status(404).json(errors)
+        }else{
+          if (resetPasswordToken.find({userId:user._id})){
+            res.status(403).json({
+              message:"Please Verify your account before loggin (check email)",
+            })
+          }
+          if (user.isValid == false){
+            user.deleteOne();
+            res.status(403).json({
+              message:"user is not found",
+            })
+          }
+          var token = jwt.sign({ 
+            id: user._id,
+            // firstName: user.firstName,
+            // lastName: user.firstName,
+            // email: user.email,
+            role: user.role
+           }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+           res.status(200).json({
+             message: "success",
+             token: "Bearer "+token
+           })
         }
       });
     }
-  } catch (error) {
-    res.status(404).json(error.message);
-  }
+  } )
+}
+}catch (error) {
+  res.status(404).json(error.message);
+}
 };
 
 const Test = (req, res) => {
@@ -182,7 +203,10 @@ const banProfile = async (req, res) => {
   } catch (error) {
     res.json(error);
   }
-};
+
+  
+}
+
 
 module.exports = {
   Register,
@@ -196,5 +220,4 @@ module.exports = {
   deleteProfile,
   uploadImage,
   banProfile,
-};
-
+}
