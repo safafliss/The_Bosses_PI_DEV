@@ -15,6 +15,7 @@ const {
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
 var router = express.Router();
+const CLIENT_URL = "http://localhost:3000/";
 
 /* users routes. */
 
@@ -87,6 +88,30 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   banProfile
 );
+
+/* authentication with fb && google */
+// router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//     successRedirect: CLIENT_URL,
+//     failureRedirect: "/login/failed",
+//   })
+// );
+
+// router.get(
+//   "/auth/facebook",
+//   passport.authenticate("facebook", { scope: ["profile"] })
+// );
+
+// router.get(
+//   "/auth/facebook/callback",
+//   passport.authenticate("facebook", {
+//     successRedirect: CLIENT_URL,
+//     failureRedirect: "/login/failed",
+//   })
+// );
 
 
 module.exports = router;

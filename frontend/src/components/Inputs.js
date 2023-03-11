@@ -9,7 +9,7 @@ function Inputs({name, label,  type, icon, onChangeHandler,errors}) {
         <span class="input-group-text">
           <i class={icon}></i>
         </span>
-        <input type={type}  name={name} class={Classnames("form-control", {"is-invalid": errors})} onChange={onChangeHandler}/>
+        <input type={type}  name={name} class={Classnames("form-control", {"is-invalid": errors})} onChange={onChangeHandler} placeholder={name}/>
         {
           errors && (<div  className="invalid-feedback">
           {errors}
