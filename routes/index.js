@@ -31,7 +31,7 @@ router.post('/login', Login);
 router.get(
   '/getUsers',
   passport.authenticate('jwt', { session: false }),
-  inRole(ROLES.ADMIN.ADMIN),
+  inRole(ROLES.ADMIN),
   getUsers
 );
 
