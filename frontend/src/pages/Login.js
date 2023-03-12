@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Inputs from "../components/Inputs";
-import { LoginAction } from "../redux/actions/authActions";
+ import { LoginAction } from "../redux/actions/authActions";
 
 function Login() {
   const [form, setForm] = useState({})

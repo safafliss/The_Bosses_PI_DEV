@@ -11,8 +11,8 @@ function Profil(user) {
   return (
     <div>
        <Link className="btn btn-outline-primary"  to="#" onClick={LogoutHanlder}>
-          Logout
-       </Link>
+                Logout
+              </Link>
     </div>
   )
 }

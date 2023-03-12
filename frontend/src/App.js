@@ -56,14 +56,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/login1"
-            element={
-              <ForceRedirect user={user}>
-                <Login1 />
-              </ForceRedirect>
-            }
-          />
+          
 
           <Route
             path="/register"
@@ -74,14 +67,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/register1"
-            element={
-              <ForceRedirect user={user}>
-                <Register1 />
-              </ForceRedirect>
-            }
-          />
+          
 
           <Route
             path="/registerPartner"

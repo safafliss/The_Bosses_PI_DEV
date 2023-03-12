@@ -8,7 +8,6 @@ var app = require('../app');
 var bodyParser = require('express');
 var debug = require('debug')('multi-user:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -20,7 +19,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer({maxHeaderSize: 16384},app);
 
 /**
  * Listen on provided port, on all network interfaces.

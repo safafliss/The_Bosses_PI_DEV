@@ -38,6 +38,10 @@ const UserModel = new Schema(
           type: String,
           // required: true
       }
+  },
+  isValid:{
+    type:Boolean,
+    default:false,
   }
   },
   {
