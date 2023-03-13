@@ -15,8 +15,7 @@ import AdminRouter from "./components/AdminRouter";
 import ForceRedirect from "./components/ForceRedirect";
 import { setUser } from "./redux/actions/authActions";
 import { useSelector } from "react-redux";
-import Login1 from "./pages/Login1";
-import Register1 from "./pages/Register1";
+import ForgotPassword from "./pages/ForgotPassword";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -36,7 +35,6 @@ function App() {
     role: auth.user.role,
   };
   return (
-    
     <BrowserRouter>
       <div className="bg-light" style={{ height: "100vh" }}>
         <Routes>
@@ -56,9 +54,6 @@ function App() {
               </ForceRedirect>
             }
           />
-
-          
-
           <Route
             path="/register"
             element={
@@ -67,9 +62,6 @@ function App() {
               </ForceRedirect>
             }
           />
-
-          
-
           <Route
             path="/registerPartner"
             element={
@@ -84,6 +76,14 @@ function App() {
               <AdminRouter user={user}>
                 <Admin />
               </AdminRouter>
+            }
+          />
+          <Route
+            path="/forgotPassword"
+            element={
+              <ForceRedirect user={user}>
+                <ForgotPassword />
+              </ForceRedirect>
             }
           />
           <Route path="*" element={<NotFound />} />

@@ -54,3 +54,21 @@ export const setUser = (decode) => ({
   type: SET_USER,
   payload: decode,
 });
+
+export const ForgotPass = (form, navigate) => (dispatch) => {
+  axios
+    .post('http://localhost:3600/api/forgotpassword', form)
+    .then((res) => {
+      navigate('/login');
+      dispatch({
+        type: ERRORS,
+        payload: {},
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
