@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 * {
 	box-sizing: border-box;
@@ -249,4 +249,9 @@ footer i {
 footer a {
     color: #3c97bf;
     text-decoration: none;
-}
+} */
+.background-image {
+	background-image: url(${backgroundImage});
+	background-size: cover;
+	background-position: center center;
+  }
