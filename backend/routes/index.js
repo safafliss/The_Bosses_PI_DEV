@@ -11,6 +11,9 @@ const {
   deleteProfile,
   uploadImage,
   banProfile,
+  resetpassword,
+  forgotpassword
+
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');

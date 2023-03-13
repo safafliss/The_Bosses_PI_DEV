@@ -1,5 +1,4 @@
 import React from 'react'
-import '../css/style1.css';
 import '../fonts/material-icon/css/material-design-iconic-font.min.css'
 import imageSignup from '../images/signup-image.jpg'
 import { useDispatch, useSelector } from 'react-redux'

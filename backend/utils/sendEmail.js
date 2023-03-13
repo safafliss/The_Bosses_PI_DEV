@@ -5,8 +5,8 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-        user: 'zerowasteprojectpi@gmail.com',
-        pass: 'dpftjggixoioegnv',
+        user: 'mahdi.ghali@esprit.tn',
+        pass: 'imzsndbjsrperodg',
     },
     tls: {
         rejectUnauthorized: false
@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport(smtpTransport({
 async function sendEmail(to, url) {
     try {
         const response = await transporter.sendMail({
-            from: 'zerowasteprojectpi@gmail.com', // sender address
+            from: 'mahdi.ghali@esprit.tn', // sender address
             to: to, // list of receivers
             subject: `reset password`, // Subject line
             html: `<div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
