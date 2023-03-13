@@ -36,6 +36,7 @@ function App() {
     role: auth.user.role,
   };
   return (
+    
     <BrowserRouter>
       <div className="bg-light" style={{ height: "100vh" }}>
         <Routes>
@@ -51,7 +52,7 @@ function App() {
             path="/login"
             element={
               <ForceRedirect user={user}>
-                <Login1 />
+                <Login />
               </ForceRedirect>
             }
           />
@@ -62,7 +63,7 @@ function App() {
             path="/register"
             element={
               <ForceRedirect user={user}>
-                <Register1 />
+                <Register />
               </ForceRedirect>
             }
           />

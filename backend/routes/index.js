@@ -11,6 +11,9 @@ const {
   deleteProfile,
   uploadImage,
   banProfile,
+  resetpassword,
+  forgotpassword
+
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
@@ -26,6 +29,12 @@ router.post('/register', Register);
 
 //? log in
 router.post('/login', Login);
+
+
+router.post('/resetpassword/:token',resetpassword);
+router.post('/forgotpassword', forgotpassword)
+
+
 
 //? GET all users
 router.get(

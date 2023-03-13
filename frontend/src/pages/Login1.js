@@ -1,4 +1,3 @@
-import "../css/style.css";
 import "../fonts/material-icon/css/material-design-iconic-font.min.css";
 import imageSignin from "../images/signin-image.jpg";
 import React, { useState } from "react";
