@@ -11,7 +11,7 @@ const resetPasswordToken = require("../models/resetPasswordToken");
 
 
 const Register = async (req, res) => {
-  const { errors, isValid } = validatorRegister(req.body);
+  const { errors, isValid } = await validatorRegister(req.body);
   try {
     if (!isValid) {
       res.status(404).json(errors);
@@ -40,6 +40,7 @@ const Register = async (req, res) => {
 
 const generateResetToken = async (userid) =>{
   tokken = crypto.randomBytes(32).toString("hex")
+  console.log(userid + "/" + tokken)
   await resetPasswordToken.create({userId:userid,token:tokken});
   //send email with token url here
 }
@@ -62,29 +63,32 @@ res.status(404).json(errors)
           errors.password = "incorrect password"
           res.status(404).json(errors)
         }else{
-          if (resetPasswordToken.find({userId:user._id})){
+          resetPasswordToken.findOne({userId:user._id}).then(notValid =>{
+            if (notValid){
             res.status(403).json({
               message:"Please Verify your account before loggin (check email)",
             })
-          }
-          if (user.isValid == false){
-            user.deleteOne();
-            res.status(403).json({
-              message:"user is not found",
-            })
-          }
-          var token = jwt.sign({ 
-            id: user._id,
-            // firstName: user.firstName,
-            // lastName: user.firstName,
-            // email: user.email,
-            role: user.role
-           }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-           res.status(200).json({
-             message: "success",
-             token: "Bearer "+token
-           })
-        }
+            }else{  
+                if (user.isValid == false){
+                  user.deleteOne();
+                  res.status(403).json({
+                    message:"user is not found",
+                  })
+                }else{
+                  var token = jwt.sign({ 
+                    id: user._id,
+                    // firstName: user.firstName,
+                    // lastName: user.firstName,
+                    // email: user.email,
+                    role: user.role
+                   }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+                   res.status(200).json({
+                     message: "success",
+                     token: "Bearer "+token
+                   })
+                }
+            }
+          })}
       });
     }
   } )

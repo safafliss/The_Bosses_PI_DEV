@@ -3,7 +3,7 @@ const validator = require('validator')
 const axios = require('axios');
 
 
-module.exports = function validatorRegister(data){
+module.exports = async function validatorRegister(data){
     let errors ={};
     data.firstName = !isEmpty(data.firstName) ? data.firstName : ""
     data.lastName = !isEmpty(data.lastName) ? data.lastName : ""
@@ -24,16 +24,10 @@ module.exports = function validatorRegister(data){
     if (validator.isEmpty(data.email)){
         errors.email = "Required email";
     }else{
-        axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=bf2c0a7fa84f4172a35e9dc5ca7f378e&email='+data.email)
-            .then(response => {
-                if (response.data["deliverability"]!="DELIVERABLE"){
-                    errors.email = "Email is not found";
-                }
-                
-            })
-            .catch(error => {
-                // console.log(error);
-    });
+        let holder;
+        holder = await checkEmail(data.email)
+        if (holder)
+        errors.email =holder;
     }
     if (validator.isEmpty(data.password)){
         errors.password = "Required password";
@@ -44,9 +38,23 @@ module.exports = function validatorRegister(data){
     if (validator.isEmpty(data.confirm)){
         errors.confirm = "Required confirm";
     }
-    
     return{
         errors,
         isValid : isEmpty(errors)
     }
+}
+
+async function checkEmail(email){
+    var tegt ;
+    await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=bf2c0a7fa84f4172a35e9dc5ca7f378e&email='+email)
+            .then(response => {
+                if (response.data["deliverability"]!="DELIVERABLE"){
+                    tegt= "Email does not exist (Undelivrable)"
+                }
+                // return ""
+            })
+            .catch(error => {
+                // return "errorr email"
+    });
+    return tegt;
 }
