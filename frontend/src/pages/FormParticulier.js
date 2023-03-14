@@ -1,10 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import "./Formulaire.css";
 function FormParticulier() {
-  const [data, setData] = useState([])
-  const navigate = useNavigate();
   const [image, setImage] = useState([]);
   //handle and convert it in base 64
   const handleImage = (e) => {
@@ -70,10 +67,6 @@ function FormParticulier() {
                    name="firstName"
                    className="form-textbox"
                    size="15"
-                   value={data.firstName || ""}
-                   onChange={(e) =>
-                      setData((prev) => ({ ...prev, firstName: e.target.value }))
-                   }
                 //    defaultValue={data.firstName}
                   />
                   <label
