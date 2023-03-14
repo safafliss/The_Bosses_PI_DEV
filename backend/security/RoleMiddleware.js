@@ -7,7 +7,7 @@ const ROLES = {
         "TRASHSPOTTER":"TRASHSPOTTER",
     },
     "ADMIN": {
-        "ADMIN":"ADMIN"},
+        "ADMIN":"ADMIN"}, 
 
     "PARTICULIER":{"PARTICULIER":"PARTICULIER"},
     "PROFESSIONAL":{"PROFESSIONAL":"PROFESSIONAL"},

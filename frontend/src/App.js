@@ -17,6 +17,7 @@ import { setUser } from "./redux/actions/authActions";
 import { useSelector } from "react-redux";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import FormParticulier from "./pages/FormParticulier";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -92,6 +93,14 @@ function App() {
             element={
               <ForceRedirect user={user}>
                 <ResetPassword />
+              </ForceRedirect>
+            }
+          />
+          <Route
+            path="/formPart"
+            element={
+              <ForceRedirect user={user}>
+                <FormParticulier />
               </ForceRedirect>
             }
           />

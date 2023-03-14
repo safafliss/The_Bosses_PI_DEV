@@ -15,6 +15,9 @@ const UserModel = new Schema(
       city:"string",
       state:"string"
     },
+    gender: "string",
+    birthDate: "Date",
+    bio: "string",
     banned:{
       isBanned:"boolean",
       banDuration:"Number",
