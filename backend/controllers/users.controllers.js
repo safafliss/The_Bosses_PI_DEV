@@ -246,7 +246,7 @@ const forgotpassword = async (req, res, next) => {
         id: user._id,
         role: user.role
        }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-      const url = `http://localhost:3600/api/resetpassword/${token}`
+      const url = `http://localhost:3000/resetPassword/${token}`
       if (sendMail(email,url)){
         res.status(200).json({ 
           success:true,

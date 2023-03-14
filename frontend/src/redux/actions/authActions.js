@@ -72,3 +72,22 @@ export const ForgotPass = (form, navigate) => (dispatch) => {
       });
     });
 };
+
+
+// export const ResetPass = (form, navigate) => (dispatch) => {
+//   axios
+//     .post(`http://localhost:3600/api/resetpassword/${match.params.token}`, form)
+//     .then((res) => {
+//       navigate('/login');
+//       dispatch({
+//         type: ERRORS,
+//         payload: {},
+//       });
+//     })
+//     .catch((err) => {
+//       dispatch({
+//         type: ERRORS,
+//         payload: err.response.data,
+//       });
+//     });
+// };
