@@ -113,20 +113,98 @@ const Admin = (req, res) => {
   res.send(req.user);
 };
 
-const updateProfile = async (req, res) => {
+// const updateProfile = async (req, res) => {
+//   try {
+    
+//     if ('password' in req.body) {
+//       const hash = bcrypt.hashSync(req.body.password, 10);
+//       req.body.password = hash;
+//     }
+//     await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+//     res.status(200).json(Object.keys(req.body));
+//   } catch (error) {
+//     res.json(error);
+//   }
+// };
+
+const updateProfile = async (req, res, next) => {
   try {
-    //
-    if ('password' in req.body) {
-      const hash = bcrypt.hashSync(req.body.password, 10);
-      req.body.password = hash;
-    }
-    await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+    await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
     res.status(200).json(Object.keys(req.body));
   } catch (error) {
     res.json(error);
   }
 };
+const uploadImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    console.log("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+    console.log(image)
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'profilePictures',
+    });
+    const profile = await UserModel.findByIdAndUpdate(req.params.id, { 
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+    res.status(200).json('done');
+  } catch (error) {
+    res.json(error);
+  }
+};
+const loginImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    const id = req.user._id
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'loginPictures',
+    });
+    const url = result.secure_url
+    console.log(url) 
+    //  await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage',{"imageUrl": url, "userId": id})
+    //         .then(response => {
+    //             console.log(response)
+    //         })
+    //         .catch(error => {
+    //             // return "errorr email"
+    // });
+    let payload = {"imageUrl": url, "userId": id};
 
+    let res = await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage', payload);
+
+    let data = res.data;
+    console.log(data);
+
+     console.log(result.public_id)
+     console.log(id)
+    //  await cloudinary.uploader.destroy(result.public_id);
+    res.status(200).json('done');
+  } catch (error) {
+    res.json(error);
+  }
+};
+const checkLoginByImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'loginPictures',
+    });
+    const url = result.secure_url
+    await axios.post('localhost:8000/checkImage',{"imageUrl": url})
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                // return "errorr email"
+    });
+    await cloudinary.uploader.destroy(result.public_id);
+    res.status(200).json('done');
+  } catch (error) {
+    res.json(error);
+  }
+};
 const getUsers = async (req, res) => {
   const users = await UserModel.find({}).sort({ createdAt: -1 });
   if (users) {
@@ -136,17 +214,29 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getSingleUser = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such user' });
-  }
+// const getSingleUser = async (req, res) => {
+//   const { id } = req.params;
+//   // if (!mongoose.Types.ObjectId.isValid(id)) {
+//   //   return res.status(404).json({ error: 'No such user' });
+//   // }
 
-  const user = await UserModel.findById(id);
-  if (!user) {
-    return res.status(404).json({ error: 'No such user' });
-  }
-};
+//   const user = await UserModel.findById(id);
+//   if (!user) {
+//     return res.status(404).json({ error: 'No such user' });
+//   }
+// };
+
+
+const getSingleUser = async (req ,res)=>{
+  try {
+      const { id } = req.params;
+      const data =  await UserModel.findById(id)
+      res.status(200).json(data)
+
+   } catch (error) {
+       res.status(404).json(error.message)
+   }
+}
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -172,23 +262,6 @@ const deleteProfile = async (req, res) => {
   }
 };
 
-const uploadImage = async (req, res) => {
-  try {
-    const { image } = req.body;
-    const result = await cloudinary.uploader.upload(image, {
-      folder: 'profilePictures',
-    });
-    const profile = await UserModel.findByIdAndUpdate(req.user._id, {
-      image: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-    });
-    res.status(200).json('done');
-  } catch (error) {
-    res.json(error);
-  }
-};
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -246,7 +319,7 @@ const forgotpassword = async (req, res, next) => {
         id: user._id,
         role: user.role
        }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-      const url = `http://localhost:3600/api/resetpassword/${token}`
+      const url = `http://localhost:3000/resetPassword/${token}`
       if (sendMail(email,url)){
         res.status(200).json({ 
           success:true,
@@ -280,5 +353,6 @@ module.exports = {
   uploadImage,
   banProfile,
   resetpassword,
-  forgotpassword
+  forgotpassword,
+  loginImage
 }

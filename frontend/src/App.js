@@ -8,7 +8,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import store from "./redux/store";
 import jwt_decode from "jwt-decode";
 //import {  setUser } from './redux/actions/authActions';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Form } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import NoAccess from "./pages/NoAccess";
 import AdminRouter from "./components/AdminRouter";
@@ -22,10 +22,20 @@ import VerifSuccess from "./pages/VerifSuccess";
 import VerifFail from "./pages/VerifFail";
 import CheckVerif from "./pages/CheckVerif";
 
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import FormParticulier from "./pages/FormParticulier";
+import { setAuth } from "./util/setAuth";
+import FormProfessional from "./pages/FormProfessional";
+import FormAssociation from "./pages/FormAssociation";
+import FormLivreur from "./pages/FormLivreur";
+import FormTrash from "./pages/FormTrash";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Profile from './components/Profile'
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
-  // setAuth(window.localStorage.jwt)
+  setAuth(window.localStorage.jwt);
   // const currentDate = Date.now / 1000
 
   // if(decode.exp >  currentDate){
@@ -60,9 +70,6 @@ function App() {
               </ForceRedirect>
             }
           />
-
-          
-
           <Route
             path="/register"
             element={
@@ -71,9 +78,6 @@ function App() {
               </ForceRedirect>
             }
           />
-
-          
-
           <Route
             path="/registerPartner"
             element={
@@ -121,6 +125,45 @@ function App() {
                 <VerifFail />
               // </ForceRedirect>
             }
+            />
+           <Route path="/forgotPassword"
+            element={
+              <ForceRedirect user={user}>
+                <ForgotPassword />
+              </ForceRedirect>
+            }/>
+          
+          <Route
+            path="/resetPassword/:token"
+            element={
+              <ForceRedirect user={user}>
+                <ResetPassword />
+              </ForceRedirect>
+            }
+          />
+          <Route
+            path="/formPart/:id"
+            element={<FormParticulier user={user} />}
+          />
+          <Route
+            path="/formProf/:id"
+            element={<FormProfessional user={user} />}
+          />
+          <Route
+            path="/formAssoc/:id"
+            element={<FormAssociation user={user} />}
+          />
+          <Route
+            path="/formLivreur/:id"
+            element={<FormLivreur user={user} />}
+          />
+          <Route
+            path="/formTrash/:id"
+            element={<FormTrash user={user} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile user={user} />}
           />
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

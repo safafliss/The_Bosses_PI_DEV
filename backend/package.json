@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:3600",
+  "proxy" : "http://localhost:3600",
   "name": "multi-user",
   "version": "0.0.0",
   "private": true,
@@ -30,7 +30,6 @@
     "passport-google-oauth": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "request": "^2.88.2",
-    "superagent": "^8.0.9",
     "validator": "^13.9.0"
   }
 }

@@ -9,7 +9,6 @@ import Inputs from '../components/Inputs'
 import { Radio } from "@material-tailwind/react";
 import Classnames from 'classnames'
 
-
 import "../assets/styles/index.css";
 export default function Register() {
   const [form, setForm] = useState({})
