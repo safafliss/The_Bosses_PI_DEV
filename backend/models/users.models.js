@@ -1,31 +1,29 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
- 
+
 const UserModel = new Schema(
   {
     firstName: "string",
     lastName: "string",
     password: "string",
     role: "string",
-    phoneNumber:"string",
-    organisationName:"string",
-    address:{
-      street:"string",
-      postalCode:"string",
-      city:"string",
-      state:"string"
-    },
+    phoneNumber: "string",
+    organisationName: "string",
+    street: "string",
+    postalCode: "string",
+    city: "string",
+    state: "string",
     gender: "string",
     birthDate: "Date",
     bio: "string",
-    banned:{
-      isBanned:"boolean",
-      banDuration:"Number",
-      banExpiresAt:"Date",
-      banNumber:{
-        type:"Number",
-        default:0
-      }
+    banned: {
+      isBanned: "boolean",
+      banDuration: "Number",
+      banExpiresAt: "Date",
+      banNumber: {
+        type: "Number",
+        default: 0,
+      },
     },
     email: {
       type: "string",
@@ -34,26 +32,22 @@ const UserModel = new Schema(
     },
     image: {
       public_id: {
-          type: String,
-          // required: true
+        type: String,
+        // required: true
       },
       url: {
-          type: String,
-          // required: true
-      }
-  },
-  isValid:{
-    type:Boolean,
-    default:false,
-  }
+        type: String,
+        // required: true
+      },
+    },
+    isValid: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   }
 );
-
-
-
-
 
 module.exports = mongoose.model("users", UserModel);

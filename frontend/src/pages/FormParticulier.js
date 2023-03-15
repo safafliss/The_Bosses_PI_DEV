@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import "./Formulaire.css";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+
 function FormParticulier() {
-  const [image, setImage] = useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+
+
+  const [data, setData] = useState({});
+  var curr = new Date();
+  const [date, setDate] = useState(curr.toISOString().substring(0, 10));
+  const getUser = useCallback(async () => {
+    const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
+    setData(data);
+    console.log(data);
+    curr = new Date(data.birthDate);
+    console.log(curr);
+    curr.setDate(curr.getDate());
+    setDate(curr.toISOString().substring(0, 10));
+    console.log(date);
+  }, [id]);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    UpdateUser();
+    navigate("/");
+  };
+  const UpdateUser = async () => {
+    const response = await axios.put(
+      `http://localhost:3600/api/updateUser/${id}`,
+      data
+    );
+    console.log(response.data);
+  };
+
+
+
+  //image
+  const [image, setImage] = useState({});
+ 
   //handle and convert it in base 64
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -17,16 +60,9 @@ function FormParticulier() {
       setImage(reader.result);
     };
   };
+
   return (
-    <form
-      className="jotform-form"
-      action="https://submit.jotform.com/submit/230723810993559"
-      method="post"
-      name="form_230723810993559"
-      id="230723810993559"
-      accept-charset="utf-8"
-      autocomplete="on"
-    >
+    <form className="jotform-form" onSubmit={handleSubmit}>
       <div role="main" className="form-all">
         <ul className="form-section page-section">
           <li id="cid_1" className="form-input-wide" data-type="control_head">
@@ -39,7 +75,7 @@ function FormParticulier() {
                 >
                   Registration Form
                 </h1>
-                <br/>
+                <br />
                 <div id="subHeader_1" className="form-subHeader">
                   Fill out the form carefully for registration
                 </div>
@@ -62,12 +98,18 @@ function FormParticulier() {
                   data-input-type="first"
                 >
                   <input
-                   type="text"
-                   id="last_4"
-                   name="firstName"
-                   className="form-textbox"
-                   size="15"
-                //    defaultValue={data.firstName}
+                    type="text"
+                    id="last_4"
+                    name="firstName"
+                    className="form-textbox"
+                    size="15"
+                    value={data.firstName || ""}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                      }))
+                    }
                   />
                   <label
                     className="form-sub-label"
@@ -90,7 +132,10 @@ function FormParticulier() {
                     name="lastName"
                     className="form-textbox"
                     size="15"
-                    // defaultValue={data.lastName}
+                    value={data.lastName || ""}
+                    onChange={(e) =>
+                      setData((prev) => ({ ...prev, lastName: e.target.value }))
+                    }
                   />
                   <label
                     className="form-sub-label"
@@ -126,10 +171,13 @@ function FormParticulier() {
                   <input
                     type="date"
                     className="form-textbox"
-                    // onChange={(e) => setExpiryDate(e.target.value)}
-                    // value={expiry_date}
-                    // className={
-                    //   emptyFields.includes("expiry_date") ? "error" : ""
+                    value={date}
+
+                    // onChange={(e) =>
+                    //   setData((prev) => ({
+                    //     ...prev,
+                    //     birthDate: e.target.value,
+                    //   }))
                     // }
                   />
                 </span>
@@ -156,6 +204,13 @@ function FormParticulier() {
                 style={{ width: "310px" }}
                 data-component="dropdown"
                 aria-label="Gender"
+                value={data.gender || ""}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    gender: e.target.value,
+                  }))
+                }
               >
                 <option value="">Please Select</option>
                 <option value="Male">Male</option>
@@ -189,6 +244,13 @@ function FormParticulier() {
                         name="address"
                         className="form-textbox form-address-line"
                         size="30"
+                        value={data.street || ""}
+                        onChange={(e) =>
+                          setData((prev) => ({
+                            ...prev,
+                            street: e.target.value,
+                          }))
+                        }
                       />
                       <label
                         className="form-sub-label"
@@ -213,6 +275,10 @@ function FormParticulier() {
                         id="input_23_city"
                         name="city"
                         className="form-textbox form-address-city"
+                        value={data.city || ""}
+                        onChange={(e) =>
+                          setData((prev) => ({ ...prev, city: e.target.value }))
+                        }
                       />
                       <label
                         className="form-sub-label"
@@ -235,6 +301,13 @@ function FormParticulier() {
                         id="input_23_state"
                         name="state"
                         className="form-textbox form-address-state"
+                        value={data.state || ""}
+                        onChange={(e) =>
+                          setData((prev) => ({
+                            ...prev,
+                            state: e.target.value,
+                          }))
+                        }
                       />
                       <label
                         className="form-sub-label"
@@ -259,6 +332,13 @@ function FormParticulier() {
                         id="input_23_postal"
                         name="postal"
                         className="form-textbox form-address-postal"
+                        value={data.postalCode || ""}
+                        onChange={(e) =>
+                          setData((prev) => ({
+                            ...prev,
+                            postalCode: e.target.value,
+                          }))
+                        }
                       />
                       <label
                         className="form-sub-label"
@@ -300,6 +380,10 @@ function FormParticulier() {
                   style={{ width: "310px" }}
                   size="310"
                   placeholder="ex: myname@example.com"
+                  value={data.email || ""}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, email: e.target.value }))
+                  }
                 />
                 <label
                   className="form-sub-label"
@@ -337,6 +421,13 @@ function FormParticulier() {
                   className="mask-phone-number form-textbox validate[Fill Mask]"
                   style={{ width: "310px" }}
                   placeholder="(000) 00-000-000"
+                  value={data.phoneNumber || ""}
+                  onChange={(e) =>
+                    setData((prev) => ({
+                      ...prev,
+                      phoneNumber: e.target.value,
+                    }))
+                  }
                 />
               </span>
             </div>
@@ -357,11 +448,11 @@ function FormParticulier() {
                 id="formupload"
                 name="image"
                 className="form-control"
+                value={data.image || ""}
               />
             </div>
             <img className="img-fluid" src={image} alt="" />
           </li>
-
           <li className="form-line" data-type="control_textarea" id="id_45">
             <label
               className="form-label form-label-top form-label-auto"
@@ -376,6 +467,10 @@ function FormParticulier() {
                 className="form-textarea"
                 name="bio"
                 style={{ width: "648px", height: "163px" }}
+                value={data.bio || ""}
+                onChange={(e) =>
+                  setData((prev) => ({ ...prev, bio: e.target.value }))
+                }
               ></textarea>
             </div>
           </li>

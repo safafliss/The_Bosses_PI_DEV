@@ -113,15 +113,42 @@ const Admin = (req, res) => {
   res.send(req.user);
 };
 
-const updateProfile = async (req, res) => {
+// const updateProfile = async (req, res) => {
+//   try {
+    
+//     if ('password' in req.body) {
+//       const hash = bcrypt.hashSync(req.body.password, 10);
+//       req.body.password = hash;
+//     }
+//     await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+//     res.status(200).json(Object.keys(req.body));
+//   } catch (error) {
+//     res.json(error);
+//   }
+// };
+
+const updateProfile = async (req, res, next) => {
   try {
-    //
-    if ('password' in req.body) {
-      const hash = bcrypt.hashSync(req.body.password, 10);
-      req.body.password = hash;
-    }
-    await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+    await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
     res.status(200).json(Object.keys(req.body));
+  } catch (error) {
+    res.json(error);
+  }
+};
+const uploadImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    console.log(image)
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'profilePictures',
+    });
+    const profile = await UserModel.findByIdAndUpdate(req.params.id, { 
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+    res.status(200).json('done');
   } catch (error) {
     res.json(error);
   }
@@ -136,17 +163,29 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getSingleUser = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such user' });
-  }
+// const getSingleUser = async (req, res) => {
+//   const { id } = req.params;
+//   // if (!mongoose.Types.ObjectId.isValid(id)) {
+//   //   return res.status(404).json({ error: 'No such user' });
+//   // }
 
-  const user = await UserModel.findById(id);
-  if (!user) {
-    return res.status(404).json({ error: 'No such user' });
-  }
-};
+//   const user = await UserModel.findById(id);
+//   if (!user) {
+//     return res.status(404).json({ error: 'No such user' });
+//   }
+// };
+
+
+const getSingleUser = async (req ,res)=>{
+  try {
+      const { id } = req.params;
+      const data =  await UserModel.findById(id)
+      res.status(200).json(data)
+
+   } catch (error) {
+       res.status(404).json(error.message)
+   }
+}
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -172,23 +211,7 @@ const deleteProfile = async (req, res) => {
   }
 };
 
-const uploadImage = async (req, res) => {
-  try {
-    const { image } = req.body;
-    const result = await cloudinary.uploader.upload(image, {
-      folder: 'profilePictures',
-    });
-    const profile = await UserModel.findByIdAndUpdate(req.user._id, {
-      image: {
-        public_id: result.public_id,
-        url: result.secure_url,
-      },
-    });
-    res.status(200).json('done');
-  } catch (error) {
-    res.json(error);
-  }
-};
+
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());

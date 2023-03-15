@@ -45,13 +45,18 @@ router.get(
 );
 
 //? GET a single user
-router.get(
-  '/getUser/:id',
-  passport.authenticate('jwt', { session: false }),
-  inRole(ROLES.ADMIN.ADMIN),
-  getSingleUser
-);
-
+// router.get(
+//   '/getUser/:id',
+//   passport.authenticate('jwt', { session: false }),
+//   inRole(ROLES.USER),
+//   getSingleUser
+// );
+router.get('/getUser/:id', 
+passport.authenticate("jwt", { session: false }),
+getSingleUser);
+router.put('/getImage/:id', 
+passport.authenticate("jwt", { session: false }),
+uploadImage);
 //? DELETE a user
 router.delete(
   '/deleteUser/:id',
@@ -60,6 +65,8 @@ router.delete(
   deleteUser
 );
 
+//? UPDATE user
+router.put("/updateUser/:id", updateProfile)
 
 
 

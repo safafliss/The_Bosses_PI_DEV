@@ -18,11 +18,12 @@ import { useSelector } from "react-redux";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import FormParticulier from "./pages/FormParticulier";
+import { setAuth } from "./util/setAuth";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
-  // setAuth(window.localStorage.jwt)
+  setAuth(window.localStorage.jwt)
   // const currentDate = Date.now / 1000
 
   // if(decode.exp >  currentDate){
@@ -97,11 +98,9 @@ function App() {
             }
           />
           <Route
-            path="/formPart"
+            path="/formPart/:id"
             element={
-              <ForceRedirect user={user}>
-                <FormParticulier />
-              </ForceRedirect>
+                <FormParticulier user={user} />
             }
           />
           <Route path="*" element={<NotFound />} />
