@@ -3,21 +3,19 @@ import { useState } from "react";
 import "./Formulaire.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-
 function FormParticulier() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-
-
   const [data, setData] = useState({});
   const [image, setImage] = useState([]);
+  const [errors, setErrors] = useState({});
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
   const getUser = useCallback(async () => {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
-    setImage(data.image.url)
+    setImage(data.image.url);
     console.log(data);
     curr = new Date(data.birthDate);
     console.log(curr);
@@ -32,25 +30,43 @@ function FormParticulier() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    UpdateUser();
-    navigate("/");
+    // validate firstName
+    const newErrors = {};
+    if (!data.firstName) {
+      newErrors.firstName = "First Name is required";
+    } else if (data.firstName.length < 3) {
+      newErrors.firstName = "First Name must be at least 3 characters long";
+    }
+
+    if (!data.lastName) {
+      newErrors.lastName = "Last Name is required";
+    } else if (data.lastName.length < 3) {
+      newErrors.lastName = "Last Name must be at least 3 characters long";
+    }
+
+    if (!/^\d{5}(?:[-\s]\d{4})?$/.test(data.postalCode)) {
+      newErrors.postalCode = "Invalid postal code";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      console.log(errors);
+      UpdateUser();
+      navigate("/");
+    }
   };
   const UpdateUser = async () => {
     const response = await axios.put(
       `http://localhost:3600/api/updateUser/${id}`,
       data
     );
-    if(image != data.image.url){
+    if (image != data.image.url) {
       UpdateImage();
     }
-    
+
     console.log(response.data);
   };
 
-
-
   //image
-  
 
   const handleImageSubmit = (event) => {
     event.preventDefault();
@@ -61,7 +77,7 @@ function FormParticulier() {
     //setImage(image)
     const response = await axios.put(
       `http://localhost:3600/api/getImage/${id}`,
-      {"image": image}
+      { image: image }
     );
     console.log(response.data);
   };
@@ -132,6 +148,9 @@ function FormParticulier() {
                       }))
                     }
                   />
+                  {errors.firstName && (
+                    <span style={{ color: "red" }}>{errors.firstName}</span>
+                  )}
                   <label
                     className="form-sub-label"
                     for="first_4"
@@ -158,6 +177,9 @@ function FormParticulier() {
                       setData((prev) => ({ ...prev, lastName: e.target.value }))
                     }
                   />
+                  {errors.lastName && (
+                    <span style={{ color: "red" }}>{errors.lastName}</span>
+                  )}
                   <label
                     className="form-sub-label"
                     for="last_4"
@@ -193,15 +215,14 @@ function FormParticulier() {
                     type="date"
                     className="form-textbox"
                     value={date}
-
-                    onChange={(e) =>{
-                      console.log(e.target.value)
-                      setDate(e.target.value)
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setDate(e.target.value);
                       setData((prev) => ({
                         ...prev,
                         birthDate: e.target.value,
-                      }))}
-                    }
+                      }));
+                    }}
                   />
                 </span>
               </div>
@@ -363,6 +384,9 @@ function FormParticulier() {
                           }))
                         }
                       />
+                      {errors.postalCode && (
+                        <span style={{ color: "red" }}>{errors.postalCode}</span>
+                      )}
                       <label
                         className="form-sub-label"
                         for="input_23_postal"
@@ -407,6 +431,7 @@ function FormParticulier() {
                   onChange={(e) =>
                     setData((prev) => ({ ...prev, email: e.target.value }))
                   }
+                  disabled
                 />
                 <label
                   className="form-sub-label"
@@ -475,7 +500,7 @@ function FormParticulier() {
               />
             </div>
             <img className="img-fluid" src={image} alt="" />
-            </li>
+          </li>
           <li className="form-line" data-type="control_textarea" id="id_45">
             <label
               className="form-label form-label-top form-label-auto"
