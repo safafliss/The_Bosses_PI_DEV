@@ -11,11 +11,13 @@ function FormParticulier() {
 
 
   const [data, setData] = useState({});
+  const [image, setImage] = useState([]);
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
   const getUser = useCallback(async () => {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
+    setImage(data.image.url)
     console.log(data);
     curr = new Date(data.birthDate);
     console.log(curr);
@@ -38,14 +40,32 @@ function FormParticulier() {
       `http://localhost:3600/api/updateUser/${id}`,
       data
     );
+    if(image != data.image.url){
+      UpdateImage();
+    }
+    
     console.log(response.data);
   };
 
 
 
   //image
-  const [image, setImage] = useState({});
- 
+  
+
+  const handleImageSubmit = (event) => {
+    event.preventDefault();
+    UpdateImage();
+    navigate("/");
+  };
+  const UpdateImage = async () => {
+    //setImage(image)
+    const response = await axios.put(
+      `http://localhost:3600/api/getImage/${id}`,
+      {"image": image}
+    );
+    console.log(response.data);
+  };
+
   //handle and convert it in base 64
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -58,6 +78,7 @@ function FormParticulier() {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage(reader.result);
+      //setData(data);
     };
   };
 
@@ -173,12 +194,14 @@ function FormParticulier() {
                     className="form-textbox"
                     value={date}
 
-                    // onChange={(e) =>
-                    //   setData((prev) => ({
-                    //     ...prev,
-                    //     birthDate: e.target.value,
-                    //   }))
-                    // }
+                    onChange={(e) =>{
+                      console.log(e.target.value)
+                      setDate(e.target.value)
+                      setData((prev) => ({
+                        ...prev,
+                        birthDate: e.target.value,
+                      }))}
+                    }
                   />
                 </span>
               </div>
@@ -448,11 +471,11 @@ function FormParticulier() {
                 id="formupload"
                 name="image"
                 className="form-control"
-                value={data.image || ""}
+                //value={data.image.url}
               />
             </div>
             <img className="img-fluid" src={image} alt="" />
-          </li>
+            </li>
           <li className="form-line" data-type="control_textarea" id="id_45">
             <label
               className="form-label form-label-top form-label-auto"
