@@ -12,7 +12,8 @@ const {
   uploadImage,
   banProfile,
   resetpassword,
-  forgotpassword
+  forgotpassword,
+  loginImage
 
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
@@ -57,6 +58,9 @@ getSingleUser);
 router.put('/getImage/:id', 
 passport.authenticate("jwt", { session: false }),
 uploadImage);
+router.put('/loginImage', 
+passport.authenticate("jwt", { session: false }),
+loginImage);
 //? DELETE a user
 router.delete(
   '/deleteUser/:id',

@@ -23,7 +23,8 @@ import FormProfessional from "./pages/FormProfessional";
 import FormAssociation from "./pages/FormAssociation";
 import FormLivreur from "./pages/FormLivreur";
 import FormTrash from "./pages/FormTrash";
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Profile from './components/Profile'
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -120,6 +121,10 @@ function App() {
           <Route
             path="/formTrash/:id"
             element={<FormTrash user={user} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile user={user} />}
           />
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

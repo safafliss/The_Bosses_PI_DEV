@@ -138,6 +138,7 @@ const updateProfile = async (req, res, next) => {
 const uploadImage = async (req, res) => {
   try {
     const { image } = req.body;
+    console.log("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
     console.log(image)
     const result = await cloudinary.uploader.upload(image, {
       folder: 'profilePictures',
@@ -153,7 +154,57 @@ const uploadImage = async (req, res) => {
     res.json(error);
   }
 };
+const loginImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    const id = req.user._id
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'loginPictures',
+    });
+    const url = result.secure_url
+    console.log(url) 
+    //  await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage',{"imageUrl": url, "userId": id})
+    //         .then(response => {
+    //             console.log(response)
+    //         })
+    //         .catch(error => {
+    //             // return "errorr email"
+    // });
+    let payload = {"imageUrl": url, "userId": id};
 
+    let res = await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage', payload);
+
+    let data = res.data;
+    console.log(data);
+
+     console.log(result.public_id)
+     console.log(id)
+    //  await cloudinary.uploader.destroy(result.public_id);
+    res.status(200).json('done');
+  } catch (error) {
+    res.json(error);
+  }
+};
+const checkLoginByImage = async (req, res) => {
+  try {
+    const { image } = req.body;
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'loginPictures',
+    });
+    const url = result.secure_url
+    await axios.post('localhost:8000/checkImage',{"imageUrl": url})
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                // return "errorr email"
+    });
+    await cloudinary.uploader.destroy(result.public_id);
+    res.status(200).json('done');
+  } catch (error) {
+    res.json(error);
+  }
+};
 const getUsers = async (req, res) => {
   const users = await UserModel.find({}).sort({ createdAt: -1 });
   if (users) {
@@ -303,5 +354,6 @@ module.exports = {
   uploadImage,
   banProfile,
   resetpassword,
-  forgotpassword
+  forgotpassword,
+  loginImage
 }

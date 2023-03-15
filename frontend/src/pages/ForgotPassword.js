@@ -80,7 +80,7 @@ function ForgotPassword() {
                           type="submit"
                           name="reset"
                         >
-                          Reset Password
+                          Send Email
                         </button>
                       </div>
                     </form>
