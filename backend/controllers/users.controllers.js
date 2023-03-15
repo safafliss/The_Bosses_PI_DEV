@@ -7,12 +7,12 @@ const jwt = require('jsonwebtoken')
 const cloudinary = require("../utils/cloudinary")
 const crypto = require("crypto");
 const resetPasswordToken = require("../models/resetPasswordToken");
-
-
+const sendMail = require('../utils/sendEmail');
 
 const Register = async (req, res) => {
+  console.log('ena ons')
   const { errors, isValid } = await validatorRegister(req.body);
-  try {
+    try {
     if (!isValid) {
       res.status(404).json(errors);
     } else {
@@ -24,9 +24,10 @@ const Register = async (req, res) => {
         }else{
           const hash = bcrypt.hashSync(req.body.password, 10)
           req.body.password = hash; 
-          req.body.role = "USER";
+          // req.body.role = "USER";
           user = await UserModel.create(req.body);
-          generateResetToken(user._id);
+          generateResetToken(user._id, user.email);
+          console.log('dakhlet')
           res.status(200).json({ message: "success" });
         }
       });
@@ -38,11 +39,18 @@ const Register = async (req, res) => {
   //await res.send('ok')
 };
 
-const generateResetToken = async (userid) =>{
+const generateResetToken = async (userid, email) =>{
   tokken = crypto.randomBytes(32).toString("hex")
-  console.log(userid + "/" + tokken)
   await resetPasswordToken.create({userId:userid,token:tokken});
-  //send email with token url here
+
+  const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
+  console.log(url)
+//   if (sendMail(email,url)){
+// console.log("mchet")
+//   }
+//   else{
+//     console.log("mamchetech")
+//   }
 }
 
 const Login = async(req, res) =>{
@@ -211,6 +219,53 @@ const banProfile = async (req, res) => {
   
 }
 
+const resetpassword = async (req, res, next) => {
+  try {
+      const passwordHash = bcrypt.hashSync(req.body.password, 10)
+      const decoded = jwt.decode(req.params['token']);
+      console.log(decoded.id)  
+      await UserModel.findOneAndUpdate({_id: decoded.id}, {
+          password:passwordHash
+      })
+
+      res.json({message:"Password successfully changed!"})
+  } catch (err) {
+      return res.status(500).json({error: err.message})   
+  }
+}
+
+const forgotpassword = async (req, res, next) => {
+  try {
+      const {email} = req.body
+      const user = await UserModel.findOne({"email": email})  
+      if(!user)return res.status(400).json({ 
+                      success:true,
+                      message: "This mail does not exist!"});
+ 
+      const token = jwt.sign({ 
+        id: user._id,
+        role: user.role
+       }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+      const url = `http://localhost:3600/api/resetpassword/${token}`
+      if (sendMail(email,url)){
+        res.status(200).json({ 
+          success:true,
+          message: "please check your email."});
+      }
+      else{
+        res.status(500).json({ 
+          success:false,
+          error: "sad"});
+      }
+      
+      
+  } catch (err) {
+      res.status(500).json({ 
+          success:false,
+          error: err.message});
+  }
+}
+
 
 module.exports = {
   Register,
@@ -224,4 +279,6 @@ module.exports = {
   deleteProfile,
   uploadImage,
   banProfile,
+  resetpassword,
+  forgotpassword
 }

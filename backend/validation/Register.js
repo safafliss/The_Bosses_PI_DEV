@@ -46,15 +46,15 @@ module.exports = async function validatorRegister(data){
 
 async function checkEmail(email){
     var tegt ;
-    await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=bf2c0a7fa84f4172a35e9dc5ca7f378e&email='+email)
-            .then(response => {
-                if (response.data["deliverability"]!="DELIVERABLE"){
-                    tegt= "Email does not exist (Undelivrable)"
-                }
-                // return ""
-            })
-            .catch(error => {
-                // return "errorr email"
-    });
+    // await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=1655116fb4ab42d49aa7b696826e3af3&email='+email)
+    //         .then(response => {
+    //             if (response.data["deliverability"]!="DELIVERABLE"){
+    //                 tegt= "Email does not exist (Undelivrable)"
+    //             }
+    //             // return ""
+    //         })
+    //         .catch(error => {
+    //             // return "errorr email"
+    // });
     return tegt;
 }
