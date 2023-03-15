@@ -17,6 +17,10 @@ import { setUser } from "./redux/actions/authActions";
 import { useSelector } from "react-redux";
 import Login1 from "./pages/Login1";
 import Register1 from "./pages/Register1";
+import VerifSend from "./pages/VerifSend";
+import VerifSuccess from "./pages/VerifSuccess";
+import VerifFail from "./pages/VerifFail";
+import CheckVerif from "./pages/CheckVerif";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -36,6 +40,7 @@ function App() {
     role: auth.user.role,
   };
   return (
+    
     <BrowserRouter>
       <div className="bg-light" style={{ height: "100vh" }}>
         <Routes>
@@ -51,7 +56,7 @@ function App() {
             path="/login"
             element={
               <ForceRedirect user={user}>
-                <Login1 />
+                <Login />
               </ForceRedirect>
             }
           />
@@ -62,7 +67,7 @@ function App() {
             path="/register"
             element={
               <ForceRedirect user={user}>
-                <Register1 />
+                <Register />
               </ForceRedirect>
             }
           />
@@ -83,6 +88,38 @@ function App() {
               <AdminRouter user={user}>
                 <Admin />
               </AdminRouter>
+            }
+          />
+          <Route
+            path="/verification"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifSend />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/verify"
+            element={
+              // <ForceRedirect user={user}>
+                <CheckVerif />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/verified"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifSuccess />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/notVerified"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifFail />
+              // </ForceRedirect>
             }
           />
           <Route path="*" element={<NotFound />} />
