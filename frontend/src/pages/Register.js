@@ -176,42 +176,77 @@ export default function Register() {
                             You are
                           </label>
 
-                          <div className="flex ">
+                          <div
+                            className="flex "
+                            style={{
+                              justifyContent: "center",
+                            }}
+                          >
                             <div className="form-check">
-                              <label htmlFor="prof">
+                              <label
+                                htmlFor="PARTICULAR"
+                                className="font-bold text-xs ease-linear"
+                              >
                                 <img
+                                  style={{ width: "100px" }}
                                   alt="..."
                                   className="w-5 mr-1"
-                                  src={require("../assets/img/assoc.jpg")}
+                                  src={require("../assets/img/userr.png")}
                                 />
                                 <input
                                   type="radio"
                                   name="role"
-                                  value="prof"
+                                  value="PARTICULAR"
                                   className="form-check-input"
-                                  id="prof"
+                                  id="PARTICULAR"
                                   onChange={onChangeHandler}
                                 />{" "}
-                                prof
+                                A particular
                               </label>
-                              <div className="form-check">
-                                <label htmlFor="part">
-                                  <img
-                                    alt="..."
-                                    className="w-5 mr-1"
-                                    src={require("../assets/img/kkk.jpg")}
-                                  />
-                                  <input
-                                    type="radio"
-                                    name="role"
-                                    value="part"
-                                    className="form-check-input"
-                                    id="part"
-                                    onChange={onChangeHandler}
-                                  />{" "}
-                                  part
-                                </label>
-                              </div>
+                            </div>
+                            <div className="form-check">
+                              <label
+                                htmlFor="PARTICULAR"
+                                className="font-bold text-xs ease-linear"
+                              >
+                                <img
+                                  style={{ width: "100px" }}
+                                  alt="..."
+                                  className="w-5 mr-1"
+                                  src={require("../assets/img/superr.png")}
+                                />
+                                <input
+                                  type="radio"
+                                  name="role"
+                                  value="PROFESSIONAL"
+                                  className="form-check-input"
+                                  id="PROFESSIONAL"
+                                  onChange={onChangeHandler}
+                                />{" "}
+                                A partner
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <label
+                                htmlFor="ASSOCIATION"
+                                className="font-bold text-xs ease-linear"
+                              >
+                                <img
+                                  alt="..."
+                                  className=""
+                                  src={require("../assets/img/ass.png")}
+                                  style={{ width: "106px" }}
+                                />
+                                <input
+                                  type="radio"
+                                  name="role"
+                                  value="ASSOCIATION"
+                                  className="form-check-input"
+                                  id="ASSOCIATION"
+                                  onChange={onChangeHandler}
+                                />{" "}
+                                An association
+                              </label>
                             </div>
 
                             {/* <Inputs  type="radio" id="user" name="role"  value="admin"  className="form-check-input" onChangeHandler={onChangeHandler}/> */}

@@ -8,7 +8,7 @@ const cloudinary = require("../utils/cloudinary")
 const crypto = require("crypto");
 const resetPasswordToken = require("../models/resetPasswordToken");
 const sendMail = require('../utils/sendEmail');
-
+const axios = require('axios')
 
 const Register = async (req, res) => {
   console.log('ena ons')
@@ -172,10 +172,14 @@ const loginImage = async (req, res) => {
     // });
     let payload = {"imageUrl": url, "userId": id};
 
-    let res = await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage', payload);
-
-    let data = res.data;
-    console.log(data);
+    try {
+      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/uploadImage', payload);
+      console.log(response.data);
+      return response.json()
+   }  
+   catch (error) {
+       console.log(error);
+   }
 
      console.log(result.public_id)
      console.log(id)
@@ -192,15 +196,35 @@ const checkLoginByImage = async (req, res) => {
       folder: 'loginPictures',
     });
     const url = result.secure_url
-    await axios.post('localhost:8000/checkImage',{"imageUrl": url})
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                // return "errorr email"
-    });
-    await cloudinary.uploader.destroy(result.public_id);
-    res.status(200).json('done');
+    try {
+      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/checkImage', {"imageUrl": url});
+      const userId = response.data["message"]
+      await cloudinary.uploader.destroy(result.public_id);
+      await UserModel.findById(userId).then((user)=> {
+        if (user){
+          console.log("logged in " + userId)
+      var token = jwt.sign({ 
+        id: user._id,
+        // firstName: user.firstName,
+        // lastName: user.firstName,
+        // email: user.email,
+        role: user.role
+       }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+       res.status(200).json({
+         message: "success",
+         token: "Bearer "+token
+       })
+        }else{ 
+          res.status(404).json({
+          message: "Not found"
+        })
+        }
+      })
+
+   }  
+   catch (error) {
+       console.log(error);
+   }
   } catch (error) {
     res.json(error);
   }
@@ -355,5 +379,6 @@ module.exports = {
   banProfile,
   resetpassword,
   forgotpassword,
-  loginImage
+  loginImage,
+  checkLoginByImage
 }

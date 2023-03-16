@@ -60,7 +60,7 @@ function FormProfessional() {
   return (
     <form className="jotform-form" onSubmit={handleSubmit}>
       <div role="main" className="form-all">
-        <ul className="form-section page-section">
+        <ul className="form-section page-section" style={{backgroundColor: "#69b550"}}>
           <li id="cid_1" className="form-input-wide" data-type="control_head">
             <div className="form-header-group header-large">
               <div className="header-text httal htvam">

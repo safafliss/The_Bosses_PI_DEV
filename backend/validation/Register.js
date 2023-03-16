@@ -32,6 +32,9 @@ module.exports = async function validatorRegister(data){
     if (validator.isEmpty(data.password)){
         errors.password = "Required password";
     }
+    // if (!validator.isStrongPassword(data.password)){
+    //     errors.password = "password must contain uppercase, lowercase, numbers, symbols";
+    // }
     if(!validator.equals(data.password, data.confirm)){
         errors.confirm = "passwords doesn't match";
     }

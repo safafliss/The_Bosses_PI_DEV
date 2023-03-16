@@ -1,4 +1,7 @@
 import "./App.css";
+import Associationpage from "./pages/Associationpage";
+import Particularpage from "./pages/Particularpage";
+import Proffpage from "./pages/Proffpage";
 import Profil from "./pages/Profil";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -23,8 +26,8 @@ import FormProfessional from "./pages/FormProfessional";
 import FormAssociation from "./pages/FormAssociation";
 import FormLivreur from "./pages/FormLivreur";
 import FormTrash from "./pages/FormTrash";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import Profile from './components/Profile'
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import Profile from "./components/Profile";
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -54,6 +57,11 @@ function App() {
               </PrivateRouter>
             }
           />
+          <Route path="/">
+            <Route path="/proffpage" element={<Proffpage />} />
+            <Route path="/particpage" element={<Particularpage />} />
+            <Route path="/associpage" element={<Associationpage />} />
+          </Route>
           <Route
             path="/login"
             element={
@@ -118,14 +126,8 @@ function App() {
             path="/formLivreur/:id"
             element={<FormLivreur user={user} />}
           />
-          <Route
-            path="/formTrash/:id"
-            element={<FormTrash user={user} />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile user={user} />}
-          />
+          <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
+          <Route path="/profile" element={<Profile user={user} />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />
         </Routes>
