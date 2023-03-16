@@ -4,21 +4,54 @@ import Inputs from "../components/Inputs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginAction } from "../redux/actions/authActions";
+import CaptchaCode from "react-captcha-code";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
+import Profile from "../components/Profile";
 export default function Login() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.errors);
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
+
+  const [captchaCode, setCaptchaCode] = useState("");
+  const [key, setKey] = useState(0);
   const onChangeHandler = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
+  const handleCaptchaCode = (code) => {
+    setCaptchaCode(code);
+    setError(false)
+  };
+
+  const handleRegenerate = () => {
+    setKey(key + 1);
+    setCaptchaCode("");
+    setError(false)
+
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(LoginAction(form, navigate));
+    const inputCode = e.target.elements.code.value;
+
+    if (dispatch(LoginAction(form, navigate)) && inputCode === captchaCode || inputCode === captchaCode) {
+      console.log('Verification successful!');
+      setError(false);
+    } else {
+      console.log('Verification failed. Please try again.');
+      setError(true);
+    }
   };
   return (
     <>
@@ -61,20 +94,20 @@ export default function Login() {
                       </h6>
                     </div>
                     <div className="btn-wrapper text-center">
-                      <button
+                      <a href="http://localhost:3600/auth/facebook/callback"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                        type="button"
+            
                       >
                         <img
                           alt="..."
                           className="w-5 mr-1"
                           src={require("../assets/img/github.svg").default}
                         />
-                        Github
-                      </button>
-                      <button
+                        facebook
+                      </a>
+                      <a href="http://localhost:3600/auth/google"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                        type="button"
+                        
                       >
                         <img
                           alt="..."
@@ -82,7 +115,7 @@ export default function Login() {
                           src={require("../assets/img/google.svg").default}
                         />
                         Google
-                      </button>
+                      </a>
                     </div>
                     <hr className="mt-6 border-b-1 border-blueGray-300" />
                   </div>
@@ -137,7 +170,24 @@ export default function Login() {
                           </span>
                         </label>
                       </div>
-
+                      <div>
+                        
+                        <CaptchaCode key={key} onChange={handleCaptchaCode} />
+                       
+                        <FontAwesomeIcon
+                          style={{ cursor: "pointer" }}
+                          icon={faRedoAlt}
+                          onClick={handleRegenerate}
+                        />
+                        <input
+                          style={{ color: "black" }}
+                          type="text"
+                          name="code"
+                          placeholder="Enter the code above"
+                        />
+                        {error && <div style={{ color: 'red' }}>Incorrect code entered. Please try again.</div>}
+                      </div>
+                      
                       <div className="text-center mt-6">
                         <button
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
@@ -147,6 +197,17 @@ export default function Login() {
                           Sign In
                         </button>
                       </div>
+                      <div className="text-center mt-6">
+                        <button
+                          className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                          name="faceId"
+                          style={{ backgroundColor: " #2dce89" }}
+                          onClick={handleShow}
+                        >
+                          Use Face ID
+                        </button>
+                      </div>
+                      <Profile show={showModal} handleClose={handleClose}/>
                     </form>
                   </div>
                 </div>

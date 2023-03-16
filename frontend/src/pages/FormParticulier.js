@@ -59,9 +59,9 @@ function FormParticulier() {
       `http://localhost:3600/api/updateUser/${id}`,
       data
     );
-    if (image != data.image.url) {
+    
       UpdateImage();
-    }
+    
 
     console.log(response.data);
   };
@@ -101,7 +101,7 @@ function FormParticulier() {
   return (
     <form className="jotform-form" onSubmit={handleSubmit}>
       <div role="main" className="form-all">
-        <ul className="form-section page-section">
+        <ul className="form-section page-section" style={{backgroundColor: "#adc7ea"}} >
           <li id="cid_1" className="form-input-wide" data-type="control_head">
             <div className="form-header-group header-large">
               <div className="header-text httal htvam">
