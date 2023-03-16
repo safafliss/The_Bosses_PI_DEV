@@ -2,7 +2,7 @@ import "./App.css";
 import Associationpage from "./pages/Associationpage";
 import Particularpage from "./pages/Particularpage";
 import Proffpage from "./pages/Proffpage";
-//import Profil from "./pages/Profil";
+import Profil from "./pages/Profil";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterPartner from "./pages/RegisterPartner";
