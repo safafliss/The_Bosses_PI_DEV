@@ -28,7 +28,7 @@ const Register = async (req, res) => {
           user = await UserModel.create(req.body);
           generateResetToken(user._id, user.email);
           console.log('dakhlet');
-          res.status(200).json({ message: 'success' });
+          res.status(200).json({ message: 'success', obj : user });
         }
       });
     }
@@ -260,10 +260,10 @@ Date.prototype.addDays = function (days) {
 
 const banProfile = async (req, res) => {
   try {
-    const { user_id, banDuration } = req.body;
+    const { _id, banDuration } = req.body;
     var date = new Date();
     const profile = await UserModel.findByIdAndUpdate(
-      user_id,
+      _id,
       { $inc: { 'banned.banNumber': 1 } },
       {
         banned: {
@@ -273,7 +273,7 @@ const banProfile = async (req, res) => {
         },
       }
     );
-    res.status(200).json('done');
+    res.status(200).json({msg: 'done', obj : profile});
   } catch (error) {
     res.json(error);
   }

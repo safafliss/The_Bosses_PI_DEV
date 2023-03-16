@@ -164,7 +164,7 @@ export default function CardListUsers({ color }) {
   );
 }
 CardListUsers.defaultProps = {
-  color: 'dark',
+  color: 'light',
 };
 
 CardListUsers.propTypes = {

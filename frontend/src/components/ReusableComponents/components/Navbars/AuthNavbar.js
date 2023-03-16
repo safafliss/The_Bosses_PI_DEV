@@ -1,13 +1,23 @@
 /*eslint-disable*/
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { Logout } from '../../../../redux/actions/authActions';
 // components
 
 import PagesDropdown from '../Dropdowns/PagesDropdown';
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const NavigateToAdmin = () => {
+    navigate('/admin');
+  };
+  const logoutHandler = () => {
+    dispatch(Logout())
+  };
   return (
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">
@@ -29,8 +39,8 @@ export default function Navbar(props) {
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center bg-transparent lg:bg-opacity-0 lg:shadow-none" +
-              (navbarOpen ? " block rounded shadow-lg" : " hidden")
+              'lg:flex flex-grow items-center bg-transparent lg:bg-opacity-0 lg:shadow-none' +
+              (navbarOpen ? ' block rounded shadow-lg' : ' hidden')
             }
             id="example-navbar-warning"
           >
@@ -40,7 +50,7 @@ export default function Navbar(props) {
                   className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/notus?ref=nr-auth-navbar"
                 >
-                  <i className="lg:text-blueGray-200 text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2" />{" "}
+                  <i className="lg:text-blueGray-200 text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2" />{' '}
                   Docs
                 </a>
               </li>
@@ -86,8 +96,18 @@ export default function Navbar(props) {
                 <button
                   className="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
+                  onClick={() => NavigateToAdmin()}
                 >
-                  <i className="fas fa-arrow-alt-circle-down"></i> Download
+                  <i className="fas fa-arrow-alt-circle-down"></i> Dashboard
+                </button>
+              </li>
+              <li className="flex items-center">
+                <button
+                  className="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => logoutHandler()}
+                >
+                  <i className="fas fa-arrow-alt-circle-down"></i> Logout
                 </button>
               </li>
             </ul>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ERRORS, SET_PROFILE, SET_PROFILES, DELETE_PROFILE, UPDATE_PROFILE } from '../types';
+import { ERRORS, SET_PROFILE, SET_PROFILES, DELETE_PROFILE, UPDATE_PROFILE, BAN_PROFILE } from '../types';
 import { setAuth } from '../../util/setAuth';
 
 export const AddProfile = (form, setShow, setMessage) => (dispatch) => {
@@ -106,4 +106,24 @@ export const DeleteProfile = (id) => (dispatch) => {
         });
       });
   }
+
+  
+};
+
+export const BanProfile = (_id, banDuration) => (dispatch) => {
+  axios
+    .post('/api/banProfile',{_id, banDuration} )
+    .then((res) => {
+      dispatch({
+        type: BAN_PROFILE,
+        payload: {},
+      });
+      console.log(res);
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data,
+      });
+    });
 };

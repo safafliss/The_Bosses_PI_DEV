@@ -113,6 +113,7 @@ router.post(
 router.post(
   '/banProfile',
   passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
   banProfile
 );
 router.get('/verify/:user_id/:token', async function (req, res) {

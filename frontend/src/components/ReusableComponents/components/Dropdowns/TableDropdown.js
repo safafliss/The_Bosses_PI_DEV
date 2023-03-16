@@ -5,6 +5,7 @@ import { createPopper } from '@popperjs/core';
 import {
   DeleteProfile,
   GetProfile,
+  BanProfile
 } from '../../../../redux/actions/profileActions';
 import { useDispatch } from 'react-redux';
 
@@ -18,7 +19,14 @@ const NotificationDropdown = (user) => {
 
   const ShowHandler = (id) => {
     dispatch(GetProfile(id));
-    navigate('/admin/profile/' + id);  };
+    navigate('/admin/profile/' + id);
+  };
+
+  const BanHandler = (id) => {
+    
+    dispatch(BanProfile(user.user._id, 1));
+    console.log('user to ban', user.user)
+  }
 
   console.log('user', user.user._id);
   // dropdown props
@@ -38,7 +46,7 @@ const NotificationDropdown = (user) => {
     <>
       <a
         className="text-blueGray-500 py-1 px-3"
-        href="#pablo"
+        href="#"
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
@@ -55,7 +63,7 @@ const NotificationDropdown = (user) => {
         }
       >
         <a
-          href="#pablo"
+          href="#$"
           className={
             'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
@@ -65,13 +73,22 @@ const NotificationDropdown = (user) => {
         </a>
 
         <a
-          href="#pablo"
+          href="#"
           className={
             'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={() => DeleteHandler(user.user._id)}
         >
           Delete
+        </a>
+        <a
+          href="#"
+          className={
+            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
+          }
+          onClick={() => BanHandler(user.user._id)}
+        >
+          Ban
         </a>
       </div>
     </>
