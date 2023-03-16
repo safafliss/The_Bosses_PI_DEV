@@ -92,19 +92,22 @@ router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;
     const token = req.params.token;
     // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    await resetPasswordToken.find({token:token}).then(Valid =>{
+    await resetPasswordToken.find({token:token}).then((Valid) =>{
       if (Valid){
-        const user =  usersModels.findByIdAndUpdate(user_id,{isValid:true})
-        var token = jwt.sign({ 
-          id: user._id,
-          role: user.role
-         }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-         res.status(200).json({
-           message: "success",
-           token: "Bearer "+token
-         })
+        usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
+          if (exists){
+            var token = jwt.sign({ 
+              id: exists._id,
+              role: exists.role
+             }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+             res.status(200).json({
+               message: "success",
+               token: "Bearer "+token
+             })
+          }
+        })
       }else{ 
-        const user = usersModels.findByIdAndDelete(user_id);
+        // const user = usersModels.findByIdAndDelete(user_id);
         console.log("not valid")
         res.status(403).send("not verified")
        }})

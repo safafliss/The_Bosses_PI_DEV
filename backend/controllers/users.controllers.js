@@ -46,12 +46,12 @@ const generateResetToken = async (userid, email) =>{
 
   const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
   console.log(url)
-//   if (sendMail(email,url)){
-// console.log("mchet")
-//   }
-//   else{
-//     console.log("mamchetech")
-//   }
+  if (sendMail(email,url)){
+console.log("mchet")
+  }
+  else{
+    console.log("mamchetech")
+  }
 }
 
 const Login = async(req, res) =>{

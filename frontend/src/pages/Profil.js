@@ -8,6 +8,8 @@ function Profil(user) {
   const LogoutHanlder = ()=>{
      dispatch(Logout())
   }
+  
+
   return (
     <div>
        <Link className="btn btn-outline-primary"  to="#" onClick={LogoutHanlder}>

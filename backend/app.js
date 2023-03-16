@@ -14,8 +14,23 @@ var app = express();
 app.use(session({
     secret: 'ilovescotchscotchyscotchscotch1'
 }));
-app.use(cors())
-
+/*app.use(cors({
+    credentials: true,
+  }))*/
+  //const cors = require('cors');
+  const whitelist = ['http://localhost:3000','http://localhost:3600'];
+  
+  const corsOptions = {
+    credentials: true, // This is important.
+    origin: (origin, callback) => {
+        console.log(origin)
+      if(1==1)
+        return callback(null, true)
+  
+        callback(new Error('Not allowed by CORS'));
+    }
+  }
+  app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 // app.use(express.json());

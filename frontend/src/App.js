@@ -35,6 +35,7 @@ import FormLivreur from "./pages/FormLivreur";
 import FormTrash from "./pages/FormTrash";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/Profile";
+import LoggedFBG from "./pages/LoggedFBG";
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -134,6 +135,15 @@ function App() {
               // </ForceRedirect>
             }
             />
+            <Route
+            path="/logged"
+            element={
+              // <ForceRedirect user={user}>
+                <LoggedFBG  />
+              // </ForceRedirect>
+            }
+            />
+          
            <Route path="/forgotPassword"
             element={
               <ForceRedirect user={user}>
