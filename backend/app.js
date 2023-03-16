@@ -14,7 +14,12 @@ var app = express();
 app.use(session({
     secret: 'ilovescotchscotchyscotchscotch1'
 }));
-app.use(cors())
+app.use(cors({
+    origin: [
+        "http://localhost:3000",
+    ],
+    credentials: true,
+}))
 
 
 app.use(logger('dev'));

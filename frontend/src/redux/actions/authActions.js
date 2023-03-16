@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ERRORS, SET_USER } from '../types';
 import jwt_decode from 'jwt-decode';
 import { setAuth } from '../../util/setAuth';
-// import { setAuth } from '../../util/setAuth';
 
 export const Registration = (form, navigate) => (dispatch) => {
   axios
