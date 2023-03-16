@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/tailwind.css";
+
 import backgroundImage from '../assets/img/register_bg_2.png';
 import { useDispatch, useSelector } from 'react-redux'
 import { Registration } from '../redux/actions/authActions'
@@ -9,8 +9,11 @@ import Inputs from '../components/Inputs'
 import { Radio } from "@material-tailwind/react";
 import Classnames from 'classnames'
 
-
+import "../assets/styles/tailwind.css";
 import "../assets/styles/index.css";
+
+
+
 export default function Register() {
   const [form, setForm] = useState({})
   const dispatch = useDispatch()
@@ -166,44 +169,71 @@ export default function Register() {
                     </label>
 
                     
-                    <div className="flex ">
+                    <div className="flex " style={{
+                      justifyContent: "center"
+                    }}>
                     <div className="form-check">
-          <label htmlFor="prof">
+          <label htmlFor="PARTICULAR" className="font-bold text-xs ease-linear">
           <img
+          style={{width:"100px"}}
                       alt="..."
                       className="w-5 mr-1"
-                      src={require("../assets/img/assoc.jpg")}
+                      src={require("../assets/img/userr.png")}
                     />
             <input
             
               type="radio"
               name="role"
-              value="prof"
+              value="PARTICULAR"
               className="form-check-input"
-              id="prof"
+              id="PARTICULAR"
               onChange={onChangeHandler}
             />{' '}
-            prof
+            A particular
           </label>
+          </div>
           <div className="form-check">
-          <label htmlFor="part">
+          <label htmlFor="PARTICULAR" className="font-bold text-xs ease-linear">
           <img
+          style={{width:"100px"}}
                       alt="..."
                       className="w-5 mr-1"
-                      src={require("../assets/img/kkk.jpg")}
+                      src={require("../assets/img/superr.png")}
                     />
             <input
            
               type="radio"
               name="role"
-              value="part"
+              value="PARTNER"
               className="form-check-input"
-              id="part"
+              id="PARTNER"
               onChange={onChangeHandler}
             />{' '}
-            part
+            A partner
           </label>
+     
         </div>
+        <div className="form-check">
+          <label htmlFor="ASSOCIATION" className="font-bold text-xs ease-linear">
+          <img
+                      alt="..."
+                      className=""
+                      src={require("../assets/img/ass.png")}
+                      style={{width:"106px"}}
+                    />
+            <input
+
+           
+              type="radio"
+              name="role"
+              value="ASSOCIATION"
+              className="form-check-input"
+              id="ASSOCIATION"
+              onChange={onChangeHandler}
+            />{' '}
+            An association
+          </label>
+     
         </div>
 
 

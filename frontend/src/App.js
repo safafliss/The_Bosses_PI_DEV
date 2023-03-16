@@ -1,5 +1,9 @@
 import "./App.css";
 import Profil from "./pages/Profil";
+import Associationpage from "./pages/Associationpage";
+import Particularpage from "./pages/Particularpage";
+
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterPartner from "./pages/RegisterPartner";
@@ -7,21 +11,22 @@ import Admin from "./pages/Dashboard";
 import PrivateRouter from "./components/PrivateRouter";
 import store from "./redux/store";
 import jwt_decode from "jwt-decode";
-//import {  setUser } from './redux/actions/authActions';
+import {  setUser } from './redux/actions/authActions';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import NoAccess from "./pages/NoAccess";
 import AdminRouter from "./components/AdminRouter";
 import ForceRedirect from "./components/ForceRedirect";
-import { setUser } from "./redux/actions/authActions";
+ import { setAuth } from "./util/setAuth";
 import { useSelector } from "react-redux";
 import Login1 from "./pages/Login1";
 import Register1 from "./pages/Register1";
+import Proffpage from "./pages/Proffpage";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
-  // setAuth(window.localStorage.jwt)
+   setAuth(window.localStorage.jwt)
   // const currentDate = Date.now / 1000
 
   // if(decode.exp >  currentDate){
@@ -48,6 +53,18 @@ function App() {
               </PrivateRouter>
             }
           />
+
+<Route path="/" >
+  <Route path="/proffpage" element={<Proffpage />} />
+  <Route path="/particpage" element={<Particularpage />} />
+  <Route path="/associpage" element={<Associationpage />} />
+  
+</Route>
+       
+
+
+
+
           <Route
             path="/login"
             element={

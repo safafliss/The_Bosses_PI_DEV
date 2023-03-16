@@ -10,7 +10,7 @@ function Profil(user) {
   }
   return (
     <div>
-       <Link className="btn btn-outline-primary"  to="/login" onClick={LogoutHanlder}>
+       <Link className="btn btn-outline-primary"  to="#" onClick={LogoutHanlder}>
                 Logout
               </Link>
     </div>
