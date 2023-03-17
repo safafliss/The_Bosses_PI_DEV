@@ -32,9 +32,9 @@ module.exports = async function validatorRegister(data){
     if (validator.isEmpty(data.password)){
         errors.password = "Required password";
     }
-    // if (!validator.isStrongPassword(data.password)){
-    //     errors.password = "password must contain uppercase, lowercase, numbers, symbols";
-    // }
+    if (!validator.isStrongPassword(data.password)){
+        errors.password = "password must contain uppercase, lowercase, numbers, symbols";
+    }
     if(!validator.equals(data.password, data.confirm)){
         errors.confirm = "passwords doesn't match";
     }
@@ -49,15 +49,15 @@ module.exports = async function validatorRegister(data){
 
 async function checkEmail(email){
     var tegt ;
-    // await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=1655116fb4ab42d49aa7b696826e3af3&email='+email)
-    //         .then(response => {
-    //             if (response.data["deliverability"]!="DELIVERABLE"){
-    //                 tegt= "Email does not exist (Undelivrable)"
-    //             }
-    //             // return ""
-    //         })
-    //         .catch(error => {
-    //             // return "errorr email"
-    // });
+    await axios.get('https://emailvalidation.abstractapi.com/v1/?api_key=1655116fb4ab42d49aa7b696826e3af3&email='+email)
+            .then(response => {
+                if (response.data["deliverability"]!="DELIVERABLE"){
+                    tegt= "Email does not exist (Undelivrable)"
+                }
+                // return ""
+            })
+            .catch(error => {
+                // return "errorr email"
+    });
     return tegt;
 }

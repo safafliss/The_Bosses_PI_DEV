@@ -18,6 +18,13 @@ import AdminRouter from "./components/AdminRouter";
 import ForceRedirect from "./components/ForceRedirect";
 import { setUser } from "./redux/actions/authActions";
 import { useSelector } from "react-redux";
+import Login1 from "./pages/Login1";
+import Register1 from "./pages/Register1";
+import VerifSend from "./pages/VerifSend";
+import VerifSuccess from "./pages/VerifSuccess";
+import VerifFail from "./pages/VerifFail";
+import CheckVerif from "./pages/CheckVerif";
+
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import FormParticulier from "./pages/FormParticulier";
@@ -28,6 +35,7 @@ import FormLivreur from "./pages/FormLivreur";
 import FormTrash from "./pages/FormTrash";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/Profile";
+import LoggedFBG from "./pages/LoggedFBG";
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -46,6 +54,7 @@ function App() {
     role: auth.user.role,
   };
   return (
+    
     <BrowserRouter>
       <div className="bg-light" style={{ height: "100vh" }}>
         <Routes>
@@ -95,13 +104,53 @@ function App() {
             }
           />
           <Route
-            path="/forgotPassword"
+            path="/verification"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifSend />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/verify"
+            element={
+              // <ForceRedirect user={user}>
+                <CheckVerif />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/verified"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifSuccess />
+              // </ForceRedirect>
+            }
+          />
+          <Route
+            path="/notVerified"
+            element={
+              // <ForceRedirect user={user}>
+                <VerifFail />
+              // </ForceRedirect>
+            }
+            />
+            <Route
+            path="/logged"
+            element={
+              // <ForceRedirect user={user}>
+                <LoggedFBG  />
+              // </ForceRedirect>
+            }
+            />
+          
+           <Route path="/forgotPassword"
             element={
               <ForceRedirect user={user}>
                 <ForgotPassword />
               </ForceRedirect>
-            }
-          />
+            }/>
+          
           <Route
             path="/resetPassword/:token"
             element={

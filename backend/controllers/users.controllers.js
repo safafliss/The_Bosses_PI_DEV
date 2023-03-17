@@ -44,7 +44,8 @@ const generateResetToken = async (userid, email) =>{
   tokken = crypto.randomBytes(32).toString("hex")
   await resetPasswordToken.create({userId:userid,token:tokken});
 
-  const url = `http://localhost:3600/api/resetpassword/${tokken}`
+  const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
+  console.log(url)
   if (sendMail(email,url)){
 console.log("mchet")
   }
@@ -173,7 +174,7 @@ const loginImage = async (req, res) => {
     let payload = {"imageUrl": url, "userId": id};
 
     try {
-      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/uploadImage', payload);
+      const response = await axios.post('https://5911-41-225-168-41.eu.ngrok.io/uploadImage', payload);
       console.log(response.data);
       return response.json()
    }  
@@ -197,7 +198,7 @@ const checkLoginByImage = async (req, res) => {
     });
     const url = result.secure_url
     try {
-      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/checkImage', {"imageUrl": url});
+      const response = await axios.post('https://5911-41-225-168-41.eu.ngrok.io/checkImage', {"imageUrl": url});
       const userId = response.data["message"]
       await cloudinary.uploader.destroy(result.public_id);
       await UserModel.findById(userId).then((user)=> {
@@ -285,7 +286,6 @@ const deleteProfile = async (req, res) => {
     res.json(error);
   }
 };
-
 
 
 Date.prototype.addDays = function (days) {

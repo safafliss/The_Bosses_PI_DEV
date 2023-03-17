@@ -22,6 +22,8 @@ const passport = require('passport');
 const resetPasswordToken = require('../models/resetPasswordToken');
 const usersModels = require('../models/users.models');
 var router = express.Router();
+
+const jwt = require('jsonwebtoken')
 const CLIENT_URL = "http://localhost:3000/";
 
 /* users routes. */
@@ -85,22 +87,30 @@ router.put('/updateProfile',passport.authenticate('jwt', { session: false}),inRo
 router.delete('/deleteProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.USER), deleteProfile);
 router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
 router.post('/banProfile',passport.authenticate('jwt', { session: false}), banProfile);
+
 router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;
     const token = req.params.token;
-    const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    if (token_result){
-        const user = await usersModels.findByIdAndUpdate(user_id,{isValid:true})
-        token_result.deleteOne()
-        res.send("User verified")
-    }else{
-        const deleteUser = await resetPasswordToken.findOne({userId:user_id}).then(token_here=>{
-            if (!token_here){
-                const user = usersModels.findByIdAndDelete(user_id);
-            }
+    // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
+    await resetPasswordToken.find({token:token}).then((Valid) =>{
+      if (Valid){
+        usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
+          if (exists){
+            var token = jwt.sign({ 
+              id: exists._id,
+              role: exists.role
+             }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+             res.status(200).json({
+               message: "success",
+               token: "Bearer "+token
+             })
+          }
         })
-        res.status(403).send("Invalid token")
-    }
+      }else{ 
+        // const user = usersModels.findByIdAndDelete(user_id);
+        console.log("not valid")
+        res.status(403).send("not verified")
+       }})
 });
 /* authentication with fb && google */
 // router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));

@@ -23,39 +23,8 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
     },
-    async function (accessToken, refreshToken, profile, done) {
+    function (accessToken, refreshToken, profile, done) {
       done(null, profile);
-      console.log("esm: " + profile.name.givenName);
-      console.log("la9ab: " + profile.name.familyName);
-      console.log("taswira: " + profile.photos[0].value);
-      console.log("email" + profile);
-      console.log(accessToken)
-      console.log(done)
-      const test = await UserModel.findOne({"email": profile.emails[0].value}).then((exist)=>{
-        if (!exist){
-          new UserModel({
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            image: { url: profile.photos[0].value },
-            email: profile.emails[0].value,
-          })
-            .save()
-            .then((newUser) => {
-              console.log("new user added");
-            });
-        }
-        //const user =  UserModel.findOne(user_id,{isValid:true})
-        console.log(exist)
-        var token = jwt.sign({ 
-          id: exist._id,
-          role: exist.role
-         }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-         res.status(200).json({
-           message: "success",
-           token: "Bearer "+token
-         })
-      })
-
     }
   )
 );
