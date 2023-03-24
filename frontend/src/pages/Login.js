@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import backgroundImage from "../assets/img/register_bg_2.png";
-import Inputs from "../components/Inputs";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { LoginAction } from "../redux/actions/authActions";
-import CaptchaCode from "react-captcha-code";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
-import Profile from "../components/Profile";
+import React, { useState } from 'react';
+import backgroundImage from '../assets/img/register_bg_2.png';
+import Inputs from '../components/Inputs';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { LoginAction } from '../redux/actions/authActions';
+import CaptchaCode from 'react-captcha-code';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import Profile from '../components/Profile';
 export default function Login() {
   const [showModal, setShowModal] = useState(false);
 
@@ -17,10 +17,11 @@ export default function Login() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.errors);
+  console.log('errors ', errors);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
 
-  const [captchaCode, setCaptchaCode] = useState("");
+  const [captchaCode, setCaptchaCode] = useState('');
   const [key, setKey] = useState(0);
   const onChangeHandler = (e) => {
     setForm({
@@ -30,14 +31,13 @@ export default function Login() {
   };
   const handleCaptchaCode = (code) => {
     setCaptchaCode(code);
-    setError(false)
+    setError(false);
   };
 
   const handleRegenerate = () => {
     setKey(key + 1);
-    setCaptchaCode("");
-    setError(false)
-
+    setCaptchaCode('');
+    setError(false);
   };
 
   const onSubmit = (e) => {
@@ -45,7 +45,10 @@ export default function Login() {
     dispatch(LoginAction(form, navigate));
     const inputCode = e.target.elements.code.value;
 
-    if (dispatch(LoginAction(form, navigate)) && inputCode === captchaCode || inputCode === captchaCode) {
+    if (
+      (dispatch(LoginAction(form, navigate)) && inputCode === captchaCode) ||
+      inputCode === captchaCode
+    ) {
       console.log('Verification successful!');
       setError(false);
     } else {
@@ -61,7 +64,7 @@ export default function Login() {
           style={{
             backgroundImage: `url(${backgroundImage})`,
 
-            backgroundSize: "cover",
+            backgroundSize: 'cover',
           }}
         >
           <div
@@ -69,21 +72,21 @@ export default function Login() {
             style={{
               backgroundImage: `url(${backgroundImage})`,
 
-              backgroundSize: "cover",
+              backgroundSize: 'cover',
             }}
           ></div>
           <div
             className="container mx-auto px-4 h-full"
             style={{
-              backgroundColor: "transparent",
-              marginTop: "5%",
+              backgroundColor: 'transparent',
+              marginTop: '5%',
             }}
           >
             <div className="flex content-center items-center justify-center h-full">
               <div
                 className="w-full lg:w-4/12 px-4"
                 style={{
-                  marginTop: "-5%",
+                  marginTop: '-5%',
                 }}
               >
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
@@ -94,25 +97,25 @@ export default function Login() {
                       </h6>
                     </div>
                     <div className="btn-wrapper text-center">
-                      <a href="http://localhost:3600/auth/facebook/callback"
+                      <a
+                        href="http://localhost:3600/auth/facebook/callback"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-            
                       >
                         <img
                           alt="..."
                           className="w-5 mr-1"
-                          src={require("../assets/img/github.svg").default}
+                          src={require('../assets/img/github.svg').default}
                         />
                         facebook
                       </a>
-                      <a href="http://localhost:3600/auth/google"
+                      <a
+                        href="http://localhost:3600/auth/google"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                        
                       >
                         <img
                           alt="..."
                           className="w-5 mr-1"
-                          src={require("../assets/img/google.svg").default}
+                          src={require('../assets/img/google.svg').default}
                         />
                         Google
                       </a>
@@ -157,6 +160,7 @@ export default function Login() {
                           onChangeHandler={onChangeHandler}
                           errors={errors.password}
                         />
+                        <div style={{ color: errors.banned ? "red" : "transparent" }}>You are banned</div>
                       </div>
                       <div>
                         <label className="inline-flex items-center cursor-pointer">
@@ -171,23 +175,26 @@ export default function Login() {
                         </label>
                       </div>
                       <div>
-                        
                         <CaptchaCode key={key} onChange={handleCaptchaCode} />
-                       
+
                         <FontAwesomeIcon
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                           icon={faRedoAlt}
                           onClick={handleRegenerate}
                         />
                         <input
-                          style={{ color: "black" }}
+                          style={{ color: 'black' }}
                           type="text"
                           name="code"
                           placeholder="Enter the code above"
                         />
-                        {error && <div style={{ color: 'red' }}>Incorrect code entered. Please try again.</div>}
+                        {error && (
+                          <div style={{ color: 'red' }}>
+                            Incorrect code entered. Please try again.
+                          </div>
+                        )}
                       </div>
-                      
+
                       <div className="text-center mt-6">
                         <button
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
@@ -201,13 +208,13 @@ export default function Login() {
                         <button
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                           name="faceId"
-                          style={{ backgroundColor: " #2dce89" }}
+                          style={{ backgroundColor: ' #2dce89' }}
                           onClick={handleShow}
                         >
                           Use Face ID
                         </button>
                       </div>
-                      <Profile show={showModal} handleClose={handleClose}/>
+                      <Profile show={showModal} handleClose={handleClose} />
                     </form>
                   </div>
                 </div>

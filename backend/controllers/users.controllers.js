@@ -9,7 +9,7 @@ const crypto = require('crypto');
 const resetPasswordToken = require('../models/resetPasswordToken');
 const sendMail = require('../utils/sendEmail');
 const ValidateProfile = require('../validation/Profile');
-const axios = require('axios')
+const axios = require('axios');
 
 const Register = async (req, res) => {
   console.log('ena ons');
@@ -28,7 +28,7 @@ const Register = async (req, res) => {
           // req.body.role = "USER";
           user = await UserModel.create(req.body);
           generateResetToken(user._id, user.email);
-          res.status(200).json({ message: 'success', obj : user });
+          res.status(200).json({ message: 'success', obj: user });
         }
       });
     }
@@ -52,19 +52,17 @@ const generateResetToken = async (userid, email) => {
 };
 
 const Login = async (req, res) => {
-  const { errors, isValid } = validateLogin(req.body);
+  const { errors, isValid } = await validateLogin(req.body);
   try {
     if (!isValid) {
       res.status(404).json(errors);
     } else {
-      UserModel.findOne({ email: req.body.email })
-      .then((user) => {
+      UserModel.findOne({ email: req.body.email }).then((user) => {
         if (!user) {
           errors.email = 'not found user';
           res.status(404).json(errors);
         } else {
-          bcrypt.compare(req.body.password, user.password)
-          .then((isMatch) => {
+          bcrypt.compare(req.body.password, user.password).then((isMatch) => {
             if (!isMatch) {
               errors.password = 'incorrect password';
               res.status(404).json(errors);
@@ -87,7 +85,7 @@ const Login = async (req, res) => {
                       var token = jwt.sign(
                         {
                           id: user._id,
-                          
+
                           role: user.role,
                         },
                         process.env.PRIVATE_KEY,
@@ -152,8 +150,10 @@ const updateProfile = async (req, res) => {
     //   req.body.password = hash;
     //   console.log('password')
     // }
-    console.log(req.body)
-    const data = await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
+    console.log(req.body);
+    const data = await UserModel.findByIdAndUpdate(req.user._id, {
+      $set: req.body,
+    });
     res.status(200).json(await UserModel.findById(req.user._id));
   } catch (error) {
     res.json(error);
@@ -163,12 +163,14 @@ const updateProfile = async (req, res) => {
 const uploadImage = async (req, res) => {
   try {
     const { image } = req.body;
-    console.log("fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-    console.log(image)
+    console.log(
+      'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    );
+    console.log(image);
     const result = await cloudinary.uploader.upload(image, {
       folder: 'profilePictures',
     });
-    const profile = await UserModel.findByIdAndUpdate(req.params.id, { 
+    const profile = await UserModel.findByIdAndUpdate(req.params.id, {
       image: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -183,12 +185,12 @@ const uploadImage = async (req, res) => {
 const loginImage = async (req, res) => {
   try {
     const { image } = req.body;
-    const id = req.user._id
+    const id = req.user._id;
     const result = await cloudinary.uploader.upload(image, {
       folder: 'loginPictures',
     });
-    const url = result.secure_url
-    console.log(url) 
+    const url = result.secure_url;
+    console.log(url);
     //  await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage',{"imageUrl": url, "userId": id})
     //         .then(response => {
     //             console.log(response)
@@ -196,26 +198,27 @@ const loginImage = async (req, res) => {
     //         .catch(error => {
     //             // return "errorr email"
     // });
-    let payload = {"imageUrl": url, "userId": id};
+    let payload = { imageUrl: url, userId: id };
 
     try {
-      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/uploadImage', payload);
+      const response = await axios.post(
+        'https://851e-41-225-168-41.eu.ngrok.io/uploadImage',
+        payload
+      );
       console.log(response.data);
-      return response.json()
-   }  
-   catch (error) {
-       console.log(error);
-   }
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
 
-     console.log(result.public_id)
-     console.log(id)
+    console.log(result.public_id);
+    console.log(id);
     //  await cloudinary.uploader.destroy(result.public_id);
     res.status(200).json('done');
   } catch (error) {
     res.json(error);
   }
 };
-
 
 const FindAllProfiles = async (req, res) => {
   try {
@@ -247,44 +250,47 @@ const DeleteProfile = async (req, res) => {
   }
 };
 
-
-
 const checkLoginByImage = async (req, res) => {
   try {
     const { image } = req.body;
     const result = await cloudinary.uploader.upload(image, {
       folder: 'loginPictures',
     });
-    const url = result.secure_url
+    const url = result.secure_url;
     try {
-      const response = await axios.post('https://851e-41-225-168-41.eu.ngrok.io/checkImage', {"imageUrl": url});
-      const userId = response.data["message"]
+      const response = await axios.post(
+        'https://851e-41-225-168-41.eu.ngrok.io/checkImage',
+        { imageUrl: url }
+      );
+      const userId = response.data['message'];
       await cloudinary.uploader.destroy(result.public_id);
-      await UserModel.findById(userId).then((user)=> {
-        if (user){
-          console.log("logged in " + userId)
-      var token = jwt.sign({ 
-        id: user._id,
-        // firstName: user.firstName,
-        // lastName: user.firstName,
-        // email: user.email,
-        role: user.role
-       }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-       res.status(200).json({
-         message: "success",
-         token: "Bearer "+token
-       })
-        }else{ 
+      await UserModel.findById(userId).then((user) => {
+        if (user) {
+          console.log('logged in ' + userId);
+          var token = jwt.sign(
+            {
+              id: user._id,
+              // firstName: user.firstName,
+              // lastName: user.firstName,
+              // email: user.email,
+              role: user.role,
+            },
+            process.env.PRIVATE_KEY,
+            { expiresIn: '90h' }
+          );
+          res.status(200).json({
+            message: 'success',
+            token: 'Bearer ' + token,
+          });
+        } else {
           res.status(404).json({
-          message: "Not found"
-        })
+            message: 'Not found',
+          });
         }
-      })
-
-   }  
-   catch (error) {
-       console.log(error);
-   }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   } catch (error) {
     res.json(error);
   }
@@ -301,14 +307,12 @@ const getUsers = async (req, res) => {
 
 const getSingleUser = async (req, res) => {
   const { id } = req.params;
-  
 
   const user = await UserModel.findById(id);
   if (!user) {
     return res.status(404).json({ error: 'No such user' });
   }
   return res.status(200).json(user);
-
 };
 
 const deleteUser = async (req, res) => {
@@ -325,7 +329,6 @@ const deleteUser = async (req, res) => {
 
   res.status(200).json(user);
 };
-
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -348,60 +351,67 @@ const banProfile = async (req, res) => {
         },
       }
     );
-    res.status(200).json({msg: 'done', obj : profile});
+    res.status(200).json({ msg: 'done', obj: profile });
   } catch (error) {
     res.json(error);
   }
 };
 
-
 const resetpassword = async (req, res, next) => {
   try {
-      const passwordHash = bcrypt.hashSync(req.body.password, 10)
-      const decoded = jwt.decode(req.params['token']);
-      console.log(decoded.id)  
-      await UserModel.findOneAndUpdate({_id: decoded.id}, {
-          password:passwordHash
-      })
+    const passwordHash = bcrypt.hashSync(req.body.password, 10);
+    const decoded = jwt.decode(req.params['token']);
+    console.log(decoded.id);
+    await UserModel.findOneAndUpdate(
+      { _id: decoded.id },
+      {
+        password: passwordHash,
+      }
+    );
 
-      res.json({message:"Password successfully changed!"})
+    res.json({ message: 'Password successfully changed!' });
   } catch (err) {
-      return res.status(500).json({error: err.message})   
+    return res.status(500).json({ error: err.message });
   }
-}
+};
 
 const forgotpassword = async (req, res, next) => {
   try {
-      const {email} = req.body
-      const user = await UserModel.findOne({"email": email})  
-      if(!user)return res.status(400).json({ 
-                      success:true,
-                      message: "This mail does not exist!"});
- 
-      const token = jwt.sign({ 
-        id: user._id,
-        role: user.role
-       }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-      const url = `http://localhost:3000/resetPassword/${token}`
-      if (sendMail(email,url)){
-        res.status(200).json({ 
-          success:true,
-          message: "please check your email."});
-      }
-      else{
-        res.status(500).json({ 
-          success:false,
-          error: "sad"});
-      }
-      
-      
-  } catch (err) {
-      res.status(500).json({ 
-          success:false,
-          error: err.message});
-  }
-}
+    const { email } = req.body;
+    const user = await UserModel.findOne({ email: email });
+    if (!user)
+      return res.status(400).json({
+        success: true,
+        message: 'This mail does not exist!',
+      });
 
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+      },
+      process.env.PRIVATE_KEY,
+      { expiresIn: '90h' }
+    );
+    const url = `http://localhost:3000/resetPassword/${token}`;
+    if (sendMail(email, url)) {
+      res.status(200).json({
+        success: true,
+        message: 'please check your email.',
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'sad',
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+};
 
 module.exports = {
   Register,
@@ -421,5 +431,5 @@ module.exports = {
   checkLoginByImage,
   AddProfile,
   FindAllProfiles,
-  FindSingleProfile
-}
+  FindSingleProfile,
+};
