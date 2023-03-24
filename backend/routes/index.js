@@ -55,7 +55,6 @@ router.get(
 router.get(
   '/getUser/:id',
   passport.authenticate('jwt', { session: false }),
-  inRole(ROLES.ADMIN),
   getSingleUser
 );
 router.put('/getImage/:id', 

@@ -19,6 +19,7 @@ const NotificationDropdown = (user) => {
 
   const ShowHandler = (id) => {
     dispatch(GetProfile(id));
+    console.log('id li hachti bih' , id)
     navigate('/admin/profile/' + id);
   };
 
@@ -63,7 +64,7 @@ const NotificationDropdown = (user) => {
         }
       >
         <a
-          href="#$"
+          href="#"
           className={
             'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }

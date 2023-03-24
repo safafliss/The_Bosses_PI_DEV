@@ -19,14 +19,18 @@ import { SET_PROFILE } from '../redux/types';
 
 function Profile() {
   let userId = useSelector((state) => state.auth.user.id);
+  console.log('userId');
   let connectedUserId = useSelector((state) => state.auth.user.id);
   let { id } = useParams();
   id = id ? id : '';
   userId = id != '' ? id : userId;
   console.log('userID ', userId);
   const dispatch = useDispatch();
-  useEffect(async () => {
+  const test = async () => {
     await dispatch(GetProfile(userId));
+  };
+  useEffect(() => {
+    test();
   }, []);
 
   const user = useSelector((state) => state.profiles.profile);

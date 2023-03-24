@@ -147,11 +147,11 @@ const AddProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     //
-    if ('password' in req.body) {
-      const hash = bcrypt.hashSync(req.body.password, 10);
-      req.body.password = hash;
-      console.log('password')
-    }
+    // if ('password' in req.body) {
+    //   const hash = bcrypt.hashSync(req.body.password, 10);
+    //   req.body.password = hash;
+    //   console.log('password')
+    // }
     console.log(req.body)
     const data = await UserModel.findByIdAndUpdate(req.user._id, { $set: req.body });
     res.status(200).json(await UserModel.findById(req.user._id));

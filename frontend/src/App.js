@@ -1,25 +1,24 @@
-import "./App.css";
-import Associationpage from "./pages/Associationpage";
-import Particularpage from "./pages/Particularpage";
-import Proffpage from "./pages/Proffpage";
-import Profil from "./pages/Profil";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RegisterPartner from "./pages/RegisterPartner";
-import Admin from "./pages/Dashboard";
-import PrivateRouter from "./components/PrivateRouter";
-import store from "./redux/store";
-import jwt_decode from "jwt-decode";
-import NotFound from "./pages/NotFound";
-import NoAccess from "./pages/NoAccess";
-import AdminRouter from "./components/AdminRouter";
-import ForceRedirect from "./components/ForceRedirect";
-import { setUser } from "./redux/actions/authActions";
-import { useSelector } from "react-redux";
-import VerifSend from "./pages/VerifSend";
-import VerifSuccess from "./pages/VerifSuccess";
-import VerifFail from "./pages/VerifFail";
-import CheckVerif from "./pages/CheckVerif";
+import './App.css';
+import Associationpage from './pages/Associationpage';
+import Particularpage from './pages/Particularpage';
+import Proffpage from './pages/Proffpage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import RegisterPartner from './pages/RegisterPartner';
+import Admin from './pages/Dashboard';
+import PrivateRouter from './components/PrivateRouter';
+import store from './redux/store';
+import jwt_decode from 'jwt-decode';
+import NotFound from './pages/NotFound';
+import NoAccess from './pages/NoAccess';
+import AdminRouter from './components/AdminRouter';
+import ForceRedirect from './components/ForceRedirect';
+import { setUser } from './redux/actions/authActions';
+import { useSelector } from 'react-redux';
+import VerifSend from './pages/VerifSend';
+import VerifSuccess from './pages/VerifSuccess';
+import VerifFail from './pages/VerifFail';
+import CheckVerif from './pages/CheckVerif';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Dashboard imports
 import Sidebar from './components/ReusableComponents/components/Sidebar/Sidebar';
@@ -33,15 +32,15 @@ import Profile from './pages/Profile';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './assets/styles/tailwind.css';
 
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import FormParticulier from "./pages/FormParticulier";
-import FormProfessional from "./pages/FormProfessional";
-import FormAssociation from "./pages/FormAssociation";
-import FormLivreur from "./pages/FormLivreur";
-import FormTrash from "./pages/FormTrash";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import LoggedFBG from "./pages/LoggedFBG";
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import FormParticulier from './pages/FormParticulier';
+import FormProfessional from './pages/FormProfessional';
+import FormAssociation from './pages/FormAssociation';
+import FormLivreur from './pages/FormLivreur';
+import FormTrash from './pages/FormTrash';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import LoggedFBG from './pages/LoggedFBG';
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -60,29 +59,59 @@ function App() {
     role: auth.user.role,
   };
   return (
-    
     <BrowserRouter>
       <div className="bg-light" style={{ height: '100vh' }}>
         <Routes>
           <Route
             path="/"
-            element={
-              <PrivateRouter user={user}>
-                <Profil />
-              </PrivateRouter>
-            }
+            element={<PrivateRouter user={user}></PrivateRouter>}
           />
-          <Route path="/">
-            <Route path="/proffpage" element={<Proffpage />} />
+          {/* <Route
+            path="/profile"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/particpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/associpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/proffpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          /> */}
+          {/* <Route path="/"> */}
+          {/* <Route path="/proffpage" element={<Proffpage />} />
             <Route path="/particpage" element={<Particularpage />} />
             <Route path="/associpage" element={<Associationpage />} />
-          </Route>
+            <Route path="/profile" element={<Profile />} /> */}
+          {/* </Route> */}
+
           <Route
             path="/admin/profile/:id"
             element={
-              <PrivateRouter user={user}>
-                <Profil user = {user} />
-              </PrivateRouter>
+              <AdminRouter user={user}>
+                <Profile user={user} />
+              </AdminRouter>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRouter user={user}>
+                <Sidebar />
+                <div className="relative md:ml-64 bg-blueGray-100">
+                  <AdminNavbar />
+                  {/* Header */}
+                  <HeaderStats />
+                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
+                    <Admin />
+                    <FooterAdmin />
+                  </div>
+                </div>
+              </AdminRouter>
             }
           />
           <Route
@@ -111,27 +140,10 @@ function App() {
           />
 
           <Route
-            path="/admin"
-            element={
-              <AdminRouter user={user}>
-                <Sidebar />
-                <div className="relative md:ml-64 bg-blueGray-100">
-                  <AdminNavbar />
-                  {/* Header */}
-                  <HeaderStats />
-                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
-                    <Admin />
-                    <FooterAdmin />
-                  </div>
-                </div>
-              </AdminRouter>
-            }
-          />
-          <Route
             path="/verification"
             element={
               // <ForceRedirect user={user}>
-                <VerifSend />
+              <VerifSend />
               // </ForceRedirect>
             }
           />
@@ -139,7 +151,7 @@ function App() {
             path="/verify"
             element={
               // <ForceRedirect user={user}>
-                <CheckVerif />
+              <CheckVerif />
               // </ForceRedirect>
             }
           />
@@ -147,7 +159,7 @@ function App() {
             path="/verified"
             element={
               // <ForceRedirect user={user}>
-                <VerifSuccess />
+              <VerifSuccess />
               // </ForceRedirect>
             }
           />
@@ -155,26 +167,28 @@ function App() {
             path="/notVerified"
             element={
               // <ForceRedirect user={user}>
-                <VerifFail />
+              <VerifFail />
               // </ForceRedirect>
             }
-            />
-            <Route
+          />
+          <Route
             path="/logged"
             element={
               // <ForceRedirect user={user}>
-                <LoggedFBG  />
+              <LoggedFBG />
               // </ForceRedirect>
             }
-            />
-          
-           <Route path="/forgotPassword"
+          />
+
+          <Route
+            path="/forgotPassword"
             element={
               <ForceRedirect user={user}>
                 <ForgotPassword />
               </ForceRedirect>
-            }/>
-          
+            }
+          />
+
           <Route
             path="/resetPassword/:token"
             element={

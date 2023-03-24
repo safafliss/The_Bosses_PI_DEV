@@ -18,8 +18,11 @@ export default function CardListUsers({ color }) {
 
   const profiles = useSelector((state) => state.profiles);
   const dispatch = useDispatch();
-  useEffect(async () => {
+  const test = async () => {
     await dispatch(getUsers());
+  };
+  useEffect(() => {
+    test();
   }, []);
   const data = profiles.profiles;
   console.log('this is data', profiles.profiles);
