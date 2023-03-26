@@ -67,14 +67,13 @@ function FormParticulier() {
   };
 
   //image
-
+ 
   const handleImageSubmit = (event) => {
     event.preventDefault();
     UpdateImage();
     navigate("/");
   };
   const UpdateImage = async () => {
-    //setImage(image)
     const response = await axios.put(
       `http://localhost:3600/api/getImage/${id}`,
       { image: image }
@@ -94,7 +93,6 @@ function FormParticulier() {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage(reader.result);
-      //setData(data);
     };
   };
 

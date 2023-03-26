@@ -14,8 +14,6 @@ const ROLES = {
     "ASSOCIATION":{"ASSOCIATION":"ASSOCIATION"},
     "LIVREUR":{"LIVREUR":"LIVREUR"},
     "TRASHSPOTTER":{"TRASHSPOTTER":"TRASHSPOTTER"},
-
-    
 }
 
 const inRole  = (...roles)=>(req, res, next)=>{

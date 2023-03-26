@@ -11,7 +11,6 @@ module.exports = async function validatorRegister(data){
     data.password = !isEmpty(data.password) ? data.password : ""
     data.confirm = !isEmpty(data.confirm) ? data.confirm : ""
 
-    
     if (validator.isEmpty(data.firstName)){
         errors.firstName = "Required firstName";
     }
@@ -29,6 +28,7 @@ module.exports = async function validatorRegister(data){
         if (holder)
         errors.email =holder;
     }
+
     if (validator.isEmpty(data.password)){
         errors.password = "Required password";
     }
@@ -41,6 +41,7 @@ module.exports = async function validatorRegister(data){
     if (validator.isEmpty(data.confirm)){
         errors.confirm = "Required confirm";
     }
+
     return{
         errors,
         isValid : isEmpty(errors)
@@ -54,10 +55,9 @@ async function checkEmail(email){
                 if (response.data["deliverability"]!="DELIVERABLE"){
                     tegt= "Email does not exist (Undelivrable)"
                 }
-                // return ""
             })
             .catch(error => {
-                // return "errorr email"
+                console.log(error);
     });
     return tegt;
 }

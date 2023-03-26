@@ -4,7 +4,6 @@ import { VerifValidation } from '../redux/actions/authActions'
 import { useDispatch } from 'react-redux'
 
 function CheckVerif() {
-    
   const dispatch = useDispatch()
   const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();

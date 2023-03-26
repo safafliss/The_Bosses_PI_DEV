@@ -1,13 +1,5 @@
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
-const passport = require("passport");
 const UserModel = require("../models/users.models");
-const jwt = require('jsonwebtoken')
-const GOOGLE_CLIENT_ID =
-  "385363050778-p5uriguv5ovdl0t8ephutnod4losdrq1.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-
-
+const passport = require("passport");
 var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 var opts = {}
@@ -15,7 +7,14 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.PRIVATE_KEY;
 
 
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
+const GOOGLE_CLIENT_ID =
+  "385363050778-p5uriguv5ovdl0t8ephutnod4losdrq1.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = "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";
 
+
+//google auth
 passport.use(
   new GoogleStrategy(
     {
@@ -29,6 +28,8 @@ passport.use(
   )
 );
 
+
+//facebook auth
 passport.use(
   new FacebookStrategy(
     {
@@ -51,13 +52,17 @@ passport.use(
   )
 );
 
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
 
+
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
+
+
 module.exports = (passport)=>{
   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
       UserModel.findOne({_id: jwt_payload.id}).then((user)=>{
