@@ -5,8 +5,8 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-        user: 'mahdi.ghali@esprit.tn',
-        pass: 'imzsndbjsrperodg',
+        user: 'zerowasteprojectpi@gmail.com',
+        pass: 'dpftjggixoioegnv',
     },
     tls: {
         rejectUnauthorized: false
@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport(smtpTransport({
 async function sendEmail(to, url) {
     try {
         const response = await transporter.sendMail({
-            from: 'mahdi.ghali@esprit.tn', // sender address
+            from: 'zerowasteprojectpi@gmail.com', // sender address
             to: to, // list of receivers
             subject: `reset password`, // Subject line
             html: `<div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
@@ -27,10 +27,6 @@ async function sendEmail(to, url) {
                     </p>
                     
                     <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Reset Password</a>
-                
-                    <p>If the button doesn't work for any reason, you can also click on the link below:</p>
-                
-                    <div>${url}</div>
                     </div>
                 `
         });

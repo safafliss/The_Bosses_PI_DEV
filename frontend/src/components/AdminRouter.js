@@ -7,7 +7,6 @@ const AdminRouter = ({user, children}) =>{
    } else{
     if(user.role !== "ADMIN"){
         return <Navigate to="/accesDenied" replace/> 
- 
     }
    }
    return children
