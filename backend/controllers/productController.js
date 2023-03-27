@@ -4,10 +4,21 @@ const validatorProduct = require("../validation/Product");
 const cloudinary = require("../utils/cloudinary");
 
 //get all products
+// const getProducts = async (req, res) => {
+//   const products = await ProductModel.find({}).sort({ createdAt: -1 });
+//   res.status(200).json(products);
+// };
+// const getProducts = async (req, res) => {
+//   const products = await ProductModel.find({}).sort({ createdAt: -1 });
+//   res.setHeader('Last-Modified', new Date().toUTCString());
+//   res.status(200).json(products);
+// };
 const getProducts = async (req, res) => {
   const products = await ProductModel.find({}).sort({ createdAt: -1 });
+  res.setHeader('Cache-Control', 'no-cache');
   res.status(200).json(products);
 };
+
 
 //create a new product
 const createProduct = async (req, res) => {
