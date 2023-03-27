@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ERRORS, FETCH_PRODUCTS_ERROR, FETCH_PRODUCTS_SUCCESS } from "../types";
+import { ERRORS, FETCH_PRODUCTS_ERROR, FETCH_PRODUCTS_SUCCESS, DELETE_PRODUCT } from "../types";
 
 export const AddProduct = (form, navigate) => (dispatch) => {  
   axios
@@ -41,5 +41,22 @@ export const fetchProducts = () => async (dispatch) => {
       type: FETCH_PRODUCTS_ERROR,
       payload: error.message,
     });
+  }
+};
+
+export const deleteProduct = (id, navigate) => async (dispatch) => {
+  try {
+    const response = await axios.delete(
+      "http://localhost:3600/product/deleteProduct/" + id
+    );
+
+    if (response.status === 200) {
+      navigate("/productsCreated");
+      const json = response.data; // or response.json()
+
+      dispatch({ type: DELETE_PRODUCT, payload: json });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

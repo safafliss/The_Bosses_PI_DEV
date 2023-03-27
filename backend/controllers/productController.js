@@ -15,10 +15,9 @@ const cloudinary = require("../utils/cloudinary");
 // };
 const getProducts = async (req, res) => {
   const products = await ProductModel.find({}).sort({ createdAt: -1 });
-  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader("Cache-Control", "no-cache");
   res.status(200).json(products);
 };
-
 
 //create a new product
 const createProduct = async (req, res) => {
@@ -57,8 +56,25 @@ const uploadImageProduct = async (req, res) => {
   }
 };
 
+//delete a product
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "No such product" });
+  }
+
+  const product = await ProductModel.findOneAndDelete({ _id: id });
+
+  if (!product) {
+    return res.status(400).json({ error: "No such product" });
+  }
+  res.status(200).json(product);
+};
+
 module.exports = {
   getProducts,
   createProduct,
   uploadImageProduct,
+  deleteProduct
 };

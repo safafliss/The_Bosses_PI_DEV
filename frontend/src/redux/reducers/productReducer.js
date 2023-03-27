@@ -1,4 +1,9 @@
-import { SET_PRODUCT, FETCH_PRODUCTS_ERROR, FETCH_PRODUCTS_SUCCESS } from "../types";
+import {
+  SET_PRODUCT,
+  FETCH_PRODUCTS_ERROR,
+  FETCH_PRODUCTS_SUCCESS,
+  DELETE_PRODUCT
+} from "../types";
 
 const initialState = {
   product: {},
@@ -22,6 +27,10 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: action.payload,
+      };
+    case DELETE_PRODUCT:
+      return {
+        products: state.products.filter((w) => w._id !== action.payload._id),
       };
     default:
       return state;
