@@ -8,12 +8,18 @@ const {
   getUsers,
   getSingleUser,
   deleteUser,
-  deleteProfile,
+  DeleteProfile,
   uploadImage,
   banProfile,
   resetpassword,
-  forgotpassword
-
+  forgotpassword,
+  loginImage,
+  checkLoginByImage,
+  AddProfile,
+  FindSingleProfile,
+  FindAllProfiles,
+  updateUser,
+  LoginFbGoogle
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
@@ -47,13 +53,20 @@ router.get(
 );
 
 //? GET a single user
+
 router.get(
   '/getUser/:id',
   passport.authenticate('jwt', { session: false }),
-  inRole(ROLES.ADMIN.ADMIN),
   getSingleUser
 );
-
+router.put('/getImage/:id', 
+passport.authenticate("jwt", { session: false }),
+uploadImage);
+router.put('/loginImage', 
+passport.authenticate("jwt", { session: false }),
+loginImage);
+router.put('/checkImage',
+checkLoginByImage);
 //? DELETE a user
 router.delete(
   '/deleteUser/:id',
@@ -62,6 +75,8 @@ router.delete(
   deleteUser
 );
 
+//? UPDATE user
+router.put("/updateUser/:id", updateProfile)
 
 
 
@@ -69,55 +84,71 @@ router.delete(
 /* test router */
 router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULIER), Test);
 router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
-router.put('/updateProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.ASSOCIATION), updateProfile);
-router.delete('/deleteProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.USER), deleteProfile);
 router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
-router.post('/banProfile',passport.authenticate('jwt', { session: false}), banProfile);
-
+router.post(
+  '/banProfile',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  banProfile
+);
+router.delete(
+  '/profiles/:id',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  DeleteProfile
+);
+// router.put(
+//   '/updateProfile',
+//   passport.authenticate('jwt', { session: false }),
+//   updateProfile
+// );
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  FindSingleProfile
+);
+router.get(
+  '/profiles',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  FindAllProfiles
+);
+router.post(
+  '/profiles',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  AddProfile
+);
+router.put(
+  '/updateUser/:id',
+  updateProfile
+);
 router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;
-    const token = req.params.token;
+    const token1 = req.params.token;
     // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    await resetPasswordToken.find({token:token}).then(Valid =>{
-      if (Valid){
-        const user =  usersModels.findByIdAndUpdate(user_id,{isValid:true})
-        var token = jwt.sign({ 
-          id: user._id,
-          role: user.role
-         }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-         res.status(200).json({
-           message: "success",
-           token: "Bearer "+token
-         })
+    resetPasswordToken.find({token:token1}).then((Valid) =>{
+      if (Valid.length>0){
+        usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
+          if (exists){
+            resetPasswordToken.findOneAndRemove({token:token1})
+            var token = jwt.sign({ 
+              id: exists._id,
+              role: exists.role
+             }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
+             res.status(200).json({
+               message: "success",
+               token: "Bearer "+token
+             })
+          }
+        })
       }else{ 
-        const user = usersModels.findByIdAndDelete(user_id);
+        // const user = usersModels.findByIdAndDelete(user_id);
         console.log("not valid")
         res.status(403).send("not verified")
        }})
-});
-/* authentication with fb && google */
-// router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+      });
 
-// router.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", {
-//     successRedirect: CLIENT_URL,
-//     failureRedirect: "/login/failed",
-//   })
-// );
-
-// router.get(
-//   "/auth/facebook",
-//   passport.authenticate("facebook", { scope: ["profile"] })
-// );
-
-// router.get(
-//   "/auth/facebook/callback",
-//   passport.authenticate("facebook", {
-//     successRedirect: CLIENT_URL,
-//     failureRedirect: "/login/failed",
-//   })
-// );
-
+router.post("/LoginFbGoogle",LoginFbGoogle)
 
 module.exports = router;

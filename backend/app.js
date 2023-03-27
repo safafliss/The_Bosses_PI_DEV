@@ -11,12 +11,43 @@ const cookieSession = require("cookie-session");
 const authRouters = require('./routes/auth')
 const session = require('express-session')
 var app = express();
-app.use(session({
-    secret: 'ilovescotchscotchyscotchscotch1'
-}));
-app.use(cors())
+// app.use(session({
+//     secret: 'ilovescotchscotchyscotchscotch1'
+// }));
+// /*app.use(cors({
+//     credentials: true,
+//   }))*/
+//   //const cors = require('cors');
+//   const whitelist = ['http://localhost:3000','http://localhost:3600'];
+  
+//   const corsOptions = {
+//     credentials: true, // This is important.
+//     origin: (origin, callback) => {
+//         console.log(origin)
+//       if(1==1)
+//         return callback(null, true)
+  
+//         callback(new Error('Not allowed by CORS'));
+//     }
+//   }
+//   app.use(cors(corsOptions));
 
-
+  require('dotenv').config()
+  
+  app.use(
+    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+  );
+  
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      methods: "GET,POST,PUT,DELETE",
+      credentials: true,
+    })
+  );//ends
 app.use(logger('dev'));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
