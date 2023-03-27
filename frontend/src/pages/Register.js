@@ -1,22 +1,19 @@
 import React from "react";
 import "../assets/styles/tailwind.css";
-import "../assets/styles/index.css";
 import backgroundImage from "../assets/img/register_bg_2.png";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Registration } from "../redux/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Registration } from "../redux/actions/authActions";
 import Inputs from "../components/Inputs";
 
+import "../assets/styles/index.css";
 export default function Register() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const errors = useSelector((state) => state.errors);
-
   const onChangeHandler = (e) => {
     setForm({
       ...form,
@@ -25,7 +22,7 @@ export default function Register() {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault(); //pour ne rien afficher dans l'url
+    e.preventDefault();
     dispatch(Registration(form, navigate));
     console.log(form);
   };
@@ -251,6 +248,10 @@ export default function Register() {
                                 An association
                               </label>
                             </div>
+
+                            {/* <Inputs  type="radio" id="user" name="role"  value="admin"  className="form-check-input" onChangeHandler={onChangeHandler}/> */}
+
+                            {/* <Inputs  type="radio" id="admin" name="role"   value="admin" className="form-check-input" onChangeHandler={onChangeHandler} /> */}
                           </div>
                         </div>
 
