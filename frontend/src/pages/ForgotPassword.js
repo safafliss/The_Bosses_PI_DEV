@@ -4,6 +4,7 @@ import Inputs from "../components/Inputs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ForgotPass } from "../redux/actions/authActions";
+
 function ForgotPassword() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();

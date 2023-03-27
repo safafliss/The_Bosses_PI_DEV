@@ -16,7 +16,7 @@ const UserModel = new Schema(
     birthDate: "Date",
     bio: "string",
     banned: {
-      isBanned: {type : Boolean, default :false},
+      isBanned: "boolean",
       banDuration: "Number",
       banExpiresAt: "Date",
       banNumber: {

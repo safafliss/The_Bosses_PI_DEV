@@ -1,31 +1,25 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import Associationpage from '../pages/Associationpage';
-import Particularpage from '../pages/Particularpage';
-import Proffpage from '../pages/Proffpage';
-import Profile from '../pages/Profile';
+import React from 'react'
+import { Navigate } from 'react-router-dom'
 
-const PrivateRouter = ({ user, children }) => {
-  if (!user.isConnected) {
-    return <Navigate to="/login" replace />;
-  }
+const PrivateRouter = ({user, children}) =>{
+   if(!user.isConnected){
+     return <Navigate to="/login" replace/> 
+   } 
 
-  if (user.isConnected) {
+   if(user.isConnected){
     switch (user.role) {
-      case 'PROFESSIONAL':
-        return <Proffpage />
-      case 'PARTICULAR':
-        return <Particularpage />
-      case 'ASSOCIATION':
-        return <Associationpage />;
-      case 'ADMIN':
-        return <Profile />;
-
-      default:
-        return <Navigate to="*" replace />;
+        case 'PROFESSIONAL':
+          return <Navigate to="/proffpage" replace />;
+        case 'PARTICULAR':
+          return <Navigate to="/particpage" replace />;
+          case 'ASSOCIATION':
+            return <Navigate to="/associpage" replace />;
+          
+        default:
+          return <Navigate to="*" replace />;
+      }
     }
-  }
-  return children;
-};
+   return children
+}
 
-export default PrivateRouter;
+export default PrivateRouter

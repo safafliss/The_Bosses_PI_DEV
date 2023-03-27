@@ -1,147 +1,89 @@
-import './App.css';
-import Associationpage from './pages/Associationpage';
-import Particularpage from './pages/Particularpage';
-import Proffpage from './pages/Proffpage';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import RegisterPartner from './pages/RegisterPartner';
-import Admin from './pages/Dashboard';
-import PrivateRouter from './components/PrivateRouter';
-import store from './redux/store';
-import jwt_decode from 'jwt-decode';
-import NotFound from './pages/NotFound';
-import NoAccess from './pages/NoAccess';
-import AdminRouter from './components/AdminRouter';
-import ForceRedirect from './components/ForceRedirect';
-import { setUser } from './redux/actions/authActions';
-import { useSelector } from 'react-redux';
-import VerifSend from './pages/VerifSend';
-import VerifSuccess from './pages/VerifSuccess';
-import VerifFail from './pages/VerifFail';
-import CheckVerif from './pages/CheckVerif';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// Dashboard imports
-import Sidebar from './components/ReusableComponents/components/Sidebar/Sidebar';
-import AdminNavbar from './components/ReusableComponents/components/Navbars/AdminNavbar';
-import HeaderStats from './components/ReusableComponents/components/Headers/HeaderStats';
-import FooterAdmin from './components/ReusableComponents/components/Footers/FooterAdmin';
-import { setAuth } from './util/setAuth';
-import { Logout } from './redux/actions/authActions';
-import Profile from './pages/Profile';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import './assets/styles/tailwind.css';
+import Associationpage from "./pages/Associationpage";
+import Particularpage from "./pages/Particularpage";
+import Proffpage from "./pages/Proffpage";
 
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import FormParticulier from './pages/FormParticulier';
-import FormProfessional from './pages/FormProfessional';
-import FormAssociation from './pages/FormAssociation';
-import FormLivreur from './pages/FormLivreur';
-import FormTrash from './pages/FormTrash';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import LoggedFBG from './pages/LoggedFBG';
-import { useEffect, useState } from 'react';
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+import Profil from "./pages/Profil";
+import RegisterPartner from "./pages/RegisterPartner";
+import Admin from "./pages/Dashboard";
+
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import FormParticulier from "./pages/FormParticulier";
+import FormProfessional from "./pages/FormProfessional";
+import FormAssociation from "./pages/FormAssociation";
+import FormLivreur from "./pages/FormLivreur";
+import FormTrash from "./pages/FormTrash";
+
+import NotFound from "./pages/NotFound";
+import NoAccess from "./pages/NoAccess";
+
+import Profile from "./components/Profile";
+
+import LoggedFBG from "./pages/LoggedFBG";
+
+import VerifSend from "./pages/VerifSend";
+import VerifSuccess from "./pages/VerifSuccess";
+import VerifFail from "./pages/VerifFail";
+import CheckVerif from "./pages/CheckVerif";
+
+import PrivateRouter from "./components/PrivateRouter";
+import AdminRouter from "./components/AdminRouter";
+import ForceRedirect from "./components/ForceRedirect";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";  //npm i react-router-dom
+
+import { useSelector } from "react-redux";
+import store from "./redux/store";
+import { setUser } from "./redux/actions/authActions";
+
+import jwt_decode from "jwt-decode";
+
+import { setAuth } from "./util/setAuth";
+import FormProduct from "./pages/product/FormProduct";
+import AddSuccProduct from "./pages/product/AddSuccProduct";
+import ProductsCreated from "./pages/product/ProductsCreated";
+
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
   setAuth(window.localStorage.jwt);
-  const currentDate = Date.now / 1000;
+  // const currentDate = Date.now / 1000
 
-  if (decode.exp > currentDate) {
-    store.dispatch(Logout());
-  }
+  // if(decode.exp >  currentDate){
+  //  store.dispatch(Logout())
+  // }
 }
 
 function App() {
   const auth = useSelector((state) => state.auth);
+
   const user = {
     isConnected: auth.isConnected,
     role: auth.user.role,
   };
-  const [user1, setUser] = useState(null);
-
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);
-  console.log(user1)
+  
   return (
     <BrowserRouter>
-      <div className="bg-light" style={{ height: '100vh' }}>
+      <div className="bg-light" style={{ height: "100vh" }}>
         <Routes>
           <Route
             path="/"
-            element={<PrivateRouter user={user}></PrivateRouter>}
+            element={
+              <PrivateRouter user={user}>
+                <Profil />
+              </PrivateRouter>
+            }
           />
-          {/* <Route
-            path="/profile"
-            element={<PrivateRouter user={user}></PrivateRouter>}
-          />
-          <Route
-            path="/particpage"
-            element={<PrivateRouter user={user}></PrivateRouter>}
-          />
-          <Route
-            path="/associpage"
-            element={<PrivateRouter user={user}></PrivateRouter>}
-          />
-          <Route
-            path="/proffpage"
-            element={<PrivateRouter user={user}></PrivateRouter>}
-          /> */}
-          {/* <Route path="/"> */}
-          {/* <Route path="/proffpage" element={<Proffpage />} />
+          <Route path="/">
+            <Route path="/proffpage" element={<Proffpage />} />
             <Route path="/particpage" element={<Particularpage />} />
             <Route path="/associpage" element={<Associationpage />} />
-            <Route path="/profile" element={<Profile />} /> */}
-          {/* </Route> */}
-
-          <Route
-            path="/admin/profile/:id"
-            element={
-              <AdminRouter user={user}>
-                <Profile user={user} />
-              </AdminRouter>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <AdminRouter user={user}>
-                <Sidebar />
-                <div className="relative md:ml-64 bg-blueGray-100">
-                  <AdminNavbar />
-                  {/* Header */}
-                  <HeaderStats />
-                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
-                    <Admin />
-                    <FooterAdmin />
-                  </div>
-                </div>
-              </AdminRouter>
-            }
-          />
+          </Route>
           <Route
             path="/login"
             element={
@@ -166,7 +108,14 @@ function App() {
               </PrivateRouter>
             }
           />
-
+          <Route
+            path="/admin"
+            element={
+              <AdminRouter user={user}>
+                <Admin />
+              </AdminRouter>
+            }
+          />
           <Route
             path="/verification"
             element={
@@ -203,7 +152,7 @@ function App() {
             path="/logged"
             element={
               // <ForceRedirect user={user}>
-              <LoggedFBG  user1={user1}/>
+              <LoggedFBG />
               // </ForceRedirect>
             }
           />
@@ -242,8 +191,12 @@ function App() {
             element={<FormLivreur user={user} />}
           />
           <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
-          {/* <Route path="/profile" element={<Profile user={user} />} />*/}
-          <Route path="/admin/profiles/" element={<Profile user={user} />} />
+          <Route path="/profile" element={<Profile user={user} />} />
+
+          <Route path="/addProduct" element={<FormProduct/>}/>
+          <Route path="/addSuccPro" element={<AddSuccProduct/>}/>
+          <Route path="/productsCreated" element={<ProductsCreated/>}/>
+
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />
         </Routes>

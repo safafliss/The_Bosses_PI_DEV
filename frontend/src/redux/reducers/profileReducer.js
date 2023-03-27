@@ -1,4 +1,4 @@
-import { DELETE_PROFILE, SET_PROFILE, SET_PROFILES, UPDATE_PROFILE } from '../types';
+import { DELETE_PROFILE, SET_PROFILE, SET_PROFILES } from "../types";
 
 const intitialState = {
   profiles: [],
@@ -16,16 +16,12 @@ export default function (state = intitialState, action) {
         ...state,
         profiles: action.payload,
       };
-    case DELETE_PROFILE:
-      return {
-        ...state,
-        profiles: state.profiles.filter((p) => p._id !== action.payload),
-      };
-    case UPDATE_PROFILE:
-      return {
-        ...state,
-        profiles: action.payload,
-      };
+      case DELETE_PROFILE:
+        return {
+          ...state,
+          profiles: state.profiles.filter(p =>p._id !== action.payload),
+        };  
+
     default:
       return state;
   }
