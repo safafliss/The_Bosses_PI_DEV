@@ -43,7 +43,7 @@ const generateResetToken = async (userid, email) => {
   tokken = crypto.randomBytes(32).toString('hex');
   await resetPasswordToken.create({ userId: userid, token: tokken });
 
-  const url = `http://localhost:3600/api/resetpassword/${tokken}`;
+  const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
   if (sendMail(email, url)) {
     console.log('mchet');
   } else {
@@ -142,22 +142,40 @@ const AddProfile = async (req, res) => {
   }
 };
 
-const updateProfile = async (req, res) => {
+// const updateProfile = async (req, res) => {
+//   try {
+//     //
+//     // if ('password' in req.body) {
+//     //   const hash = bcrypt.hashSync(req.body.password, 10);
+//     //   req.body.password = hash;
+//     //   console.log('password')
+//     // }
+//     console.log(req.body);
+//     const data = await UserModel.findByIdAndUpdate(req.user._id, {
+//       $set: req.body,
+//     });
+//     res.status(200).json(await UserModel.findById(req.user._id));
+//   } catch (error) {
+//     res.json(error);
+//   }
+// };
+const updateProfile = async (req, res, next) => {
   try {
-    //
-    // if ('password' in req.body) {
-    //   const hash = bcrypt.hashSync(req.body.password, 10);
-    //   req.body.password = hash;
-    //   console.log('password')
-    // }
-    console.log(req.body);
-    const data = await UserModel.findByIdAndUpdate(req.user._id, {
-      $set: req.body,
-    });
-    res.status(200).json(await UserModel.findById(req.user._id));
+    await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.status(200).json(Object.keys(req.body));
   } catch (error) {
     res.json(error);
   }
+};
+const updateUser = async (req, res) => {
+  console.log("aaaaaaaaaaah")
+    try {
+      await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
+      res.status(200).json(Object.keys(req.body));
+    } catch (error) {
+      res.json(error);
+    }
+  
 };
 
 const uploadImage = async (req, res) => {
@@ -432,4 +450,5 @@ module.exports = {
   AddProfile,
   FindAllProfiles,
   FindSingleProfile,
+  updateUser
 };

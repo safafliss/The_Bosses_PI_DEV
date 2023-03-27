@@ -18,6 +18,7 @@ const {
   AddProfile,
   FindSingleProfile,
   FindAllProfiles,
+  updateUser
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
@@ -95,11 +96,11 @@ router.delete(
   inRole(ROLES.ADMIN),
   DeleteProfile
 );
-router.put(
-  '/updateProfile',
-  passport.authenticate('jwt', { session: false }),
-  updateProfile
-);
+// router.put(
+//   '/updateProfile',
+//   passport.authenticate('jwt', { session: false }),
+//   updateProfile
+// );
 router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
@@ -116,6 +117,10 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   inRole(ROLES.ADMIN),
   AddProfile
+);
+router.put(
+  '/updateUser/:id',
+  updateProfile
 );
 router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;

@@ -44,6 +44,7 @@ export const GetProfile = (userId) => (dispatch) => {
 };
 
 export const UpdateProfile = (user) => (dispatch) => {
+  console.log(user)
   axios
     .put('http://localhost:3600/api/updateProfile/', user)
     .then((res) => {
