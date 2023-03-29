@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react'
-import CardLineChart from "../components/Cards/CardLineChart.js";
-import CardBarChart from "../components/Cards/CardBarChart.js";
-import CardPageVisits from "../components/Cards/CardPageVisits.js";
-import CardSocialTraffic from "../components/Cards/CardSocialTraffic.js";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from 'react';
 
-function Admin() {
-  const profiles = useSelector(state => state.profiles)
-  const dispatch  = useDispatch()
-  useEffect(async()=>{
-   
-  },[])
+import CardListUsers from '../components/ReusableComponents/components/Cards/CardListUsers';
+import CardLineChart from '../components/ReusableComponents/components/Cards/CardLineChart';
+import CardBarChart from '../components/ReusableComponents/components/Cards/CardBarChart';
+import CardSocialTraffic from '../components/ReusableComponents/components/Cards/CardSocialTraffic';
+import CardPageVisits from '../components/ReusableComponents/components/Cards/CardPageVisits';
+function Dashboard() {
+  
   return (
     <>
       <div className="flex flex-wrap">
+        <div className="w-full xl:w-12/12 px-4">
+          <CardListUsers />
+        </div>
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
           <CardLineChart />
         </div>
@@ -30,7 +29,7 @@ function Admin() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Admin
+export default Dashboard;

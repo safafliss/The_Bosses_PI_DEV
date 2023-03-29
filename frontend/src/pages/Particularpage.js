@@ -1,26 +1,39 @@
-import React from 'react'
+import React from "react";
 import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import backgroundImage from '../assets/img/landpage.png';
-function Particularpage() {
-    const dispatch = useDispatch()
-    const LogoutHanlder = ()=>{
-       dispatch(Logout())
-    }
+import backgroundImage from "../assets/img/landpage.png";
+import jwt_decode from "jwt-decode"
+import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
+
+function Particularpage(props) {
+  const dispatch = useDispatch();
+  const LogoutHanlder = () => {
+    dispatch(Logout());
+  };
+  console.log(localStorage.getItem("jwt"))
+  const token = localStorage.getItem("jwt")
+  console.log(jwt_decode(token))
+  const id = jwt_decode(token).id
   return (
     <>
-      {/* <Navbar transparent /> */}
+    <Navbar  /> 
       <main>
-      <Link className="btn btn-outline-primary"  to="/login" onClick={LogoutHanlder}>
-                Logout
-              </Link>
-        <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75  top-0 w-full h-full bg-center bg-cove" 
-         style={{
-            backgroundImage:
-            `url(${backgroundImage})`,
-              backgroundRepeat: 'no-repeat',
-         }}>
+        {/* 
+      
+        <Link
+          className="btn btn-outline-primary"
+          to={`/formPart/${id}`}
+        >
+          Profile
+        </Link> */}
+        <div
+          className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75  top-0 w-full h-full bg-center bg-cove"
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundRepeat: "no-repeat",
+          }}
+        >
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
@@ -34,13 +47,16 @@ function Particularpage() {
             ></span>
           </div>
           <div className="container relative mx-auto">
-            <div className="items-right flex flex-wrap "   >
-              <div className="w-full lg:w-6/12 px-4 " >
+            <div className="items-right flex flex-wrap ">
+              <div className="w-full lg:w-6/12 px-4 ">
                 <div className="pr-12">
-                  <h1 className=" font-semibold text-4xl " style={{
-          color:"#2aafbe"
-         }}>
-                  Welcome to Zero Waste.
+                  <h1
+                    className=" font-semibold text-4xl "
+                    style={{
+                      color: "#2aafbe",
+                    }}
+                  >
+                    Welcome to Zero Waste.
                   </h1>
                   <p className="mt-4 text-lg ">
                     This is a simple example of a Landing Page you can build
@@ -573,7 +589,7 @@ function Particularpage() {
       </main>
       {/* <Footer /> */}
     </>
-  )
+  );
 }
 
-export default Particularpage
+export default Particularpage;
