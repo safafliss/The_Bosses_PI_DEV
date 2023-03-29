@@ -72,9 +72,53 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
+//get a single product
+const getSingleProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await ProductModel.findById(id);
+    console.log(data);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};
+
+//update product
+const updateProduct = async (req, res, next) => {
+  try {
+    await ProductModel.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.status(200).json(Object.keys(req.body));
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+//update picture
+const updatePicture = async (req, res) => {
+  try {
+    const { image } = req.body;
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "productPictures",
+    });
+    const picture = await ProductModel.findByIdAndUpdate(req.params.id, {
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+    res.status(200).json("done");
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
   uploadImageProduct,
-  deleteProduct
+  deleteProduct,
+  updateProduct,
+  getSingleProduct,
+  updatePicture
 };

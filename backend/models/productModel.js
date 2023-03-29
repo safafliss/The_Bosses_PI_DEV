@@ -36,10 +36,12 @@ const ProductSchema = new Schema(
       public_id: {
         type: String,
         //required: true,
+        //default: "default_public_id"
       },
       url: {
         type: String,
         //required: true,
+        //default: "default_url"
       },
     },
   },

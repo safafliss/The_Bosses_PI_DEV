@@ -1,11 +1,17 @@
 import axios from "axios";
-import { ERRORS, FETCH_PRODUCTS_ERROR, FETCH_PRODUCTS_SUCCESS, DELETE_PRODUCT } from "../types";
+import {
+  ERRORS,
+  FETCH_PRODUCTS_ERROR,
+  FETCH_PRODUCTS_SUCCESS,
+  DELETE_PRODUCT,
+  GET_SINGLE_PRODUCT,
+} from "../types";
 
-export const AddProduct = (form, navigate) => (dispatch) => {  
-  axios
+export const AddProduct = (form, navigate) => async (dispatch) => {
+  await axios
     .post("http://localhost:3600/product/addProduct", form)
     .then((res) => {
-      navigate("/addSuccPro");
+      navigate("/productsCreated");
       dispatch({
         type: ERRORS,
         payload: {},
@@ -28,10 +34,11 @@ export const UploadImage = async (image) => {
 
 export const fetchProducts = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3600/product/getProducts" ,{
+    const res = await axios.get("http://localhost:3600/product/getProducts", {
       params: {
         random: Math.random(),
-      }});
+      },
+    });
     dispatch({
       type: FETCH_PRODUCTS_SUCCESS,
       payload: res.data,
@@ -59,4 +66,49 @@ export const deleteProduct = (id, navigate) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const fetchSingleProduct = (id, navigate) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getSingleProduct/" + id
+    );
+    if (res.status === 200) {
+      navigate("/updateProduct/" + id);
+      dispatch({
+        type: GET_SINGLE_PRODUCT,
+        payload: res.data,
+      });
+      console.log(res.data);
+    }
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const updateProduct = (id, data, navigate) => async (dispatch) => {
+  try {
+    const res = await axios.put(
+      `http://localhost:3600/product/updateProduct/${id}`,
+      data
+    );
+    if (res.status === 200) {
+      navigate("/productsCreated");
+    }
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const UpdateImage = async (id, image) => {
+  const response = await axios.put(
+    `http://localhost:3600/product/updatePicture/${id}`,
+    { image: image }
+  );
 };

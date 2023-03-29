@@ -44,9 +44,9 @@ import { setUser } from "./redux/actions/authActions";
 import jwt_decode from "jwt-decode";
 
 import { setAuth } from "./util/setAuth";
-import FormProduct from "./pages/product/FormProduct";
-import AddSuccProduct from "./pages/product/AddSuccProduct";
+import FormProduct from "./pages/product/FormProduct";  
 import ProductsCreated from "./pages/product/ProductsCreated";
+import FormUpdateProduct from "./pages/product/FormUpdateProduct";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -194,8 +194,8 @@ function App() {
           <Route path="/profile" element={<Profile user={user} />} />
 
           <Route path="/addProduct" element={<FormProduct/>}/>
-          <Route path="/addSuccPro" element={<AddSuccProduct/>}/>
           <Route path="/productsCreated" element={<ProductsCreated/>}/>
+          <Route path="/updateProduct/:id" element={<FormUpdateProduct/>}/>
 
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />
