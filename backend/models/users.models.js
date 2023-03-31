@@ -15,8 +15,10 @@ const UserModel = new Schema(
     gender: "string",
     birthDate: "Date",
     bio: "string",
+    googleId:"string",
+    secret:"string",
     banned: {
-      isBanned: "boolean",
+      isBanned: {type : Boolean, default :false},
       banDuration: "Number",
       banExpiresAt: "Date",
       banNumber: {
@@ -43,6 +45,7 @@ const UserModel = new Schema(
       type: Boolean,
       default: false,
     },
+    
   },
   {
     timestamps: true,

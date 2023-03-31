@@ -4,11 +4,10 @@
  * Module dependencies.
  */
 
-var http = require('http');
 var app = require('../app');
 var bodyParser = require('express');
 var debug = require('debug')('multi-user:server');
-
+var http = require('http');
 /**
  * Get port from environment and store in Express.
  */

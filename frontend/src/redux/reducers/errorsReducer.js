@@ -7,7 +7,7 @@ export default function(state = initialState, action){
       case ERRORS:
           return action.payload
   
-      default: 
+      default:
           return state
   }
 }

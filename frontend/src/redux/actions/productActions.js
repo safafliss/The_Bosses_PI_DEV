@@ -7,15 +7,36 @@ import {
   GET_SINGLE_PRODUCT,
 } from "../types";
 
+// export const AddProduct = (form, navigate) => async (dispatch) => {
+//   await axios
+//     .post("http://localhost:3600/product/addProduct", form)
+//     .then((res) => {
+//       navigate("/productsCreated");
+//       dispatch({
+//         type: ERRORS,
+//         payload: {},
+//       });
+//     })
+//     .catch((err) => {
+//       dispatch({
+//         type: ERRORS,
+//         payload: err.response.data,
+//       });
+//     });
+// };
+
 export const AddProduct = (form, navigate) => async (dispatch) => {
   await axios
     .post("http://localhost:3600/product/addProduct", form)
     .then((res) => {
-      navigate("/productsCreated");
-      dispatch({
-        type: ERRORS,
-        payload: {},
-      });
+      setTimeout(() => {
+        console.log('Waited for 3 seconds');
+        navigate("/productsCreated");
+        dispatch({
+          type: ERRORS,
+          payload: {},
+        });
+      }, 3000); // 3000ms = 3 seconds 
     })
     .catch((err) => {
       dispatch({
@@ -89,6 +110,23 @@ export const fetchSingleProduct = (id, navigate) => async (dispatch) => {
   }
 };
 
+// export const updateProduct = (id, data, navigate) => async (dispatch) => {
+//   try {
+//     const res = await axios.put(
+//       `http://localhost:3600/product/updateProduct/${id}`,
+//       data
+//     );
+//     if (res.status === 200) {
+//       navigate("/productsCreated");
+//     }
+//   } catch (error) {
+//     dispatch({
+//       type: FETCH_PRODUCTS_ERROR,
+//       payload: error.message,
+//     });
+//   }
+// };
+
 export const updateProduct = (id, data, navigate) => async (dispatch) => {
   try {
     const res = await axios.put(
@@ -96,7 +134,10 @@ export const updateProduct = (id, data, navigate) => async (dispatch) => {
       data
     );
     if (res.status === 200) {
-      navigate("/productsCreated");
+      setTimeout(() => {
+        console.log('Waited for 3 seconds');
+        navigate("/productsCreated");
+      }, 3000); // 3000ms = 3 seconds 
     }
   } catch (error) {
     dispatch({

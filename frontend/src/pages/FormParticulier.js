@@ -12,7 +12,6 @@ function FormParticulier() {
   const [errors, setErrors] = useState({});
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
-  
   const getUser = useCallback(async () => {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
@@ -139,7 +138,7 @@ function FormParticulier() {
                     name="firstName"
                     className="form-textbox"
                     size="15"
-                    value={data.firstName || ""} 
+                    value={data.firstName || ""}
                     onChange={(e) =>
                       setData((prev) => ({
                         ...prev,

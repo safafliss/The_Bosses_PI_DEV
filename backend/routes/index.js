@@ -2,37 +2,47 @@ var express = require('express');
 const {
   Register,
   Login,
+  Test,
   updateProfile,
+  Admin,
   getUsers,
   getSingleUser,
   deleteUser,
-  deleteProfile,
+  DeleteProfile,
   uploadImage,
+  banProfile,
   resetpassword,
   forgotpassword,
   loginImage,
-  checkLoginByImage
+  checkLoginByImage,
+  AddProfile,
+  FindSingleProfile,
+  FindAllProfiles,
+  updateUser,
+  LoginFbGoogle
 } = require('../controllers/users.controllers');
-
-var router = express.Router();
-
 const { ROLES, inRole } = require('../security/RoleMiddleware');
-
+const passport = require('passport');
 const resetPasswordToken = require('../models/resetPasswordToken');
 const usersModels = require('../models/users.models');
-const jwt = require('jsonwebtoken');
-const passport = require("passport");
+var router = express.Router();
+
+const jwt = require('jsonwebtoken')
+const CLIENT_URL = "http://localhost:3000/";
 
 /* users routes. */
+
 //? sign in
 router.post('/register', Register);
 
 //? log in
 router.post('/login', Login);
 
-router.post('/resetpassword/:token',resetpassword);
 
+router.post('/resetpassword/:token',resetpassword);
 router.post('/forgotpassword', forgotpassword)
+
+
 
 //? GET all users
 router.get(
@@ -42,7 +52,22 @@ router.get(
   getUsers
 );
 
-//? DELETE user
+//? GET a single user
+
+router.get(
+  '/getUser/:id',
+  passport.authenticate('jwt', { session: false }),
+  getSingleUser
+);
+router.put('/getImage/:id', 
+passport.authenticate("jwt", { session: false }),
+uploadImage);
+router.put('/loginImage', 
+passport.authenticate("jwt", { session: false }),
+loginImage);
+router.put('/checkImage',
+checkLoginByImage);
+//? DELETE a user
 router.delete(
   '/deleteUser/:id',
   passport.authenticate('jwt', { session: false }),
@@ -50,38 +75,63 @@ router.delete(
   deleteUser
 );
 
-router.get('/getUser/:id', 
-passport.authenticate("jwt", { session: false }),
-getSingleUser);
-
-router.put('/getImage/:id', 
-passport.authenticate("jwt", { session: false }),
-uploadImage);
-
-router.put('/loginImage',  
-passport.authenticate("jwt", { session: false }),
-loginImage);
-
-router.put('/checkImage',
-checkLoginByImage);
-
-
-//? UPDATE profile
+//? UPDATE user
 router.put("/updateUser/:id", updateProfile)
 
-//? DELETE profile
-router.delete('/deleteProfile',passport.authenticate('jwt', { session: false}),inRole(ROLES.USER), deleteProfile);
 
 
 
+/* test router */
+router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULIER), Test);
+router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
+router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
+router.post(
+  '/banProfile',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  banProfile
+);
+router.delete(
+  '/profiles/:id',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  DeleteProfile
+);
+// router.put(
+//   '/updateProfile',
+//   passport.authenticate('jwt', { session: false }),
+//   updateProfile
+// );
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  FindSingleProfile
+);
+router.get(
+  '/profiles',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  FindAllProfiles
+);
+router.post(
+  '/profiles',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.ADMIN),
+  AddProfile
+);
+router.put(
+  '/updateUser/:id',
+  updateProfile
+);
 router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;
-    const token = req.params.token;
+    const token1 = req.params.token;
     // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    await resetPasswordToken.find({token:token}).then((Valid) =>{
-      if (Valid){
+    resetPasswordToken.find({token:token1}).then((Valid) =>{
+      if (Valid.length>0){
         usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
           if (exists){
+            resetPasswordToken.findOneAndRemove({token:token1})
             var token = jwt.sign({ 
               id: exists._id,
               role: exists.role
@@ -90,7 +140,6 @@ router.get('/verify/:user_id/:token', async function(req,res){
                message: "success",
                token: "Bearer "+token
              })
-             resetPasswordToken.deleteOne({token:token})
           }
         })
       }else{ 
@@ -98,9 +147,8 @@ router.get('/verify/:user_id/:token', async function(req,res){
         console.log("not valid")
         res.status(403).send("not verified")
        }})
-});
+      });
 
-
-
+router.post("/LoginFbGoogle",LoginFbGoogle)
 
 module.exports = router;
