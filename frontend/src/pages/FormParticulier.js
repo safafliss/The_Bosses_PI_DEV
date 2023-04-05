@@ -55,6 +55,8 @@ function FormParticulier() {
     }
   };
   const UpdateUser = async () => {
+    setData({user: {data}})
+    console.log('dataaaa', data)
     const response = await axios.put(
       `http://localhost:3600/api/updateUser/${id}`,
       data

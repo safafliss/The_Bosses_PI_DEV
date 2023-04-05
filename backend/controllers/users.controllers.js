@@ -150,11 +150,18 @@ const updateProfile = async (req, res) => {
     //   req.body.password = hash;
     //   console.log('password')
     // }
-    console.log(req.body);
-    const data = await UserModel.findByIdAndUpdate(req.user._id, {
-      $set: req.body,
-    });
-    res.status(200).json(await UserModel.findById(req.user._id));
+    if (req.user) {
+      const data = await UserModel.findByIdAndUpdate(req.user._id, {
+        $set: req.body,
+      });
+      res.status(200).json(await UserModel.findById(req.user._id));
+    } else {
+      console.log('fsdf', req.body);
+      const data = await UserModel.findByIdAndUpdate(req.body._id, {
+        $set: req.body,
+      });
+      res.status(200).json(await UserModel.findById(req.body._id));
+    }
   } catch (error) {
     res.json(error);
   }
