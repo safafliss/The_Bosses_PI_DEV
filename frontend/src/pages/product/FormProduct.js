@@ -4,8 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddProduct, UploadImage } from "../../redux/actions/productActions";
 import { useNavigate } from "react-router-dom";
 import Classnames from "classnames";
+import jwt_decode from "jwt-decode";
 
 function FormProduct() {
+  console.log(localStorage.getItem("jwt"))
+  const token = localStorage.getItem("jwt")
+  console.log(jwt_decode(token))
+  const idUser = jwt_decode(token).id
+  
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,7 +32,7 @@ function FormProduct() {
     };
   };
 
-  const errors = useSelector((state) => state.errors); 
+  const errors = useSelector((state) => state.errors);
 
   const onChangeHandler = (e) => {
     setForm({
@@ -37,8 +43,7 @@ function FormProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); //pour ne rien afficher dans l'url
-    //console.log(image);
-    dispatch(AddProduct(form, navigate), UploadImage(image));
+    dispatch(AddProduct(form, idUser, navigate), UploadImage(image));
   };
 
   return (

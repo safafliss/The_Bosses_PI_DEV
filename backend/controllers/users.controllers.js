@@ -482,7 +482,6 @@ const forgotpassword = async (req, res, next) => {
 };
 
 
-
 module.exports = {
   Register,
   Login,

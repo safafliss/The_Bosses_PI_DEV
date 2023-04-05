@@ -44,6 +44,7 @@ import { useEffect, useState } from "react";
 import FormProduct from "./pages/product/FormProduct";  
 import ProductsCreated from "./pages/product/ProductsCreated";
 import FormUpdateProduct from "./pages/product/FormUpdateProduct";
+import AllProducts from "./pages/product/AllProducts";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -228,6 +229,7 @@ function App() {
           <Route path="/addProduct" element={<FormProduct />} />
           <Route path="/productsCreated" element={<ProductsCreated />} />
           <Route path="/updateProduct/:id" element={<FormUpdateProduct />} />
+          <Route path="/allProducts" element={<AllProducts />} />
 
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

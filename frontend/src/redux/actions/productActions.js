@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   ERRORS,
   FETCH_PRODUCTS_ERROR,
@@ -25,9 +26,13 @@ import {
 //     });
 // };
 
-export const AddProduct = (form, navigate) => async (dispatch) => {
+export const AddProduct = (form, idUser, navigate) => async (dispatch) => {
+  const product = {
+    ...form,
+    username: idUser,
+  };
   await axios
-    .post("http://localhost:3600/product/addProduct", form)
+    .post("http://localhost:3600/product/addProduct", product)
     .then((res) => {
       setTimeout(() => {
         console.log('Waited for 3 seconds');
@@ -53,9 +58,28 @@ export const UploadImage = async (image) => {
   );
 };
 
-export const fetchProducts = () => async (dispatch) => {
+export const fetchProducts = (idUser) => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3600/product/getProducts", {
+    const res = await axios.get("http://localhost:3600/product/getProducts/" + idUser, {
+      params: {
+        random: Math.random(),
+      },
+    });
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const fetchAllProducts = () => async (dispatch) => {
+  try {
+    const res = await axios.get("http://localhost:3600/product/getAllProducts" , {
       params: {
         random: Math.random(),
       },

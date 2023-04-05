@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
+const User = require("./users.models");
 
 const ProductSchema = new Schema(
   {
+    username: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User,
+    },
     category: {
       type: String,
       required: true,

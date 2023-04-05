@@ -3,17 +3,16 @@ const mongoose = require("mongoose");
 const validatorProduct = require("../validation/Product");
 const cloudinary = require("../utils/cloudinary");
 
-//get all products
-// const getProducts = async (req, res) => {
-//   const products = await ProductModel.find({}).sort({ createdAt: -1 });
-//   res.status(200).json(products);
-// };
-// const getProducts = async (req, res) => {
-//   const products = await ProductModel.find({}).sort({ createdAt: -1 });
-//   res.setHeader('Last-Modified', new Date().toUTCString());
-//   res.status(200).json(products);
-// };
+//get user products
 const getProducts = async (req, res) => {
+  const { idUser } = req.params;
+  const products = await ProductModel.find({username: idUser}).sort({ createdAt: -1 });
+  res.setHeader("Cache-Control", "no-cache");
+  res.status(200).json(products);
+};
+
+//get all products
+const getAllProducts = async (req, res) => {
   const products = await ProductModel.find({}).sort({ createdAt: -1 });
   res.setHeader("Cache-Control", "no-cache");
   res.status(200).json(products);
@@ -120,5 +119,6 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getSingleProduct,
-  updatePicture
+  updatePicture,
+  getAllProducts
 };
