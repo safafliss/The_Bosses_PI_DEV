@@ -4,13 +4,15 @@ const passportSetup = require("../security/passport");
 const CLIENT_URL = "http://localhost:3000/logged";
 
 router.get("/login/success", (req, res) => {
- 
+  // console.log("req.user", req.user)
+  if (req.user) {
     res.status(200).json({
       success: true,
       message: "successfull",
       user: req.user,
       //   cookies: req.cookies
     });
+  }
   
 });
 
@@ -43,7 +45,7 @@ router.get(
 
 router.get(
   "/facebook",
-  passport.authenticate("facebook", { scope: ["profile"] })
+  passport.authenticate("facebook", { scope: ["email"] })
 );
 
 router.get(

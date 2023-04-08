@@ -18,7 +18,8 @@ const {
   AddProfile,
   FindSingleProfile,
   FindAllProfiles,
-  updateUser
+  updateUser,
+  LoginFbGoogle
 } = require('../controllers/users.controllers');
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
@@ -124,12 +125,13 @@ router.put(
 );
 router.get('/verify/:user_id/:token', async function(req,res){
     const user_id = req.params.user_id;
-    const token = req.params.token;
+    const token1 = req.params.token;
     // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    await resetPasswordToken.find({token:token}).then((Valid) =>{
-      if (Valid){
+    resetPasswordToken.find({token:token1}).then((Valid) =>{
+      if (Valid.length>0){
         usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
           if (exists){
+            resetPasswordToken.findOneAndRemove({token:token1})
             var token = jwt.sign({ 
               id: exists._id,
               role: exists.role
@@ -147,28 +149,6 @@ router.get('/verify/:user_id/:token', async function(req,res){
        }})
       });
 
-/* authentication with fb && google */
-// router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
-
-// router.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", {
-//     successRedirect: CLIENT_URL,
-//     failureRedirect: "/login/failed",
-//   })
-// );
-
-// router.get(
-//   "/auth/facebook",
-//   passport.authenticate("facebook", { scope: ["profile"] })
-// );
-
-// router.get(
-//   "/auth/facebook/callback",
-//   passport.authenticate("facebook", {
-//     successRedirect: CLIENT_URL,
-//     failureRedirect: "/login/failed",
-//   })
-// );
+router.post("/LoginFbGoogle",LoginFbGoogle)
 
 module.exports = router;

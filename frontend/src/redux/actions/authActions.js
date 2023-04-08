@@ -61,6 +61,27 @@ export const LoginAction = (form, navigate) => (dispatch) => {
     });
 };
 
+export const LoginFbGoogleAction = (form, navigate) => (dispatch) => {
+  axios
+    .post('http://localhost:3600/api/LoginFbGoogle', form)
+    .then((res) => {
+      const { token } = res.data;
+      localStorage.setItem('jwt', token);
+      const decode = jwt_decode(token);
+      console.log(decode);
+      dispatch(setUser(decode));
+      setAuth(token);
+      navigate("/");
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data,
+      });
+      navigate("/login");
+    });
+};
+
 
 export const Logout = () => (dispatch) => {
   localStorage.removeItem('jwt');

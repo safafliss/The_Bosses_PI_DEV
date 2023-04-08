@@ -10,6 +10,8 @@ module.exports = async function validateLogin(data) {
   let user = await UserModel.findOne({ email: data.email }).then(
     async (user) => {
       console.log('user', user);
+      if (user)
+      if ('banned' in Object.keys(user))
       if (user.banned.isBanned) {
         console.log('normalement banned');
         return true;
@@ -29,6 +31,7 @@ module.exports = async function validateLogin(data) {
         console.log('normalement not banned');
         return false;
       }
+      return false;
     }
   );
   console.log(user);

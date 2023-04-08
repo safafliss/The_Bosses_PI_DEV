@@ -42,6 +42,7 @@ import FormTrash from './pages/FormTrash';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LoggedFBG from './pages/LoggedFBG';
 import { useEffect, useState } from 'react';
+import SupportCenter from './pages/SupportCenter';
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -63,7 +64,7 @@ function App() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
+      fetch("http://localhost:3600/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -236,6 +237,10 @@ function App() {
           <Route
             path="/formAssoc/:id"
             element={<FormAssociation user={user} />}
+          />
+             <Route
+            path="/support"
+            element={<SupportCenter user1={user1} />}
           />
           <Route
             path="/formLivreur/:id"

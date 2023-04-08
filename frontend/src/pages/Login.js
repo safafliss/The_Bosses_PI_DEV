@@ -7,6 +7,7 @@ import { LoginAction } from '../redux/actions/authActions';
 import CaptchaCode from 'react-captcha-code';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import './Login.css'
 import Profile from '../components/Profile';
 export default function Login() {
   const [showModal, setShowModal] = useState(false);
@@ -98,7 +99,7 @@ export default function Login() {
                     </div>
                     <div className="btn-wrapper text-center">
                       <a
-                        href="http://localhost:5000/auth/facebook"
+                        href="http://localhost:3600/auth/facebook"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                       >
                         <img
@@ -109,7 +110,7 @@ export default function Login() {
                         facebook
                       </a>
                       <a
-                        href="http://localhost:5000/auth/google"
+                        href="http://localhost:3600/auth/google"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                       >
                         <img
@@ -206,6 +207,7 @@ export default function Login() {
                       </div>
                       <div className="text-center mt-6">
                         <button
+                        type="button"
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                           name="faceId"
                           style={{ backgroundColor: ' #2dce89' }}
@@ -213,6 +215,10 @@ export default function Login() {
                         >
                           Use Face ID
                         </button>
+                      </div>
+                      
+                      <div className='backGroundModal' style={showModal?{"display":"block"}:{"display":"none"}}>
+
                       </div>
                       <Profile show={showModal} handleClose={handleClose} />
                     </form>

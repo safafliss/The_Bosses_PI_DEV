@@ -11,6 +11,8 @@ const sendMail = require('../utils/sendEmail');
 const ValidateProfile = require('../validation/Profile');
 const axios = require('axios');
 
+
+
 const Register = async (req, res) => {
   console.log('ena ons');
   const { errors, isValid } = await validatorRegister(req.body);
@@ -50,6 +52,54 @@ const generateResetToken = async (userid, email) => {
     console.log('mamchetech');
   }
 };
+
+
+const LoginFbGoogle = (req,res)=>{
+ console.log("hedha l userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",req.body)
+ if( Object.keys(req.body).length > 0 ){
+  var {googleId,email,firstName,lastName} = req.body
+ 
+  if (!firstName){
+    firstName = req.body.name.givenName;
+   
+    lastName = req.body.name.familyName;
+    email = req.body.emails[0].value;
+    googleId = req.body.id;
+  }
+
+
+  try{
+    const userTest = UserModel.findOne({googleId:googleId,lastName:lastName,email:email,firstName:firstName}).then((user) => {
+      if (user){
+        
+        var token = jwt.sign(
+          {
+            id: user._id,
+
+            role: user.role,
+          },
+          process.env.PRIVATE_KEY,
+          { expiresIn: '90h' }
+        );
+        res.status(200).json({
+          message: 'success',
+          token: 'Bearer ' + token,
+        });
+      }else{
+       
+        res.status(403).json("not found");
+      }
+    })
+
+  }catch (error) {
+   
+    res.status(400).json("Bad request");
+  }
+}
+else{
+  res.status(400).json("faceboookkkkk");
+}
+}
 
 const Login = async (req, res) => {
   const { errors, isValid } = await validateLogin(req.body);
@@ -431,6 +481,8 @@ const forgotpassword = async (req, res, next) => {
   }
 };
 
+
+
 module.exports = {
   Register,
   Login,
@@ -450,5 +502,6 @@ module.exports = {
   AddProfile,
   FindAllProfiles,
   FindSingleProfile,
-  updateUser
+  updateUser,
+  LoginFbGoogle
 };
