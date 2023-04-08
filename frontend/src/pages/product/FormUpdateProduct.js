@@ -5,10 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import Classnames from "classnames";
 import { UpdateImage, updateProduct } from "../../redux/actions/productActions";
 import axios from "axios";
+import "./formProduct.css";
 
 function FormUpdateProduct() {
   const [data, setData] = useState({});
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState([
+    "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
+  ]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -17,12 +20,14 @@ function FormUpdateProduct() {
 
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
- 
+
   const getProduct = useCallback(async () => {
-    const { data } = await axios.get(`http://localhost:3600/product/getSingleProduct/${id}`);
+    const { data } = await axios.get(
+      `http://localhost:3600/product/getSingleProduct/${id}`
+    );
     setData(data);
     setImage(data.image.url);
-    
+
     curr = new Date(data.expiry_date);
     curr.setDate(curr.getDate());
     setDate(curr.toISOString().substring(0, 10));
@@ -31,6 +36,27 @@ function FormUpdateProduct() {
   useEffect(() => {
     getProduct();
   }, [getProduct]);
+
+  // Available categories list
+  const categories = [
+    "PRODUITS LAITIERS",
+    "FRUITS ET LÉGUMES",
+    "PRODUITS CÉRÉALIERS",
+    "EAU",
+    "PATES",
+    "VIANDE, POISSON ET FRUITS DE MER",
+    "OTHER",
+  ];
+
+  const [categoryIsOther, setCategoryIsOther] = useState(false);
+
+  const handleSelectChange = (e) => {
+    setCategoryIsOther(e.target.value === "OTHER");
+    setData((prev) => ({
+      ...prev,
+      category: e.target.value,
+    }));
+  };
 
   //handle and convert it in base 64
   const handleImage = (e) => {
@@ -55,104 +81,190 @@ function FormUpdateProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); //pour ne rien afficher dans l'url
-    dispatch(updateProduct(id, data, navigate), UpdateImage(id, image));  
+    dispatch(updateProduct(id, data, navigate), UpdateImage(id, image));
   };
 
-
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Update Product</h3>
+    <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
+      <div class="wrapper wrapper--w960">
+        <div class="card card-2">
+          <div class="card-heading"></div>
+          <div class="card-body">
+            <h2 class="title" style={{ color: "#2c6ed5" }}>
+              UPDATE PRODUCT
+            </h2>
+            <br />
+            <form className="create" method="POST" onSubmit={handleSubmit}>
+              <label>category:</label>
+              <br />
+              {!categories.includes(data.category) ? (
+                <div>
+                  <select
+                    name="category"
+                    className="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+                    value={data.category}
+                    onChange={handleSelectChange}
+                  >
+                    <option>Choose a category</option>
+                    <option>PRODUITS LAITIERS</option>
+                    <option>FRUITS ET LÉGUMES</option>
+                    <option>PRODUITS CÉRÉALIERS</option>
+                    <option>EAU</option>
+                    <option>PATES</option>
+                    <option>VIANDE, POISSON ET FRUITS DE MER</option>
+                    <option>OTHER</option>
+                  </select>
+                  <br />
+                  <br />
+                  <Inputs
+                    name="category"
+                    type="text"
+                    placeholder="category"
+                    onChangeHandler={onChangeHandler}
+                    errors={errors.category}
+                    value={data.category || ""}
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <select
+                    name="category"
+                    className="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+                    value={data.category}
+                    onChange={handleSelectChange}
+                  >
+                    <option>Choose a category</option>
+                    <option>PRODUITS LAITIERS</option>
+                    <option>FRUITS ET LÉGUMES</option>
+                    <option>PRODUITS CÉRÉALIERS</option>
+                    <option>EAU</option>
+                    <option>PATES</option>
+                    <option>VIANDE, POISSON ET FRUITS DE MER</option>
+                    <option>OTHER</option>
+                  </select>
+                  <br />
+                  <br />
+                  {categoryIsOther && (
+                    <Inputs
+                      name="category"
+                      type="text"
+                      placeholder="category"
+                      onChangeHandler={onChangeHandler}
+                      errors={errors.category}
+                      value={data.category || ""}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  )}
+                </div>
+              )}
 
-      <label>category:</label>
-      <Inputs
-        name="category"
-        type="text"
-        placeholder="category"
-        onChangeHandler={onChangeHandler}
-        errors={errors.category}
-        value={data.category || ""} 
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Type:</label>
-      <Inputs
-        name="type"
-        type="text"
-        placeholder="type"
-        onChangeHandler={onChangeHandler}
-        errors={errors.type}
-        value={data.type || ""} 
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Brand:</label>
-      <Inputs
-        name="brand"
-        type="text"
-        placeholder="brand"
-        onChangeHandler={onChangeHandler}
-        errors={errors.brand}
-        value={data.brand || ""} 
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Price:</label>
-      <Inputs
-        name="price"
-        type="number"
-        placeholder="price"
-        onChangeHandler={onChangeHandler}
-        errors={errors.price}
-        value={data.price || ""} 
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Quantity:</label>
-      <Inputs
-        name="quantity"
-        type="number"
-        placeholder="quantity"
-        onChangeHandler={onChangeHandler}
-        errors={errors.quantity}
-        value={data.quantity || ""} 
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Expiry date:</label>
-      <Inputs
-        name="expiry_date"
-        type="date"
-        placeholder="expiry_date"
-        onChangeHandler={onChangeHandler}
-        errors={errors.expiry_date}
-        value={date}
-        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-      />
-      <label>Description:</label>
-      <textarea
-        name="description"
-        type="text"
-        placeholder="Description..."
-        value={data.description || ""}
-        class={Classnames("form-control")}
-        onChange={onChangeHandler}
-      />
-      <label className="form-label form-label-top form-label-auto">
-        Upload Picture
-      </label>
-      <div className="form-outline mb-4">
-        <input
-          onChange={handleImage}
-          type="file"
-          id="formupload"
-          name="image"
-          className="form-control"
-        />
+              <br />
+              <label>Type:</label>
+              <Inputs
+                name="type"
+                type="text"
+                placeholder="type"
+                onChangeHandler={onChangeHandler}
+                errors={errors.type}
+                value={data.type || ""}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+              <br />
+              <label>Brand:</label>
+              <Inputs
+                name="brand"
+                type="text"
+                placeholder="brand"
+                onChangeHandler={onChangeHandler}
+                errors={errors.brand}
+                value={data.brand || ""}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+              <br />
+              <label>Price:</label>
+              <Inputs
+                name="price"
+                type="number"
+                placeholder="price"
+                onChangeHandler={onChangeHandler}
+                errors={errors.price}
+                value={data.price || ""}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+              <br />
+              <label>Quantity:</label>
+              <Inputs
+                name="quantity"
+                type="number"
+                placeholder="quantity"
+                onChangeHandler={onChangeHandler}
+                errors={errors.quantity}
+                value={data.quantity || ""}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+              <br />
+              <label>Expiry date:</label>
+              <Inputs
+                name="expiry_date"
+                type="date"
+                placeholder="expiry_date"
+                onChangeHandler={onChangeHandler}
+                errors={errors.expiry_date}
+                value={date}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+              <br />
+              <label>Description:</label>
+              <textarea
+                name="description"
+                type="text"
+                placeholder="Description..."
+                value={data.description || ""}
+                class={Classnames("form-control")}
+                onChange={onChangeHandler}
+              />
+              <br />
+              <div className="mb-4 d-flex">
+                <img
+                  src={image}
+                  alt="example placeholder"
+                  style={{
+                    width: "300px",
+                    height: "300px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+
+              <div className="d-flex">
+                <div className="btn btn-primary btn-rounded">
+                  <label
+                    className="form-label text-white m-1"
+                    htmlFor="customFile1"
+                  >
+                    Choose file
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control d-none"
+                    id="customFile1"
+                    onChange={handleImage}
+                  />
+                </div>
+              </div>
+              <br />
+              <button
+                type="submit"
+                className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+              >
+                Update Product
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-      <img className="img-fluid" src={image} alt="" />
-
-      <button
-        type="submit"
-        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-      >
-        Update Product
-      </button>
-    </form>
+    </div>
   );
 }
 

@@ -7,7 +7,8 @@ const {
   updateProduct,
   getSingleProduct,
   updatePicture,
-  getAllProducts
+  getAllProducts,
+  getAllProductsFilter
 } = require("../controllers/productController");
 var router = express.Router();
 
@@ -16,6 +17,9 @@ router.get("/getProducts/:idUser", getProducts);
 
 //get all products
 router.get("/getAllProducts", getAllProducts);
+
+//get Filtered products
+router.get("/getAllProductsFilter", getAllProductsFilter);
 
 //Post a new product
 router.post("/addProduct", createProduct);

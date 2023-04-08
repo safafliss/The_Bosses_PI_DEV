@@ -92,7 +92,7 @@ function App() {
   console.log(user1);
   return (
     <BrowserRouter>
-      <div className="bg-light" style={{ height: "100vh" }}>
+      <div>
         <Routes>
           <Route
             path="/"
@@ -230,6 +230,7 @@ function App() {
           <Route path="/productsCreated" element={<ProductsCreated />} />
           <Route path="/updateProduct/:id" element={<FormUpdateProduct />} />
           <Route path="/allProducts" element={<AllProducts />} />
+
 
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

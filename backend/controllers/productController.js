@@ -18,6 +18,24 @@ const getAllProducts = async (req, res) => {
   res.status(200).json(products);
 };
 
+//get Filtered products
+const getAllProductsFilter =  async (req, res) => {
+  try {
+    const { minPrice, maxPrice } = req.query;
+    let products;
+    if (minPrice && maxPrice) {
+      products = await ProductModel.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+      });
+    } else {
+      products = await ProductModel.find();
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //create a new product
 const createProduct = async (req, res) => {
   const { errors, isValid } = await validatorProduct(req.body);
@@ -120,5 +138,6 @@ module.exports = {
   updateProduct,
   getSingleProduct,
   updatePicture,
-  getAllProducts
+  getAllProducts,
+  getAllProductsFilter
 };

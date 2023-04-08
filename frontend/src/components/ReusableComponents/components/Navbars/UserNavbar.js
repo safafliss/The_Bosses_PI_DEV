@@ -45,7 +45,7 @@ export default function Navbar() {
                     className="hidden h-8 w-auto lg:block"
                     src={backgroundImage}
                     alt="Your Company"
-                    style={{ height: "60px" }}
+                    style={{ height: "40px" }}
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">

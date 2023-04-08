@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
 import jwt_decode from "jwt-decode"
 import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
-
+ 
 function Particularpage(props) {
   const dispatch = useDispatch();
   const LogoutHanlder = () => {

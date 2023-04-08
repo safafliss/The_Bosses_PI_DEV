@@ -35,13 +35,13 @@ export const AddProduct = (form, idUser, navigate) => async (dispatch) => {
     .post("http://localhost:3600/product/addProduct", product)
     .then((res) => {
       setTimeout(() => {
-        console.log('Waited for 3 seconds');
+        console.log("Waited for 3 seconds");
         navigate("/productsCreated");
         dispatch({
           type: ERRORS,
           payload: {},
         });
-      }, 3000); // 3000ms = 3 seconds 
+      }, 3000); // 3000ms = 3 seconds
     })
     .catch((err) => {
       dispatch({
@@ -60,11 +60,14 @@ export const UploadImage = async (image) => {
 
 export const fetchProducts = (idUser) => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3600/product/getProducts/" + idUser, {
-      params: {
-        random: Math.random(),
-      },
-    });
+    const res = await axios.get(
+      "http://localhost:3600/product/getProducts/" + idUser,
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
     dispatch({
       type: FETCH_PRODUCTS_SUCCESS,
       payload: res.data,
@@ -79,14 +82,71 @@ export const fetchProducts = (idUser) => async (dispatch) => {
 
 export const fetchAllProducts = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:3600/product/getAllProducts" , {
-      params: {
-        random: Math.random(),
-      },
-    });
+    const res = await axios.get(
+      "http://localhost:3600/product/getAllProducts",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
     dispatch({
       type: FETCH_PRODUCTS_SUCCESS,
       payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const fetchAllProducts1 =
+  ({ minPrice, maxPrice }) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:3600/product/getAllProductsFilter",
+        {
+          params: {
+            random: Math.random(),
+            minPrice,
+            maxPrice,
+          },
+        }
+      );
+      dispatch({
+        type: FETCH_PRODUCTS_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FETCH_PRODUCTS_ERROR,
+        payload: error.message,
+      });
+    }
+  };
+
+export const fetchAllProducts2 = (searchQuery) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getAllProducts",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
+    const filteredProducts = res.data.filter(
+      (product) =>
+        product &&
+        product.type &&
+        product.type.toLowerCase().includes(searchQuery)
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: filteredProducts,
     });
   } catch (error) {
     dispatch({
@@ -104,6 +164,23 @@ export const deleteProduct = (id, navigate) => async (dispatch) => {
 
     if (response.status === 200) {
       navigate("/productsCreated");
+      const json = response.data; // or response.json()
+
+      dispatch({ type: DELETE_PRODUCT, payload: json });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProduct1 = (id, navigate) => async (dispatch) => {
+  try {
+    const response = await axios.delete(
+      "http://localhost:3600/product/deleteProduct/" + id
+    );
+
+    if (response.status === 200) {
+      navigate("/allProducts");
       const json = response.data; // or response.json()
 
       dispatch({ type: DELETE_PRODUCT, payload: json });
@@ -159,9 +236,9 @@ export const updateProduct = (id, data, navigate) => async (dispatch) => {
     );
     if (res.status === 200) {
       setTimeout(() => {
-        console.log('Waited for 3 seconds');
+        console.log("Waited for 3 seconds");
         navigate("/productsCreated");
-      }, 3000); // 3000ms = 3 seconds 
+      }, 3000); // 3000ms = 3 seconds
     }
   } catch (error) {
     dispatch({

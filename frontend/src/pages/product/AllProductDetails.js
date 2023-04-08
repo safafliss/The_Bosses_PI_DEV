@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useDispatch } from "react-redux";
-import "./foodhut.css";
-
+import "./cardStyle.css";
 import {
-  deleteProduct,
+  deleteProduct1,
   fetchSingleProduct,
 } from "../../redux/actions/productActions";
 import { useNavigate } from "react-router-dom";
+
 function AllProductDetails({ product, idUser }) {
+  const [isHover, setIsHover] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHover(false);
+  };
+
+  // var cards = document.querySelectorAll(".product-box");
+  // [...cards].forEach((card) => {
+  //   card.addEventListener("mouseover", function () {
+  //     card.classList.add("is-hover");
+  //   });
+  //   card.addEventListener("mouseleave", function () {
+  //     card.classList.remove("is-hover");
+  //   });
+  // });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = async () => {
-    dispatch(deleteProduct(product._id, navigate));
+    dispatch(deleteProduct1(product._id, navigate));
   };
   const handleClick1 = async () => {
     console.log("avant" + product);
@@ -21,8 +40,10 @@ function AllProductDetails({ product, idUser }) {
   };
 
   return (
-    <div>
-      <p>{product.category}</p>
+    <div className={`col-lg-3 col-md-4 mb-3 product-box ${isHover ? "is-hover" : ""}`}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}>
+      {/* <p>{product.category}</p>
       <p>Type: {product.type}</p>
       <p>Brand: {product.brand}</p>
       <p>Price: {product.price}</p>
@@ -50,28 +71,88 @@ function AllProductDetails({ product, idUser }) {
         >
           update
         </button>
-      ) : null}
+      ) : null} */}
 
-
-
-
-      <div className="row">
-        <div className="col-md-4">
-          <div className="card bg-transparent border my-3 my-md-0">
-            <img src={product.image.url} alt={product.description} className="rounded-0 card-img-top mg-responsive"/>
-            <div className="card-body">
-              <h1 className="text-center mb-4">
-                <a href="#" className="badge badge-primary">
-                  $5
-                </a>
-              </h1>
-              <h4 className="pt20 pb20">Reiciendis Laborum </h4>
-              <p className="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-                provident illum officiis fugit laudantium voluptatem sit iste
-                delectus qui ex.{" "}
-              </p>
-            </div>
+      <div className="product-box">
+        <div className="product-inner-box position-relative">
+          <div className="icons">
+            <a
+              href="#"
+              className="text-decoration-none text-dark"
+              style={{ backgroundColor: "#69b550" }}
+            >
+              <i class="fa-solid fa-heart"></i>
+            </a>
+            <a
+              href="#"
+              className="text-decoration-none text-dark"
+              style={{ backgroundColor: "#69b550" }}
+            >
+              <i class="fa-solid fa-eye"></i>
+            </a>
+            {product.username == idUser ? (
+              <a
+                href="#"
+                onClick={handleClick}
+                className="text-decoration-none text-dark"
+                style={{ backgroundColor: "#69b550" }}
+              >
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            ) : null}
+            {product.username == idUser ? (
+              <a
+                href="#"
+                onClick={handleClick1}
+                className="text-decoration-none text-dark"
+                style={{ backgroundColor: "#69b550" }}
+              >
+                <i class="fa-solid fa-pen"></i>
+              </a>
+            ) : null}
+          </div>
+          <div className="onsale position-absolute top-0 start-0">
+            <span className="badge rounded-0">
+              <i class="fa-solid fa-arrow-down"></i>29%
+            </span>
+          </div>
+          <img
+            src={product.image.url}
+            alt={product.description}
+            className="img-fluid"
+          />
+          <div className="cart-btn">
+            <button className="btn btn-dark shadow-sm rounded-pill">
+              <i class="fa-sharp fa-solid fa-cart-shopping"></i>Add to Cart
+            </button>
+          </div>
+        </div>
+        <div className="product-info">
+          <div className="product-category">
+            <h3>{product.category}</h3>
+          </div>
+          <div className="product-type">
+            <span>Type: {product.type}</span>
+          </div>
+          <div className="product-brand">
+            <span>Brand: {product.brand}</span>
+          </div>
+          <div className="product-price">
+            <span>Price: {product.price}DT</span>
+          </div>
+          <div className="product-quantity">
+            <span>Quantity: {product.quantity}</span>
+          </div>
+          <div className="product-date">
+            <span>
+              Expiry Date:{" "}
+              {formatDistanceToNow(new Date(product.expiry_date), {
+                addSuffix: true,
+              })}
+            </span>
+          </div>
+          <div className="product-desc">
+            <span>Description: {product.description}</span>
           </div>
         </div>
       </div>
