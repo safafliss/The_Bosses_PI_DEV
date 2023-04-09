@@ -5,6 +5,9 @@ import {
   fetchAllProducts,
   fetchAllProducts1,
   fetchAllProducts2,
+  fetchAllProducts3,
+  fetchAllProducts4,
+  fetchAllProducts5,
 } from "../../redux/actions/productActions";
 import AllProductDetails from "./AllProductDetails";
 import Navbar from "../../components/ReusableComponents/components/Navbars/UserNavbar";
@@ -19,13 +22,21 @@ function AllProducts() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
-
+  useEffect(() => {
+    if (selectedCategories.length > 0) {
+      dispatch(fetchAllProducts3(selectedCategories));
+    } else {
+      dispatch(fetchAllProducts());
+    }
+  }, [selectedCategories]);
   const handleMinPriceChange = (event) => {
     setMinPrice(parseInt(event.target.value));
   };
@@ -41,6 +52,28 @@ function AllProducts() {
   const handleSearch = (event) => {
     const searchQuery = event.target.value.toLowerCase();
     dispatch(fetchAllProducts2(searchQuery));
+  };
+
+  function handleCategoryChange(event) {
+    const value = event.target.value;
+    if (event.target.checked) {
+      console.log("yahhh" + value);
+      setSelectedCategories([...selectedCategories, value]);
+    } else {
+      setSelectedCategories(selectedCategories.filter((c) => c !== value));
+    }
+  }
+
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    if(value == "price"){
+      dispatch(fetchAllProducts4());
+    }else if (value == "Expiry Date"){
+      dispatch(fetchAllProducts5());
+    }
+    else{
+      dispatch(fetchAllProducts());
+    }
   };
 
   return (
@@ -120,58 +153,95 @@ function AllProducts() {
                 <br />
                 {/* filter category */}
                 <div>
-                <label><strong>Filter by Category</strong></label>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  PRODUITS LAITIERS
-                  </span>
-                </label>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  FRUITS ET LÉGUMES
-                  </span>
-                </label>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  PRODUITS CÉRÉALIERS
-                  </span>
-                </label>
-                <br/>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  EAU
-                  </span>
-                </label>
-                <br/>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  PATES
-                  </span>
-                </label>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  VIANDE, POISSON ET FRUITS DE MER
-                  </span>
-                </label>
-                <label className="custom-control overflow-checkbox">
-                  <input type="checkbox" className="overflow-control-input" />
-                  &nbsp;&nbsp;
-                  <span className="overflow-control-description">
-                  OTHER
-                  </span>
-                </label>
+                  <label>
+                    <strong>Filter by Category</strong>
+                  </label>
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"PRODUITS LAITIERS"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">
+                      PRODUITS LAITIERS
+                    </span>
+                  </label>
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"FRUITS ET LÉGUMES"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">
+                      FRUITS ET LÉGUMES
+                    </span>
+                  </label>
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"PRODUITS CÉRÉALIERS"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">
+                      PRODUITS CÉRÉALIERS
+                    </span>
+                  </label>
+                  <br />
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"EAU"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">EAU</span>
+                  </label>
+                  <br />
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"PATES"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">PATES</span>
+                  </label>
+                  <label className="custom-control overflow-checkbox">
+                    <input
+                      type="checkbox"
+                      className="overflow-control-input"
+                      value={"VIANDE, POISSON ET FRUITS DE MER"}
+                      onChange={handleCategoryChange}
+                    />
+                    &nbsp;&nbsp;
+                    <span className="overflow-control-description">
+                      VIANDE, POISSON ET FRUITS DE MER
+                    </span>
+                  </label>
+                </div>
+                <br />
+                {/* sort by */}
+                <div>
+                  <label>
+                    <strong>Sort by</strong>
+                  </label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    onChange={handleSelectChange}
+                  >
+                    <option selected value="all">Open this select menu</option>
+                    <option value="price">price</option>
+                    <option value="Expiry Date">Expiry Date</option>
+                  </select>
                 </div>
               </div>
             </div>

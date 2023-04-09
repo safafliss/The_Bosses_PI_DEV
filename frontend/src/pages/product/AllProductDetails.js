@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useDispatch } from "react-redux";
 import "./cardStyle.css";
+import Dialog from './Dialog';
+
 import {
   deleteProduct1,
   fetchSingleProduct,
@@ -9,6 +11,16 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function AllProductDetails({ product, idUser }) {
+  const [dialog, setDialog] = useState({
+    message:'',
+    isLoading: false
+  })
+  const handleDialog = (message, isLoading) => {
+    setDialog({
+      message,
+      isLoading,
+    });
+  };
   const [isHover, setIsHover] = useState(false);
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -31,13 +43,23 @@ function AllProductDetails({ product, idUser }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = async () => {
-    dispatch(deleteProduct1(product._id, navigate));
+    handleDialog("Are you sure you want to delete this product?", true);
+    //dispatch(deleteProduct1(product._id, navigate));
   };
   const handleClick1 = async () => {
     console.log("avant" + product);
     dispatch(fetchSingleProduct(product._id, navigate));
     console.log("après" + product);
   };
+
+  const areUSureDelete = (choose) => {
+    if (choose) {
+      dispatch(deleteProduct1(product._id, navigate));
+      handleDialog("", false);
+    } else {
+      handleDialog("", false);
+    }
+  }
 
   return (
     <div className={`col-lg-3 col-md-4 mb-3 product-box ${isHover ? "is-hover" : ""}`}
@@ -156,6 +178,7 @@ function AllProductDetails({ product, idUser }) {
           </div>
         </div>
       </div>
+      {dialog.isLoading && <Dialog onDialog={areUSureDelete} message= {dialog.message}/>}
     </div>
   );
 }

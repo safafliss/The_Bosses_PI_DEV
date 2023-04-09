@@ -20,7 +20,8 @@ function FormUpdateProduct() {
 
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
-
+  const [mochkla, setMochkla] = useState({});
+  
   const getProduct = useCallback(async () => {
     const { data } = await axios.get(
       `http://localhost:3600/product/getSingleProduct/${id}`
@@ -81,7 +82,27 @@ function FormUpdateProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); //pour ne rien afficher dans l'url
-    dispatch(updateProduct(id, data, navigate), UpdateImage(id, image));
+    //validate price
+    const newErrors = {};
+    if (data.price < 0) {
+      newErrors.price = "The price entered is incorrect";
+    }
+    //validate quantity
+    if (data.quantity < 0) {
+      newErrors.quantity = "The quantity entered is incorrect";
+    }
+    //validate expiry date
+    // const curr = new Date().getTime();
+    // const expiryDate = new Date(data.expiry_date).getTime();
+    // if (expiryDate < curr) {
+    //   newErrors.expiry_date = "The product has reached its expiry date!";
+    // }
+    setMochkla(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      console.log(mochkla);
+      dispatch(updateProduct(id, data, navigate), UpdateImage(id, image));
+    }
+    //dispatch(updateProduct(id, data, navigate), UpdateImage(id, image));
   };
 
   return (
@@ -192,6 +213,9 @@ function FormUpdateProduct() {
                 value={data.price || ""}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.price && (
+                <span style={{ color: "red" }}>{mochkla.price}</span>
+              )}
               <br />
               <label>Quantity:</label>
               <Inputs
@@ -203,6 +227,9 @@ function FormUpdateProduct() {
                 value={data.quantity || ""}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.quantity && (
+                <span style={{ color: "red" }}>{mochkla.quantity}</span>
+              )}
               <br />
               <label>Expiry date:</label>
               <Inputs
@@ -214,6 +241,9 @@ function FormUpdateProduct() {
                 value={date}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {/* {mochkla.expiry_date && (
+                <span style={{ color: "red" }}>{mochkla.expiry_date}</span>
+              )} */}
               <br />
               <label>Description:</label>
               <textarea

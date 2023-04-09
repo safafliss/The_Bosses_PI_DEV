@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Dialog.css";
 function Dialog({ message, onDialog}) {
   return (
     <div
@@ -11,6 +11,7 @@ function Dialog({ message, onDialog}) {
         bottom: "0",
         backgroundColor: "rgba(0,0,0,0.5)"
       }}
+      className="popup"
       onClick={() => onDialog(false)}
     >
       <div

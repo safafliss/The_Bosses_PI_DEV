@@ -70,6 +70,12 @@ function FormProduct() {
     if (form.quantity < 0) {
       newErrors.quantity = "The quantity entered is incorrect";
     }
+    //validate expiry date
+    const curr = new Date().getTime();
+    const expiryDate = new Date(form.expiry_date).getTime();
+    if (expiryDate < curr) {
+      newErrors.expiry_date = "The product has reached its expiry date!";
+    }
     setMochkla(newErrors);
     if (Object.keys(newErrors).length === 0) {
       console.log(mochkla);
@@ -173,6 +179,9 @@ function FormProduct() {
                 errors={errors.expiry_date}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.expiry_date && (
+                <span style={{ color: "red" }}>{mochkla.expiry_date}</span>
+              )}
               <br />
               <label>Description:</label>
               <textarea

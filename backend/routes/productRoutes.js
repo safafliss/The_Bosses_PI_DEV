@@ -8,7 +8,9 @@ const {
   getSingleProduct,
   updatePicture,
   getAllProducts,
-  getAllProductsFilter
+  getAllProductsFilter,
+  getAllProductsSortedByPrice,
+  getAllProductsSortedByDate
 } = require("../controllers/productController");
 var router = express.Router();
 
@@ -20,6 +22,12 @@ router.get("/getAllProducts", getAllProducts);
 
 //get Filtered products
 router.get("/getAllProductsFilter", getAllProductsFilter);
+
+//get Sorted products by price
+router.get("/getAllProductsSortedByPrice", getAllProductsSortedByPrice);
+
+//get Sorted products by expiry date
+router.get("/getAllProductsSortedByDate", getAllProductsSortedByDate);
 
 //Post a new product
 router.post("/addProduct", createProduct);

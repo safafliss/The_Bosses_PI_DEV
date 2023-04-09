@@ -36,6 +36,20 @@ const getAllProductsFilter =  async (req, res) => {
   }
 };
 
+//get products sorted by price
+const getAllProductsSortedByPrice = async (req, res) => {
+  const products = await ProductModel.find({}).sort({ price: 1 });
+  res.setHeader("Cache-Control", "no-cache");
+  res.status(200).json(products);
+};
+
+//get products sorted by expiry date
+const getAllProductsSortedByDate = async (req, res) => {
+  const products = await ProductModel.find({}).sort({ expiry_date: -1 });
+  res.setHeader("Cache-Control", "no-cache");
+  res.status(200).json(products);
+};
+
 //create a new product
 const createProduct = async (req, res) => {
   const { errors, isValid } = await validatorProduct(req.body);
@@ -139,5 +153,7 @@ module.exports = {
   getSingleProduct,
   updatePicture,
   getAllProducts,
-  getAllProductsFilter
+  getAllProductsFilter,
+  getAllProductsSortedByPrice,
+  getAllProductsSortedByDate
 };

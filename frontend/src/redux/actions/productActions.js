@@ -156,6 +156,78 @@ export const fetchAllProducts2 = (searchQuery) => async (dispatch) => {
   }
 };
 
+export const fetchAllProducts3 = (selectedCategories) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getAllProducts",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
+    const filteredProducts = res.data.filter(
+      (product) =>
+        product &&
+        //product.category in selectedCategories
+        selectedCategories.includes(product.category)
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: filteredProducts,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const fetchAllProducts5 = () => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getAllProductsSortedByDate",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const fetchAllProducts4 = () => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getAllProductsSortedByPrice",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
 export const deleteProduct = (id, navigate) => async (dispatch) => {
   try {
     const response = await axios.delete(
