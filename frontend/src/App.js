@@ -43,6 +43,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LoggedFBG from './pages/LoggedFBG';
 import { useEffect, useState } from 'react';
 import SupportCenter from './pages/SupportCenter';
+import SideButton from './pages/sideButton';
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -241,6 +242,12 @@ function App() {
              <Route
             path="/support"
             element={<SupportCenter user1={user1} />}
+          />
+
+              
+            <Route
+            path="/rate"
+            element={<SideButton user1={user1} user={user}/>}
           />
           <Route
             path="/formLivreur/:id"

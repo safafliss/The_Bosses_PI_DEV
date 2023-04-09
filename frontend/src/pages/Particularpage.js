@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
 import jwt_decode from "jwt-decode"
 import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
+import SideButton from "./sideButton";
 
 function Particularpage(props) {
   const dispatch = useDispatch();
@@ -363,6 +364,7 @@ function Particularpage(props) {
                   </div>
                 </div>
               </div>
+       
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <img
@@ -442,7 +444,10 @@ function Particularpage(props) {
             </div>
           </div>
         </section>
+<div> 
+      <SideButton/>
 
+</div>
         <section className="pb-20 relative block bg-blueGray-800">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"

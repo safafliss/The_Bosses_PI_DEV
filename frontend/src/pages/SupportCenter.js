@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 
 function SupportCenter({user1}) {
   console.log(user1)
   const [formData, setFormData] = useState({
-    email:user1.email,
+    email:user1?.email,
     subject: "",
     description: "",
   });
@@ -12,6 +12,7 @@ function SupportCenter({user1}) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +58,7 @@ function SupportCenter({user1}) {
                       <input
                         type="text"
                         name="firstname"
-                        value={user1.email}
+                        value={user1?.email}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         placeholder="Full Name"
                       />
