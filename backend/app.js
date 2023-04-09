@@ -11,6 +11,9 @@ const cookieSession = require("cookie-session");
 const authRouters = require('./routes/auth')
 const session = require('express-session')
 var app = express();
+
+const recipeRoute = require("./routes/recipeRoute");
+
 // app.use(session({
 //     secret: 'ilovescotchscotchyscotchscotch1'
 // }));
@@ -72,6 +75,6 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api', indexRouter);
 
-
+app.use("/recipe", recipeRoute);
 
 module.exports = app;

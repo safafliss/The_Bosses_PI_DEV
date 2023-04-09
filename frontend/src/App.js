@@ -4,12 +4,12 @@ import Particularpage from './pages/Particularpage';
 import Proffpage from './pages/Proffpage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import RegisterPartner from './pages/RegisterPartner';
 import Admin from './pages/Dashboard';
 import PrivateRouter from './components/PrivateRouter';
 import store from './redux/store';
 import jwt_decode from 'jwt-decode';
 import NotFound from './pages/NotFound';
+import Recipes from './pages/Recipes';
 import NoAccess from './pages/NoAccess';
 import AdminRouter from './components/AdminRouter';
 import ForceRedirect from './components/ForceRedirect';
@@ -125,6 +125,14 @@ function App() {
               </AdminRouter>
             }
           />
+            <Route
+            path="/recipes"
+            element={
+              
+                <Recipes  />
+              
+            }
+          />
           <Route
             path="/admin"
             element={
@@ -158,14 +166,7 @@ function App() {
               </ForceRedirect>
             }
           />
-          <Route
-            path="/registerPartner"
-            element={
-              <PrivateRouter user={user}>
-                <RegisterPartner />
-              </PrivateRouter>
-            }
-          />
+          
 
           <Route
             path="/verification"

@@ -2,7 +2,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import Middleware from 'redux-thunk';
 import Reducers from './reducers'
-const initialState = {}
+const initialState = { recipes:[],}
 const store = createStore(
     Reducers,
     initialState,

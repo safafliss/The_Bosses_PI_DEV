@@ -8,6 +8,7 @@ function FormAssociation() {
   const navigate = useNavigate();
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
+  ///
   const getUser = useCallback(async () => {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
@@ -17,7 +18,7 @@ function FormAssociation() {
   useEffect(() => {
     getUser();
   }, [getUser]);
-
+///
   const handleSubmit = (event) => {
     event.preventDefault();
     // validate firstName

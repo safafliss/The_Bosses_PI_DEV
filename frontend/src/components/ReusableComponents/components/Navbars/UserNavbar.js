@@ -25,7 +25,7 @@ export default function Navbar() {
   const navigation = [
     { name: 'Home', href: '#', current: true },
     { name: 'Profile', href: `/formPart/${id}`, current: false },
-    { name: 'Recepies', href: '#', current: false },
+    { name: 'Recepies', href: '/recipes', current: false },
     { name: 'TrashSpot', href: '#', current: false },
   ]
   return (
