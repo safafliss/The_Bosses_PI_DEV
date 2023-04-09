@@ -32,6 +32,7 @@ function FormUpdateProduct() {
     curr = new Date(data.expiry_date);
     curr.setDate(curr.getDate());
     setDate(curr.toISOString().substring(0, 10));
+
   }, [id]);
 
   useEffect(() => {
@@ -236,7 +237,15 @@ function FormUpdateProduct() {
                 name="expiry_date"
                 type="date"
                 placeholder="expiry_date"
-                onChangeHandler={onChangeHandler}
+                //onChangeHandler={onChangeHandler}
+                onChangeHandler={(e)=>{
+                  console.log(e.target.value);
+                      setDate(e.target.value);
+                      setData((prev) => ({
+                        ...prev,
+                        expiry_date: e.target.value,
+                      }));
+                }}
                 errors={errors.expiry_date}
                 value={date}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"

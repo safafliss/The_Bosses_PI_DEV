@@ -82,3 +82,12 @@ body {
   font-size: 16px;
   font-weight: 400;
 } */
+
+.bestProduct{
+  background-color: #69b550;
+  animation: clignote 2s linear infinite;
+  border: 2px solid black;
+}
+@keyframes clignote{
+  50% {opacity: 0.5;}
+}

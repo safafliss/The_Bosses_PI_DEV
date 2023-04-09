@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useDispatch } from "react-redux";
 import "./cardStyle.css";
-import Dialog from './Dialog';
+import Dialog from "./Dialog";
 
 import {
   deleteProduct1,
@@ -12,9 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 function AllProductDetails({ product, idUser }) {
   const [dialog, setDialog] = useState({
-    message:'',
-    isLoading: false
-  })
+    message: "",
+    isLoading: false,
+  });
   const handleDialog = (message, isLoading) => {
     setDialog({
       message,
@@ -59,12 +59,16 @@ function AllProductDetails({ product, idUser }) {
     } else {
       handleDialog("", false);
     }
-  }
+  };
 
   return (
-    <div className={`col-lg-3 col-md-4 mb-3 product-box ${isHover ? "is-hover" : ""}`}
-    onMouseEnter={handleMouseEnter}
-    onMouseLeave={handleMouseLeave}>
+    <div
+      className={`col-lg-3 col-md-4 mb-3 product-box ${
+        isHover ? "is-hover" : ""
+      } ${product.isValid === true ? "bestProduct" : false}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* <p>{product.category}</p>
       <p>Type: {product.type}</p>
       <p>Brand: {product.brand}</p>
@@ -133,11 +137,14 @@ function AllProductDetails({ product, idUser }) {
               </a>
             ) : null}
           </div>
-          <div className="onsale position-absolute top-0 start-0">
-            <span className="badge rounded-0">
-              <i class="fa-solid fa-arrow-down"></i>29%
-            </span>
-          </div>
+          {product.isValid === true && (
+            <div className="onsale position-absolute top-0 start-0">
+              <span className="badge rounded-0">
+                <i class="fa-solid fa-arrow-down"></i>PROMO
+              </span>
+            </div>
+          )}
+
           <img
             src={product.image.url}
             alt={product.description}
@@ -178,7 +185,9 @@ function AllProductDetails({ product, idUser }) {
           </div>
         </div>
       </div>
-      {dialog.isLoading && <Dialog onDialog={areUSureDelete} message= {dialog.message}/>}
+      {dialog.isLoading && (
+        <Dialog onDialog={areUSureDelete} message={dialog.message} />
+      )}
     </div>
   );
 }

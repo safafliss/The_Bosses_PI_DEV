@@ -48,6 +48,10 @@ const ProductSchema = new Schema(
         //default: "default_url"
       },
     },
+    isValid: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
