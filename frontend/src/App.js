@@ -28,6 +28,8 @@ import FooterAdmin from './components/ReusableComponents/components/Footers/Foot
 import { setAuth } from './util/setAuth';
 import { Logout } from './redux/actions/authActions';
 import Profile from './pages/Profile';
+import CardListRatings  from './components/ReusableComponents/components/Cards/CardListRatings';
+import CardListReports from './components/ReusableComponents/components/Cards/CardListReports';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './assets/styles/tailwind.css';
@@ -142,6 +144,44 @@ function App() {
                   </div>
                 </div>
               </AdminRouter>
+            }
+          />
+           <Route
+            path="/admin/listOfRatings"
+            element={
+              <>
+              <AdminRouter user={user}>
+                <Sidebar />
+                <div className="relative md:ml-64 bg-blueGray-100">
+              
+                  {/* Header */}
+                  <HeaderStats />
+                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
+                   <CardListRatings/>
+                    <FooterAdmin />
+                  </div>
+                </div>
+                </AdminRouter>
+                </>
+            }
+          />
+            <Route
+            path="/admin/listOfReports"
+            element={
+              <>
+              <AdminRouter user={user}>
+                <Sidebar />
+                <div className="relative md:ml-64 bg-blueGray-100">
+              
+                  {/* Header */}
+                  <HeaderStats />
+                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
+                   <CardListReports/>
+                    <FooterAdmin />
+                  </div>
+                </div>
+                </AdminRouter>
+                </>
             }
           />
           <Route

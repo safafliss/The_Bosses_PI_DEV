@@ -12,6 +12,11 @@ const SupportSchema = new Schema(
       type: String,
 
     },
+    state: {
+      type: String,
+      enum: ["treated", "not treated"],
+      default: "not treated",
+    },
     description: {
       type: String,
     },
