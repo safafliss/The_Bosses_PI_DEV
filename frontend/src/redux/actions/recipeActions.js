@@ -31,6 +31,7 @@ export const getRecipeById = (id) => {
         type: GET_RECIPE_BY_ID,
         payload: res.data,
       });
+      console.log(res.data)
     } catch (error) {
       console.error(error);
     }

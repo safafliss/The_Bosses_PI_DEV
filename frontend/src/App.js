@@ -10,6 +10,8 @@ import store from './redux/store';
 import jwt_decode from 'jwt-decode';
 import NotFound from './pages/NotFound';
 import Recipes from './pages/Recipes';
+import FormRecipe from './pages/FormRecipe';
+import RecipeDetails from './pages/RecipeDetails';
 import NoAccess from './pages/NoAccess';
 import AdminRouter from './components/AdminRouter';
 import ForceRedirect from './components/ForceRedirect';
@@ -52,6 +54,10 @@ if (window.localStorage.jwt) {
     store.dispatch(Logout());
   }
 }
+
+
+
+
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -129,10 +135,41 @@ function App() {
             path="/recipes"
             element={
               
-                <Recipes  />
+                <Recipes  user={user} />
               
             }
           />
+             <Route
+            path="/recipes/add"
+            element={
+              
+                <FormRecipe user={user} />
+              
+            }
+          />
+       
+
+          <Route
+            path="/recipes/add"
+            element={
+              
+                <FormRecipe  />
+              
+            }
+          />
+          
+          <Route
+            path="/recipes/edit/:id"
+            element={
+              
+                <FormRecipe  />
+              
+            }
+          />
+          <Route path="/recipes/:id" 
+        element={<RecipeDetails /> }  />
+
+
           <Route
             path="/admin"
             element={
@@ -226,6 +263,8 @@ function App() {
               </ForceRedirect>
             }
           />
+
+
           <Route
             path="/formPart/:id"
             element={<FormParticulier user={user} />}

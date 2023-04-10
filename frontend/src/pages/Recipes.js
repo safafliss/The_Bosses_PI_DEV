@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllRecipes } from '../redux/actions/recipeActions';
+import { getAllRecipes, deleteRecipe } from '../redux/actions/recipeActions';
+import { Link } from 'react-router-dom';
 
 const Recipes = () => {
   const recipes = useSelector(state => state.recipes.recipes);
@@ -10,18 +11,18 @@ const Recipes = () => {
     dispatch(getAllRecipes());
 
   }, [dispatch]);
-  console.log(recipes,"hedhyyyyy")
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      dispatch(deleteRecipe(id)).then(() => {
+        dispatch(getAllRecipes());
+      });
+    }
+  };
+
   if (!recipes) {
     return <div>Loading...</div>
   }
-//   if (typeof recipes === 'object' && recipes !== null) {
-//     return (
-//       <div>
-//         <h3>{recipes.name}</h3>
-//         <p>{recipes.preparation}</p>
-//       </div>
-//     );
-//   }
 
   return (
     <div>
@@ -31,12 +32,15 @@ const Recipes = () => {
           <li key={index}>
             <h3>{recipe.name}</h3>
             <p>{recipe.rating}</p>
-            <ul>
-             
-            </ul>
+            <Link to={`/recipes/${recipe._id}`}>{recipe.name}</Link>
+            <button onClick={() => handleDelete(recipe._id)}>Delete</button>
+            <Link to={`/recipes/edit/${recipe._id}`}>Edit</Link>
           </li>
         ))}
       </ul>
+      <Link to="/recipes/add">
+        <button>Add Recipe</button>
+      </Link>
     </div>
   );
 };
