@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
 import jwt_decode from "jwt-decode"
+import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
+
 function Particularpage(props) {
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
@@ -15,21 +17,16 @@ function Particularpage(props) {
   const id = jwt_decode(token).id
   return (
     <>
-      {/* <Navbar transparent /> */}
+    <Navbar  /> 
       <main>
-        <Link
-          className="btn btn-outline-primary"
-          to="/login"
-          onClick={LogoutHanlder}
-        >
-          Logout
-        </Link>
+        {/* 
+      
         <Link
           className="btn btn-outline-primary"
           to={`/formPart/${id}`}
         >
           Profile
-        </Link>
+        </Link> */}
         <div
           className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75  top-0 w-full h-full bg-center bg-cove"
           style={{

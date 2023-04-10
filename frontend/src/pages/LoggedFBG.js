@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 function LoggedFBG({user1}) {
-  console.log(user1)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  if(user1){
+  console.log(user1)
+
     dispatch(LoginFbGoogleAction(user1,navigate));
+  }
     return ;
   const logout = () => {
     window.open("http://localhost:3600/auth/logout", "_self");

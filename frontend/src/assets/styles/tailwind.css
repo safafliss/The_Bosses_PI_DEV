@@ -32,7 +32,8 @@ html {
 
 html {
   line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
+  /* -webkit-text-size-adjust: 100%;  */
+  /* 2 */
 }
 
 /*
@@ -1506,9 +1507,7 @@ select {
   height: auto;
 }
 
-.h-full {
-  height: 100%;
-}
+
 
 .h-95-px {
   height: 95px;

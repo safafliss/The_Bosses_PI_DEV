@@ -21,6 +21,8 @@ const {
   updateUser,
   LoginFbGoogle
 } = require('../controllers/users.controllers');
+
+const {addTrashSpot,getAllTrashSpots,deleteATrashSpot,collectTrash,getTrashRanks} = require("../controllers/trashSpot.controllers");
 const { ROLES, inRole } = require('../security/RoleMiddleware');
 const passport = require('passport');
 const resetPasswordToken = require('../models/resetPasswordToken');
@@ -82,7 +84,7 @@ router.put("/updateUser/:id", updateProfile)
 
 
 /* test router */
-router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULIER), Test);
+router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULAR), Test);
 router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
 router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
 router.post(
@@ -150,5 +152,13 @@ router.get('/verify/:user_id/:token', async function(req,res){
       });
 
 router.post("/LoginFbGoogle",LoginFbGoogle)
+
+
+router.post("/addTrashSpot",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),addTrashSpot);
+router.get("/getAllTrashSpots",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),getAllTrashSpots);
+router.post("/deleteATrashSpot",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),deleteATrashSpot)
+router.post("/collectTrash",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),collectTrash)
+router.get("/getTrashRanks",getTrashRanks)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),
 
 module.exports = router;

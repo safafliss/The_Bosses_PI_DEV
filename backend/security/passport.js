@@ -24,7 +24,7 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
+      
       UserModel.findOne({ email: profile.emails[0].value })
         .then(async function (user) {
           if (user) {
@@ -109,7 +109,7 @@ passport.use(
 
     },
     function (accessToken, refreshToken, profile, cb) {
- 
+      console.log(profile.displayName);
      //const email = profile.emails[0].value;
      console.log("heye",profile)
     const image = profile._json.picture.data.url;
@@ -127,7 +127,8 @@ passport.use(
     
             image: { url: profile.photos[0].value },
             email: profile.emails[0].value,
-            firstName: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             googleId:profile.id,
             secret: accessToken,
           };
@@ -142,7 +143,8 @@ passport.use(
             googleId: profile.id,
             image: { url: profile.photos[0].value },
             email: profile.emails[0].value,
-            firstName: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             secret: accessToken,
             role:"PARTICULAR"
           });

@@ -19,6 +19,7 @@ import VerifSend from './pages/VerifSend';
 import VerifSuccess from './pages/VerifSuccess';
 import VerifFail from './pages/VerifFail';
 import CheckVerif from './pages/CheckVerif';
+import TrashSpotHome from './pages/TrashSpot/TrashSpotHome';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Dashboard imports
 import Sidebar from './components/ReusableComponents/components/Sidebar/Sidebar';
@@ -88,7 +89,7 @@ function App() {
   console.log(user1)
   return (
     <BrowserRouter>
-      <div className="bg-light" style={{ height: '100vh' }}>
+      <div className="bg-light" style={{ height: 'fit-content' }}> {/* kent style={{ height: '100vh' }} */}
         <Routes>
           <Route
             path="/"
@@ -240,6 +241,15 @@ function App() {
           <Route
             path="/formLivreur/:id"
             element={<FormLivreur user={user} />}
+          />
+          
+          <Route
+            path="/TrashSpot"
+            element={
+              // <ForceRedirect user={user}>
+              <TrashSpotHome user={user} />
+              // </ForceRedirect>
+            }
           />
           <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
           {/* <Route path="/profile" element={<Profile user={user} />} />*/}

@@ -10,13 +10,15 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 import "./assets/styles/index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.referrerPolicy = "no-referrer"; 
+root.render(<Provider store={store} ><App/></Provider>)
+// root.render(
+//   <Provider store={store}>
+//     <App />
+//   </Provider>,
+//   document.getElementById('root')
+// );
 
 
 

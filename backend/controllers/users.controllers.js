@@ -55,9 +55,21 @@ const generateResetToken = async (userid, email) => {
 
 
 const LoginFbGoogle = (req,res)=>{
-  const {createdAt,updatedAt,role,email,_id,firstName} = req.body
+ console.log("hedha l userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",req.body)
+ if( Object.keys(req.body).length > 0 ){
+  var {googleId,email,firstName,lastName} = req.body
+ 
+  if (!firstName){
+    firstName = req.body.name.givenName;
+   
+    lastName = req.body.name.familyName;
+    email = req.body.emails[0].value;
+    googleId = req.body.id;
+  }
+
+
   try{
-    const userTest = UserModel.findOne({createdAt:createdAt,updatedAt:updatedAt,role:role,email:email,_id:_id,firstName:firstName}).then((user) => {
+    const userTest = UserModel.findOne({googleId:googleId,lastName:lastName,email:email,firstName:firstName}).then((user) => {
       if (user){
         
         var token = jwt.sign(
@@ -74,12 +86,19 @@ const LoginFbGoogle = (req,res)=>{
           token: 'Bearer ' + token,
         });
       }else{
+       
         res.status(403).json("not found");
       }
     })
+
   }catch (error) {
+   
     res.status(400).json("Bad request");
   }
+}
+else{
+  res.status(400).json("faceboookkkkk");
+}
 }
 
 const Login = async (req, res) => {

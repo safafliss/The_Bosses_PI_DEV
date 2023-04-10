@@ -1,0 +1,15 @@
+.navbarClass{
+    position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        font-size: 25px;
+        z-index: 9999;
+}
+
+
+/* style={{position: "sticky",
+    top: 0,
+    background: "white",
+    zIndex: 999999}
+    } */
