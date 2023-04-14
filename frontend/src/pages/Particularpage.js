@@ -37,8 +37,8 @@ function Particularpage(props) {
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
-              backgroundImage:
-                "url('https://cdn.dribbble.com/users/3474264/screenshots/14875714/media/24c5c1e464908c220e9cb24887c07063.jpg?compress=1&resize=1000x750&vertical=top')",
+              width:"0px",
+       
             }}
           >
             <span
