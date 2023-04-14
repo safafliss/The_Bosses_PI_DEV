@@ -45,6 +45,9 @@ import FormProduct from "./pages/product/FormProduct";
 import ProductsCreated from "./pages/product/ProductsCreated";
 import FormUpdateProduct from "./pages/product/FormUpdateProduct";
 import AllProducts from "./pages/product/AllProducts";
+import Gallery from "./pages/product/Gallery";
+import Popup from "./pages/product/Popup";
+import Favoris from "./pages/product/Favoris";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -230,8 +233,8 @@ function App() {
           <Route path="/productsCreated" element={<ProductsCreated />} />
           <Route path="/updateProduct/:id" element={<FormUpdateProduct />} />
           <Route path="/allProducts" element={<AllProducts />} />
-
-
+          <Route path="/favoris" element={<Favoris/>}/> 
+ 
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />
         </Routes>

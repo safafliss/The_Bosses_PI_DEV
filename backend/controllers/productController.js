@@ -11,6 +11,13 @@ const getProducts = async (req, res) => {
   res.status(200).json(products);
 };
 
+//get products by idProduct
+const getProductsById = async (req, res) => {
+  const { id } = req.params;
+  const products = await ProductModel.findOne({_id: id});
+  res.status(200).json(products);
+};
+
 //get all products
 const getAllProducts = async (req, res) => {
   const products = await ProductModel.find({}).sort({ createdAt: -1 });
@@ -144,6 +151,8 @@ const updatePicture = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   getProducts,
   createProduct,
@@ -155,5 +164,6 @@ module.exports = {
   getAllProducts,
   getAllProductsFilter,
   getAllProductsSortedByPrice,
-  getAllProductsSortedByDate
+  getAllProductsSortedByDate,
+  getProductsById
 };

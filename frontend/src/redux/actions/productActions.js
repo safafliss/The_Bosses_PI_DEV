@@ -102,6 +102,23 @@ export const fetchAllProducts = () => async (dispatch) => {
   }
 };
 
+export const fetchAllFavoris = (idUser) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/favoris/getFavoris/" + idUser
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
 export const fetchAllProducts1 =
   ({ minPrice, maxPrice }) =>
   async (dispatch) => {

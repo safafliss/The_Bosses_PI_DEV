@@ -12,6 +12,8 @@ const authRouters = require("./routes/auth");
 const session = require("express-session");
 //product
 const productRoutes = require("./routes/productRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
+const favorisRoutes = require("./routes/favorisRoutes");
 const cron = require("node-cron");
 const sendEmailProduct = require("./utils/sendEmailProduct");
 const automaticUpdateProduct = require("./utils/automaticUpdateProduct");
@@ -54,6 +56,8 @@ mongoose
 
 app.use("/api", indexRouter);
 app.use("/product", productRoutes);
+app.use("/gallery",galleryRoutes);
+app.use("/favoris", favorisRoutes);
 // cron.schedule('*/2 * * * *', () => {
 //   console.log('running a task every two minutes');
 // });
@@ -61,12 +65,13 @@ app.use("/product", productRoutes);
 //   sendEmailProduct();
 //   console.log("heyy");
 // });
+
 // cron.schedule("*/2 * * * *", () => {
 //   sendEmailProduct();
 //   console.log("heyy");
 // });
-cron.schedule("*/0.3 * * * *", () => {
-  automaticUpdateProduct();
-  console.log("heyy");
-});
+// cron.schedule("*/0.3 * * * *", () => {
+//   automaticUpdateProduct();
+//   console.log("heyy");
+// });
 module.exports = app;

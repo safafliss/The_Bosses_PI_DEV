@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./cardStyle.css";
 import Dialog from "./Dialog";
-
+import "./Popup.css";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faHeartbeat } from "@fortawesome/free-solid-svg-icons";
 import {
   deleteProduct1,
   fetchSingleProduct,
+  fetchAllFavoris,
 } from "../../redux/actions/productActions";
+
 import { useNavigate } from "react-router-dom";
 
 function AllProductDetails({ product, idUser }) {
@@ -47,9 +52,9 @@ function AllProductDetails({ product, idUser }) {
     //dispatch(deleteProduct1(product._id, navigate));
   };
   const handleClick1 = async () => {
-    console.log("avant" + product);
+    //console.log("avant" + product);
     dispatch(fetchSingleProduct(product._id, navigate));
-    console.log("après" + product);
+    //console.log("après" + product);
   };
 
   const areUSureDelete = (choose) => {
@@ -60,6 +65,38 @@ function AllProductDetails({ product, idUser }) {
       handleDialog("", false);
     }
   };
+  //detail
+  //const products = useSelector((state) => state.products.products);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    showGallery();
+    //dispatch(fetchAllFavoris(idUser));
+  }, []);
+
+  const showGallery = async () => {
+    const response = await axios.get(
+      `http://localhost:3600/gallery/showGallery/${product._id}`
+    );
+    //console.log(response.data);
+    response.data.map((img) => {
+      setImages([...images, img.images]);
+    });
+    //console.log(images.flat());
+  };
+  const [isFavorite, setIsFavorite] = useState(product.isFavorite);
+  const addToFavoris = async () => {
+    const response = await axios.post(
+      `http://localhost:3600/favoris/addFavoris`,
+      { username: idUser, productsFavoris: product }
+    );
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div
@@ -69,36 +106,6 @@ function AllProductDetails({ product, idUser }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* <p>{product.category}</p>
-      <p>Type: {product.type}</p>
-      <p>Brand: {product.brand}</p>
-      <p>Price: {product.price}</p>
-      <p>Quantity: {product.quantity}</p>
-      <p>
-        Expiry Date:{" "}
-        {formatDistanceToNow(new Date(product.expiry_date), {
-          addSuffix: true,
-        })}
-      </p>
-      <p>Description: {product.description}</p>
-      <img src={product.image.url} alt={product.description} />
-      {product.username == idUser ? (
-        <button
-          className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-          onClick={handleClick}
-        >
-          delete
-        </button>
-      ) : null}
-      {product.username == idUser ? (
-        <button
-          className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-          onClick={handleClick1}
-        >
-          update
-        </button>
-      ) : null} */}
-
       <div className="product-box">
         <div className="product-inner-box position-relative">
           <div className="icons">
@@ -106,16 +113,72 @@ function AllProductDetails({ product, idUser }) {
               href="#"
               className="text-decoration-none text-dark"
               style={{ backgroundColor: "#69b550" }}
+              onClick={addToFavoris}
             >
-              <i class="fa-solid fa-heart"></i>
+              <FontAwesomeIcon
+                icon={faHeart}
+                style={{ color: isFavorite ? "#FF1493" : "#000000" }}
+              />
             </a>
             <a
               href="#"
               className="text-decoration-none text-dark"
               style={{ backgroundColor: "#69b550" }}
+              onClick={togglePopup}
             >
               <i class="fa-solid fa-eye"></i>
             </a>
+            {isOpen && (
+              <div className="popup">
+                <div className="popup-inner">
+                  <button
+                    onClick={togglePopup}
+                    className="bg-red-800 text-white text-sm font-bold uppercase  rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-10"
+                    //style={{ marginRight: "-320px", marginTop: "10px" }}
+                  >
+                    <i class="fa fa-x"></i>
+                  </button>
+                  <div className="product-brand">
+                    <span>
+                      <strong>Brand:</strong> {product.brand}
+                    </span>
+                  </div>
+                  <div className="product-quantity">
+                    <span>
+                      <strong>Quantity:</strong> {product.quantity}
+                    </span>
+                  </div>
+                  <div className="product-desc">
+                    <span>
+                      <strong>Description:</strong> {product.description}
+                    </span>
+                  </div>
+
+                  <div>
+                    {/* <div>
+                      <img
+                        src={product.image.url}
+                        alt={product.description}
+                        className="img-fluid"
+                      />
+                    </div> */}
+                    <div>
+                      {images.flat().map((img, i) => {
+                        return (
+                          <img
+                            //className="preview"
+                            src={img.url}
+                            alt={"image-" + i}
+                            key={i}
+                            style={{ marginRight: "10px" }}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {product.username == idUser ? (
               <a
                 href="#"
@@ -161,28 +224,32 @@ function AllProductDetails({ product, idUser }) {
             <h3>{product.category}</h3>
           </div>
           <div className="product-type">
-            <span>Type: {product.type}</span>
+            <span>
+              <strong>Type:</strong> {product.type}
+            </span>
           </div>
-          <div className="product-brand">
+          {/* <div className="product-brand">
             <span>Brand: {product.brand}</span>
-          </div>
+          </div> */}
           <div className="product-price">
-            <span>Price: {product.price}DT</span>
+            <span>
+              <strong>Price:</strong> {product.price}DT
+            </span>
           </div>
-          <div className="product-quantity">
+          {/* <div className="product-quantity">
             <span>Quantity: {product.quantity}</span>
-          </div>
+          </div> */}
           <div className="product-date">
             <span>
-              Expiry Date:{" "}
+              <strong>Expiry Date: </strong>
               {formatDistanceToNow(new Date(product.expiry_date), {
                 addSuffix: true,
               })}
             </span>
           </div>
-          <div className="product-desc">
+          {/* <div className="product-desc">
             <span>Description: {product.description}</span>
-          </div>
+          </div> */}
         </div>
       </div>
       {dialog.isLoading && (

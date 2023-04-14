@@ -10,12 +10,16 @@ const {
   getAllProducts,
   getAllProductsFilter,
   getAllProductsSortedByPrice,
-  getAllProductsSortedByDate
+  getAllProductsSortedByDate,
+  getProductsById
 } = require("../controllers/productController");
 var router = express.Router();
 
 //get user products
 router.get("/getProducts/:idUser", getProducts);
+
+//get product by id
+router.get("/getProductsById/:id", getProductsById);
 
 //get all products
 router.get("/getAllProducts", getAllProducts);
