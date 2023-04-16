@@ -5,7 +5,7 @@ import Particularpage from '../pages/Particularpage';
 import Proffpage from '../pages/Proffpage';
 import Profile from '../pages/Profile';
 
-const PrivateRouter = ({ user, children }) => {
+const PrivateRouter = ({ user, children ,user1}) => {
   if (!user.isConnected) {
     return <Navigate to="/login" replace />;
   }
@@ -15,7 +15,7 @@ const PrivateRouter = ({ user, children }) => {
       case 'PROFESSIONAL':
         return <Proffpage />
       case 'PARTICULAR':
-        return <Particularpage />
+        return <Particularpage user={user} user1={user1} />
       case 'ASSOCIATION':
         return <Associationpage />;
       case 'ADMIN':

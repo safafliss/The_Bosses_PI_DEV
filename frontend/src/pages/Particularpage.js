@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -6,19 +6,23 @@ import backgroundImage from "../assets/img/landpage.png";
 import jwt_decode from "jwt-decode"
 import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
 import SideButton from "./sideButton";
+import { useTranslation } from "react-i18next";
 
 function Particularpage(props) {
+ //console.log("***"+Object.entries(props.user1?.email))
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
+  const {t}=useTranslation();
   console.log(localStorage.getItem("jwt"))
   const token = localStorage.getItem("jwt")
   console.log(jwt_decode(token))
   const id = jwt_decode(token).id
+  console.log("-->"+id)
   return (
     <>
-    <Navbar  /> 
+    <Navbar  user1={props.user1} /> 
       <main>
         {/* 
       
@@ -57,7 +61,7 @@ function Particularpage(props) {
                       color: "#2aafbe",
                     }}
                   >
-                    Welcome to Zero Waste.
+                    {t('Welcome to Zero Waste')}
                   </h1>
                   <p className="mt-4 text-lg ">
                     This is a simple example of a Landing Page you can build

@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import EmojiRating from 'react-emoji-rating'
 import { FaStar } from "react-icons/fa";
 import jwt_decode from "jwt-decode"
+import { useTranslation } from 'react-i18next';
 
 function SideButton({user}) {
     const token = localStorage.getItem("jwt")
@@ -56,7 +57,7 @@ function SideButton({user}) {
           BorderColr:"black"
         },
       };
- 
+    const {t}= useTranslation();
     const [star, setstar] = useState(0);
     const [hoverValue, setHoverValue] = useState(undefined);
     const[experience,setExp]=useState("");
@@ -77,7 +78,7 @@ function SideButton({user}) {
     }
 
       let subtitle;
-      const [modalIsOpen, setIsOpen] = React.useState(true);
+      const [modalIsOpen, setIsOpen] = React.useState(false);
     
       function openModal() {
         setIsOpen(true);
@@ -103,9 +104,9 @@ function SideButton({user}) {
       function closeModal() {
         setIsOpen(false);
       }
-      const handleSubmit = async (e) => {
+      const handleSubmit = async () => {
         
-        e.preventDefault();
+   
         try {
           const response = await fetch("/rate/addRating", {
             method: "POST",
@@ -124,9 +125,9 @@ function SideButton({user}) {
     
       return (
      
-        <div>
+        <div style={{cursor:"pointer"}}>
             <i class="fas fa-smile-wink"
-            onClick={openModal} style={{position: 'fixed', right: 20, 
+            onClick={()=>openModal()} style={{position: 'fixed', right: 20, 
             bottom: 20, width: 50, height: 50, borderRadius: '50%',
             color: '#24b765', fontSize: 50, fontWeight: 'bold',
             cursor:"pointer"}}>
@@ -139,12 +140,12 @@ function SideButton({user}) {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-             <i class="fa fa-times" style={{color:"Red",cursor:"pointer",float:"right"}}onClick={closeModal}></i>
+             <i class="fa fa-times" style={{color:"Red",cursor:"pointer",float:"right"}}onClick={()=>closeModal()}></i>
 
              {!finished ? (
             <div style={styles.container}>
             
-                <h2 className="text-xxl" style={{marginTop:"25px",marginBottom:"25px"}}> Rate your Experience! </h2>
+                <h2 className="text-xxl" style={{marginTop:"25px",marginBottom:"25px"}}> {t('Rate your Experience!')} </h2>
                 <div style={styles.stars}>
                     {stars.map((_, index) => {
                     return (
@@ -173,16 +174,16 @@ function SideButton({user}) {
                         <button
                                 className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-32 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
-                                onClick={handleSubmit}
+                                onClick={()=>handleSubmit()}
                         >
-                            Submit
+                           {t(' Submit')}
                         </button>
                         
                     </div>
                         ): (    <div style={{ textAlign: "center" }}>
                         <i className="fas fa-check-circle" style={{ color: "#24b765", fontSize: "3em", marginBottom: "20px" }}></i>
-                        <h2 className="text-xxl" style={{ marginTop: "0", marginBottom: "20px" }}>Thank you for submitting!</h2>
-                        <p style={{ fontSize: "1.2em" }}>Your feedback has been received.</p>
+                        <h2 className="text-xxl" style={{ marginTop: "0", marginBottom: "20px" }}>{t('Thank you for submitting!')}</h2>
+                        <p style={{ fontSize: "1.2em" }}>{t('Your feedback has been received')}.</p>
                       </div>)}
                     </Modal>
             </div>

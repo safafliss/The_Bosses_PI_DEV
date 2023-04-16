@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-
+import Navbar  from'../components/ReusableComponents/components/Navbars/UserNavbar'
+import { useTranslation } from 'react-i18next';
 function SupportCenter({user1}) {
+
+  const { t } = useTranslation()
+  
   console.log(user1)
   const [formData, setFormData] = useState({
     email:user1?.email,
@@ -32,20 +36,20 @@ function SupportCenter({user1}) {
   };
   return (
  <>
-
-<section className="relative block py-24 lg:pt-0 bg-green-800	">
-          <div className="container mx-auto px-4">
+        <Navbar user1={user1}/>
+        
+<section className="relative block py-24  bg-green-800	">
+          <div className="container my-6 px-4 ">
             <div className="">
              
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-green-50		">
                   <div className="flex-auto p-5 lg:p-10">
-                    <h4 className="text-2xl font-semibold">
-                      feel free to report  us any bugs or  Reports  !
+                    <h4 className="text-2xl font-semibold ">
+                     {t('feel free to report  us any bugs or  Reports!') }
                     </h4>
                     <br></br>
                     <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
-                      Complete this form and we will get back to you in 24
-                      hours.
+                    { t('Complete this form and we will get back to you in 24hours')}
                     </p>
                     <form onSubmit={handleSubmit}>
                     <div className="relative w-full mb-3 mt-8">
@@ -53,7 +57,7 @@ function SupportCenter({user1}) {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="full-name"
                       >
-                        email
+                       {t('email')}
                       </label>
                       <input
                         type="text"
@@ -69,7 +73,7 @@ function SupportCenter({user1}) {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="email"
                       >
-                        Subject
+                        {t('Subject')}
                       </label>
                       <input
                         type="text"
@@ -86,7 +90,7 @@ function SupportCenter({user1}) {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="message"
                       >
-                        Message
+                       {t( 'Message')}
                       </label>
                       <textarea
                         name="description"
@@ -105,7 +109,7 @@ function SupportCenter({user1}) {
                         type="button"
                         onClick={handleSubmit}
                       >
-                        Send Message
+                        {t('Send Message')}
                       </button>
                   
                     </div>

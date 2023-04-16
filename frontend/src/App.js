@@ -57,7 +57,10 @@ if (window.localStorage.jwt) {
   }
 }
 
+
 function App() {
+
+
   const auth = useSelector((state) => state.auth);
   const user = {
     isConnected: auth.isConnected,
@@ -96,7 +99,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<PrivateRouter user={user}></PrivateRouter>}
+            element={<PrivateRouter user1={user1} user={user}></PrivateRouter>}
           />
           {/* <Route
             path="/profile"
@@ -203,7 +206,7 @@ function App() {
           <Route
             path="/registerPartner"
             element={
-              <PrivateRouter user={user}>
+              <PrivateRouter user={user} user1={user1}>
                 <RegisterPartner />
               </PrivateRouter>
             }
@@ -285,10 +288,7 @@ function App() {
           />
 
               
-            <Route
-            path="/rate"
-            element={<SideButton user1={user1} user={user}/>}
-          />
+       
           <Route
             path="/formLivreur/:id"
             element={<FormLivreur user={user} />}
@@ -298,6 +298,10 @@ function App() {
           <Route path="/admin/profiles/" element={<Profile user={user} />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />
+          <Route
+            path="/rate"
+            element={<SideButton user1={user1} user={user}/>}
+          />
         </Routes>
       </div>
     </BrowserRouter>
