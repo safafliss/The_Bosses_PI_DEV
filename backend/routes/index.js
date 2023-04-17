@@ -158,7 +158,7 @@ router.post("/addTrashSpot",passport.authenticate('jwt', { session: false }),inR
 router.get("/getAllTrashSpots",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),getAllTrashSpots);
 router.post("/deleteATrashSpot",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),deleteATrashSpot)
 router.post("/collectTrash",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),collectTrash)
-router.get("/getTrashRanks",getTrashRanks)
+router.get("/getTrashRanks",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),getTrashRanks)
 // ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR),
 
 module.exports = router;

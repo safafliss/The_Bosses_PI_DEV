@@ -120,7 +120,7 @@ function CollectModal(props) {
                 />
               </div>
             </div>
-            <div className="swearPart mt-5" >
+            <div className="swearPart mt-4" >
                 
             <h5>Honors assignment</h5>
                   <label>I collected this trash: &nbsp;</label>
@@ -129,7 +129,7 @@ function CollectModal(props) {
             
             <div className="d-flex justify-content-center " style={{marginTop:"40px"}}>
               {error == "Please wait..." ?
-              <div className="errors mt-3">{error} <div  className="spinner-border" role="status">
+              <div className="errors mt-3">{error} <div  className="spinner-border" style={{    marginBottom: "-10px"}} role="status">
                           <span className="visually-hidden">Loading...</span>
                           </div></div>:
               <div className="errors mt-3">{error}</div>}

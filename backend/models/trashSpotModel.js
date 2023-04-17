@@ -8,14 +8,18 @@ const TrashSpotModel = new Schema(
     accessTrash:"boolean",
     trashSize: "string",
     type:"string",
-    position: {
-        longitude: {
-          type: Number,
+      location: {
+        type: {
+          type: String, 
+          enum: ['Point'], 
+          required: true
         },
-        latitude: {
-          type: Number,
-        },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
       },
+    importanceLevel : "string",
     image: {
         public_id: {
           type: String,
@@ -37,7 +41,13 @@ const TrashSpotModel = new Schema(
           type: String,
         },
       },
+      frontEndLevel: "string",
+      collected_at: {
+        type: Date,
+        default: Date.now,
+      },
       collected_by:{ type: MyObjectId, ref: 'user' },
+      secondary_spots: [{ type: MyObjectId, ref: 'trashSpot' }]
     },
     {
       timestamps: true,

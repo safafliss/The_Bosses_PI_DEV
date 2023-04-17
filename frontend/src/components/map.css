@@ -114,3 +114,10 @@
     top:160px;
     z-index: 3;
   }
+
+  .roundedGround{
+    background-color: blue;
+    border-radius: 50%;
+    opacity: 0.2;
+    transform: translateY(-50%);
+  }

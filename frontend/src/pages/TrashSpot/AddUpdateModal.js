@@ -108,8 +108,8 @@ function AddUpdateModal(props) {
             </div>
             <div className="d-flex justify-content-center">
               {props.error == "Please wait..." ?
-              <div className="errors mt-3">{props.error} <div  className="spinner-border" role="status">
-                          <span class="visually-hidden">Loading...</span>
+              <div className="errors mt-3">{props.error} <div  className="spinner-border"  style={{    marginBottom: "-10px"}} role="status">
+                          <span className="visually-hidden">Loading...</span>
                           </div></div>:
               <div className="errors mt-3">{props.error}</div>}
             </div>
@@ -117,7 +117,7 @@ function AddUpdateModal(props) {
         </div>
       </div>
       <div className="footer d-flex justify-content-end">
-        <button className="btn btn-success" disabled={props.error == "Please wait..."} onClick={saveUpdateTrash}>
+        <button className="btn btn-success" disabled={props.error == "Please wdait..."} onClick={saveUpdateTrash}>
           {props.idTrash == -1? 'Add':'Update'}
         </button>
       </div>

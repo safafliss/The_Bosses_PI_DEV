@@ -28,6 +28,7 @@ const [selectedLong,setSelectedLong] = useState(0)
 var selectedLat1 = 0
 var selectedLong1 = 0
 
+
 var markerHtml= document.createElement("div");
 markerHtml.style.display = "block";
 markerHtml.className = "marker MarkerByUser";
@@ -55,6 +56,7 @@ markerHtmlNewMark.addEventListener("click",function(e){
 useEffect(()=>{
   if (!map.current) return;
   map.current.on('click', (e) => {
+    console.log([e.lngLat.lng ,e.lngLat.lat])
     markerOnMapNewMark = new mapboxgl.Marker(markerHtmlNewMark, { offset: [0, -50 / 2] });
   markerOnMapNewMark.setLngLat([e.lngLat.lng ,e.lngLat.lat]);
   
@@ -110,8 +112,9 @@ useEffect(() => {
         if (map.current){ 
           
         if (currentLat!=0 && !markerHtml){ 
-          map.current.setCenter([currentLong ,currentLat])
           map.current.setZoom(15);
+          map.current.setCenter([currentLong ,currentLat])
+          
         }
           return;} 
         map.current = new mapboxgl.Map({
@@ -121,7 +124,10 @@ useEffect(() => {
         maxBounds: bounds,
         zoom: zoom
         });
+        
+
         },[currentLat]);
+
 
   const changeStyle = () =>{
     if (mapStyle.includes("satellite")){
@@ -155,8 +161,62 @@ useEffect(() => {
     }
   },[props.addMapMarker])
 
+    useEffect(() =>{
+      if (props.jumpTo[0] != 0){ 
+          map.current.jumpTo({center:[props.jumpTo[1],props.jumpTo[0]],zoom:12 })
+      }
+    },[props.jumpTo])
+
 
   const addASpotMarker = (trash) =>{
+    createANewMarker(trash,trash.id)
+    var blueCircleRange = document.createElement("div");
+    blueCircleRange.className =  "roundedGround rounded"+ trash.id
+    const scale = Math.pow(2, map.current.getZoom());
+    blueCircleRange.style.width = (scale * .04)*.76 + "px"
+    blueCircleRange.style.height = (scale * .04)*.76 + "px"
+    
+  map.current.on('zoom', function() {
+    const scale = Math.pow(2, map.current.getZoom());
+    blueCircleRange.style.width = (scale * .04)*.76 + "px"
+    blueCircleRange.style.height = (scale * .04)*.76 + "px"
+      var newTop = "0px"
+      if (scale<3500){
+        newTop = 3.9473684210526E-6 * (scale **2) - 0.0041973684210526 * scale + 10.1073684210526+"px"
+      }
+      blueCircleRange.style.top = newTop
+    // set css size based on scale
+});
+    var doura = new mapboxgl.Marker(blueCircleRange, { offset: [0, -50 / 2] });
+    doura.setLngLat([trash.longitude ,trash.latitude])
+    doura.addTo(map.current);
+  }
+
+  useEffect(()=>{
+    if (props.deleteRoundedAndCreateAnother.length>0){
+      let roudedMarker = document.getElementById("rounded"+props.deleteRoundedAndCreateAnother[1])
+      if (roudedMarker){
+        roudedMarker.remove()
+        if (props.deleteRoundedAndCreateAnother[0]['ownerId']){
+         let typeTrash = {
+          id: props.deleteRoundedAndCreateAnother[0]._id,
+          longitude: props.deleteRoundedAndCreateAnother[0].location.coordinates[1],
+          latitude: props.deleteRoundedAndCreateAnother[0].location.coordinates[0],
+          ownerId: props.deleteRoundedAndCreateAnother[0].ownerId._id,
+          type: props.deleteRoundedAndCreateAnother[0].type,
+        }
+        addASpotMarker(typeTrash)
+      }
+
+      }
+    }
+
+  },[props.deleteRoundedAndCreateAnother])
+
+   
+
+  const createANewMarker = (trash,directTo,theTrash="") =>{
+
     var markerTrashHtml = document.createElement("div");
     markerTrashHtml.style.display = "block";
     switch(trash.type) {
@@ -180,32 +240,52 @@ useEffect(() => {
       markerTrashHtml.style.backgroundColor = "#d55e00";
     }
     markerTrashHtml.className = "marker trashSpot "+trash.id;
+    // markerTrashHtml.hidden = "true"
     markerTrashHtml.id = "marker"+trash.id
     var markerTrashMark = new mapboxgl.Marker(markerTrashHtml, { offset: [0, -50 / 2] });
     markerTrashMark.setLngLat([trash.longitude ,trash.latitude]);
     markerTrashMark.addTo(map.current);
     markerTrashHtml.addEventListener("click",function(e){
       e.stopPropagation();
-      if (trash.ownerId==props.myid){
-        props.showMyTrashSpots()
-      }else{
-        props.showAllTrashSpotsSaufMine()
-      }
-      window.location = "#"+trash.id;  
+      props.showTheRightTrash(directTo,theTrash)
+      // if (trash.ownerId==props.myid){
+      //   props.showMyTrashSpots()
+      // }else{
+      //   props.showAllTrashSpotsSaufMine()
+      // }
+      console.log("redirecting to ...",directTo)
+      // window.location = "#"+directTo;  
     })
-
+    
     map.current.on('move', () => {
       var south  = map.current.getBounds()._sw.lng;
       var east = map.current.getBounds()._ne.lat;
       if (markerTrashMark){
         if (  markerTrashMark._lngLat.lng < south ||    markerTrashMark._lngLat.lat > east ){
           markerTrashHtml.style.display = "none";
-      }else{
-        markerTrashHtml.style.display = "block";
+        }else{
+          markerTrashHtml.style.display = "block";
+        }
       }
-    }
-  })
+    })
   }
+
+  useEffect(() =>{
+    if (props.newTrash!=""){
+    let typeTrash = {
+      id: props.newTrash[0]._id,
+      longitude: props.newTrash[0].location.coordinates[1],
+      latitude: props.newTrash[0].location.coordinates[0],
+      ownerId: props.newTrash[0].ownerId._id,
+      type: props.newTrash[0].type,
+      hide_id: props.newTrash[1]._id,
+    }
+    createANewMarker(typeTrash,props.newTrash[1],props.newTrash[0])
+    let markToRemove = document.getElementById("marker"+props.newTrash[0].hide_id)
+    if (markToRemove)
+    markToRemove.remove()
+  }
+  },[props.newTrash])
 
   
   const locateMe = ()=>{
@@ -214,8 +294,8 @@ useEffect(() => {
     deleteMarkers()
     markerOnMap.setLngLat([props.currLong ,props.currLat]);
     markerOnMap.addTo(map.current);
-    map.current.setCenter([props.currLong ,props.currLat])
     map.current.setZoom(15);  
+    map.current.setCenter([props.currLong ,props.currLat])
   }
   }
   useEffect(() => {
@@ -234,6 +314,10 @@ useEffect(() => {
       for (let i = 0; i < marker.length; i++) {
         marker[i].remove();
     }
+    marker = document.getElementsByClassName("MarkerByUser")
+    for (let i = 0; i < marker.length; i++) {
+      marker[i].remove();
+  }
     }
   },[props.mapMarkerRemoverTrigger])
 

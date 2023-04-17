@@ -76,8 +76,8 @@ html {
 .modalCollect{
   min-height: 800px;
 }
-
-select.trashType,  input{
+select.trashType, select,  input{
+  height: 40px;
   border-radius: 10px;
   /* background-color: green; */
   color:black;
