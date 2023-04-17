@@ -9,9 +9,7 @@ function Particularpage(props) {
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
-  console.log(localStorage.getItem("jwt"))
   const token = localStorage.getItem("jwt")
-  console.log(jwt_decode(token))
   const id = jwt_decode(token).id
   return (
     <>

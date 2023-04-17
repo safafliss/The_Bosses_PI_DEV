@@ -9,15 +9,12 @@ module.exports = async function validateLogin(data) {
   data.password = !isEmpty(data.password) ? data.password : '';
   let user = await UserModel.findOne({ email: data.email }).then(
     async (user) => {
-      console.log('user', user);
       if (user.banned.isBanned) {
-        console.log('normalement banned');
         return true;
       } else if (
         user.banned.isBanned &&
         new Date() > user.banned.banExpiresAt
       ) {
-        console.log('normalement not banned');
         user.banned.isBanned = false;
         await UserModel.findOneAndUpdate({ _id: user._id }, user, {
           new: true,
@@ -26,12 +23,10 @@ module.exports = async function validateLogin(data) {
         });
         return false;
       } else {
-        console.log('normalement not banned');
         return false;
       }
     }
   );
-  console.log(user);
 
   if (!validator.isEmail(data.email)) {
     errors.email = 'Required format email';
@@ -45,7 +40,6 @@ module.exports = async function validateLogin(data) {
   if (user == true) {
     errors.banned = 'You are banned till ...';
   }
-  console.log(errors);
   return {
     errors,
     isValid: isEmpty(errors),

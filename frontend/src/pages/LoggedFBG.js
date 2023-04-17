@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
 
 function LoggedFBG() {
     const [userfbg,setuserfbg]=useState(null)
-    console.log(userfbg);
     useEffect(() => {
         const getUser = () => {
           fetch("http://localhost:3000/auth/login/success", {

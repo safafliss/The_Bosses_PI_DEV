@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import Inputs from '../components/Inputs';
 import { useDispatch, useSelector } from 'react-redux';
-import Classnames from 'classnames';
-
 import { useParams } from 'react-router-dom';
-
-import {
-  AddProfile,
-  GetProfile,
-  UpdateProfile,
-} from '../redux/actions/profileActions';
+import { GetProfile, UpdateProfile } from '../redux/actions/profileActions';
 
 //------------- imports
 
 import Navbar from '../components/ReusableComponents/components/Navbars/AuthNavbar';
 import Footer from '../components/ReusableComponents/components/Footers/Footer';
-import { SET_PROFILE } from '../redux/types';
 
 function Profile() {
   let userId = useSelector((state) => state.auth.user.id);
-  console.log('userId');
   let connectedUserId = useSelector((state) => state.auth.user.id);
   let { id } = useParams();
   id = id ? id : '';
-  userId = id != '' ? id : userId;
-  console.log('userID ', userId);
+  userId = id !== '' ? id : userId;
   const dispatch = useDispatch();
   const test = async () => {
     await dispatch(GetProfile(userId));
@@ -34,13 +23,25 @@ function Profile() {
   }, []);
 
   const user = useSelector((state) => state.profiles.profile);
-  console.log('ijeni', user);
+
+  // reformat date
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  let date = new Date(user.birthDate);
+  const formattedDate = date.toLocaleDateString('fr-FR', options);
 
   //edit profile
   const [showText, setShowText] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [organisationName, setOrganisationName] = useState('');
+  const [street, setStreet] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [gender, setGender] = useState('');
+  const [bio, setBio] = useState('');
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -54,10 +55,51 @@ function Profile() {
     setEmail(event.target.value);
   };
 
+  const handlePhoneNumberChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
+  const handleOrganisationNameChange = (event) => {
+    setOrganisationName(event.target.value);
+  };
+
+  const handleStreetChange = (event) => {
+    setStreet(event.target.value);
+  };
+
+  const handlePostalCodeChange = (event) => {
+    setPostalCode(event.target.value);
+  };
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleStateChange = (event) => {
+    setState(event.target.value);
+  };
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleBioChange = (event) => {
+    setBio(event.target.value);
+  };
+
   const handleShowText = () => {
     setFirstName(user.firstName);
     setLastName(user.lastName);
     setEmail(user.email);
+    setPhoneNumber(user.phoneNumber);
+    setOrganisationName(user.organisationName);
+    setStreet(user.street);
+    setPostalCode(user.postalCode);
+    setCity(user.city);
+    setState(user.state);
+    setGender(user.gender);
+    setBio(user.bio);
+
     setShowText(!showText);
   };
 
@@ -65,8 +107,17 @@ function Profile() {
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.organisationName = organisationName;
+    user.street = street;
+    user.postalCode = postalCode;
+    user.city = city;
+    user.state = state;
+    user.gender = gender;
+    user.bio = bio;
     await dispatch(UpdateProfile(user));
   };
+
   return (
     <>
       <Navbar transparent />
@@ -113,8 +164,8 @@ function Profile() {
                     <div className="relative">
                       <img
                         alt="..."
-                        src={require('../assets/img/team-2-800x800.jpg')}
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                        src={user.image != null ? user.image.url : ''}
+                        className="shadow-xl rounded-full h-auto align-middle border-none flex -m-10 -ml-20 lg:-ml-16 max-w-100-px"
                       />
                     </div>
                   </div>
@@ -126,7 +177,7 @@ function Profile() {
                       >
                         Connect
                       </button>
-                      {connectedUserId == userId ? (
+                      {connectedUserId === userId ? (
                         <>
                           {!showText ? (
                             <>
@@ -194,12 +245,42 @@ function Profile() {
                       </h3>
                       {/* EMAIL */}
                       <div className="mb-2 text-blueGray-600 mt-10">
-                        <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                        {user.organisationName}
+                      </div>
+                      <div className="mb-2 text-blueGray-600 mt-10">
                         {user.email}
                       </div>
-                      <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                        <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>{' '}
-                        Los Angeles, California
+                      <div className="mb-2 text-blueGray-600 mt-10">
+                        +{user.phoneNumber}
+                      </div>
+                      <div className="mb-2 text-blueGray-600 mt-10">
+                        {user.city} {user.state},{user.street} :{' '}
+                        {user.postalCode}
+                      </div>
+                      <div className="mb-2 text-blueGray-600 mt-10">
+                        {user.gender}
+                      </div>
+                      <div className="mb-2 text-blueGray-600 mt-10">
+                        {formattedDate}
+                      </div>
+                      <div className="mb-2 text-blueGray-600 mt-10">
+                        {user.email}
+                      </div>
+                      <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                        <div className="flex flex-wrap justify-center">
+                          <div className="w-full lg:w-9/12 px-4">
+                            <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
+                              {user.bio}
+                            </p>
+                            <a
+                              href="#pablo"
+                              className="font-normal text-lightBlue-500"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Show more
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     </>
                   ) : (
@@ -231,28 +312,83 @@ function Profile() {
                           onChange={handleEmailChange}
                         />
                       </label>
+                      <label>
+                        Phone Number:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="number"
+                          value={phoneNumber}
+                          onChange={handlePhoneNumberChange}
+                        />
+                      </label>
+                      <label>
+                        Name of Organisation:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={organisationName}
+                          onChange={handleOrganisationNameChange}
+                        />
+                      </label>
+                      <label>
+                        City:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={city}
+                          onChange={handleCityChange}
+                        />
+                      </label>
+                      <label>
+                        State:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={state}
+                          onChange={handleStateChange}
+                        />
+                      </label>
+                      <label>
+                        Street:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={street}
+                          onChange={handleStreetChange}
+                        />
+                      </label>
+                      <label>
+                        Postal Code:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={postalCode}
+                          onChange={handlePostalCodeChange}
+                        />
+                      </label>
+                      <label>
+                        Gender:
+                        <input
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={gender}
+                          onChange={handleGenderChange}
+                        />
+                      </label>
+                      <label>
+                        Bio:
+                        <textarea
+                          name="bio"
+                          rows="5"
+                          cols="40"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                          type="text"
+                          value={bio}
+                          onChange={handleBioChange}
+                        />
+                      </label>
                     </div>
                   )}
-                </div>
-                <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                  <div className="flex flex-wrap justify-center">
-                    <div className="w-full lg:w-9/12 px-4">
-                      <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                        An artist of considerable range, Jenna the name taken by
-                        Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                        performs and records all of his own music, giving it a
-                        warm, intimate feel with a solid groove structure. An
-                        artist of considerable range.
-                      </p>
-                      <a
-                        href="#pablo"
-                        className="font-normal text-lightBlue-500"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        Show more
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

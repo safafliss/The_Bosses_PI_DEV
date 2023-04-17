@@ -25,8 +25,8 @@ const resetPasswordToken = require('../models/resetPasswordToken');
 const usersModels = require('../models/users.models');
 var router = express.Router();
 
-const jwt = require('jsonwebtoken')
-const CLIENT_URL = "http://localhost:3000/";
+const jwt = require('jsonwebtoken');
+const CLIENT_URL = 'http://localhost:3000/';
 
 /* users routes. */
 
@@ -36,11 +36,8 @@ router.post('/register', Register);
 //? log in
 router.post('/login', Login);
 
-
-router.post('/resetpassword/:token',resetpassword);
-router.post('/forgotpassword', forgotpassword)
-
-
+router.post('/resetpassword/:token', resetpassword);
+router.post('/forgotpassword', forgotpassword);
 
 //? GET all users
 router.get(
@@ -57,14 +54,17 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getSingleUser
 );
-router.put('/getImage/:id', 
-passport.authenticate("jwt", { session: false }),
-uploadImage);
-router.put('/loginImage', 
-passport.authenticate("jwt", { session: false }),
-loginImage);
-router.put('/checkImage',
-checkLoginByImage);
+router.put(
+  '/getImage/:id',
+  passport.authenticate('jwt', { session: false }),
+  uploadImage
+);
+router.put(
+  '/loginImage',
+  passport.authenticate('jwt', { session: false }),
+  loginImage
+);
+router.put('/checkImage', checkLoginByImage);
 //? DELETE a user
 router.delete(
   '/deleteUser/:id',
@@ -74,15 +74,26 @@ router.delete(
 );
 
 //? UPDATE user
-router.put("/updateUser/:id", updateProfile)
-
-
-
+router.put('/updateUser/:id', updateProfile);
 
 /* test router */
-router.get('/test',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER.PARTICULIER), Test);
-router.get('/admin',passport.authenticate('jwt', { session: false}), inRole(ROLES.USER), Admin);
-router.post('/uploadImage',passport.authenticate('jwt', { session: false}), uploadImage);
+router.get(
+  '/test',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.USER.PARTICULIER),
+  Test
+);
+router.get(
+  '/admin',
+  passport.authenticate('jwt', { session: false }),
+  inRole(ROLES.USER),
+  Admin
+);
+router.post(
+  '/uploadImage',
+  passport.authenticate('jwt', { session: false }),
+  uploadImage
+);
 router.post(
   '/banProfile',
   passport.authenticate('jwt', { session: false }),
@@ -117,30 +128,36 @@ router.post(
   inRole(ROLES.ADMIN),
   AddProfile
 );
-router.get('/verify/:user_id/:token', async function(req,res){
-    const user_id = req.params.user_id;
-    const token = req.params.token;
-    // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
-    await resetPasswordToken.find({token:token}).then((Valid) =>{
-      if (Valid){
-        usersModels.findByIdAndUpdate(user_id,{isValid:true}).then((exists)=>{
-          if (exists){
-            var token = jwt.sign({ 
-              id: exists._id,
-              role: exists.role
-             }, process.env.PRIVATE_KEY,  { expiresIn: '90h' });
-             res.status(200).json({
-               message: "success",
-               token: "Bearer "+token
-             })
+router.get('/verify/:user_id/:token', async function (req, res) {
+  const user_id = req.params.user_id;
+  const token = req.params.token;
+  // const token_result = await resetPasswordToken.findOne({userId:user_id,token:token});
+  await resetPasswordToken.find({ token: token }).then((Valid) => {
+    if (Valid) {
+      usersModels
+        .findByIdAndUpdate(user_id, { isValid: true })
+        .then((exists) => {
+          if (exists) {
+            var token = jwt.sign(
+              {
+                id: exists._id,
+                role: exists.role,
+              },
+              process.env.PRIVATE_KEY,
+              { expiresIn: '90h' }
+            );
+            res.status(200).json({
+              message: 'success',
+              token: 'Bearer ' + token,
+            });
           }
-        })
-      }else{ 
-        // const user = usersModels.findByIdAndDelete(user_id);
-        console.log("not valid")
-        res.status(403).send("not verified")
-       }})
-      });
+        });
+    } else {
+      // const user = usersModels.findByIdAndDelete(user_id);
+      res.status(403).send('not verified');
+    }
+  });
+});
 
 /* authentication with fb && google */
 // router.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));

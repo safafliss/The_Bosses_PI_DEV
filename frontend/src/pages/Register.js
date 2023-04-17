@@ -24,7 +24,6 @@ export default function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(Registration(form, navigate));
-    console.log(form);
   };
 
   return (

@@ -1,6 +1,8 @@
-import React from "react";
-import { createPopper } from "@popperjs/core";
+import React, { useEffect, useState } from 'react';
+import { createPopper } from '@popperjs/core';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { GetProfile } from '../../../../redux/actions/profileActions';
 const UserDropdown = () => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -8,13 +10,30 @@ const UserDropdown = () => {
   const popoverDropdownRef = React.createRef();
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
+      placement: 'bottom-start',
     });
     setDropdownPopoverShow(true);
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  //TODO : Get User
+  //? get user id from state
+  const userId = useSelector((state) => state.auth.user.id);
+
+  //? get user
+  const dispatch = useDispatch();
+
+  const getUser = async () => {
+    await dispatch(GetProfile(userId));
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  let user = useSelector((state) => state.profiles.profile);
+
   return (
     <>
       <a
@@ -31,7 +50,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("../../../../assets/img/team-1-800x800.jpg").default}
+              src={user.image != null ? user.image.url : ""}
             />
           </span>
         </div>
@@ -39,14 +58,14 @@ const UserDropdown = () => {
       <div
         ref={popoverDropdownRef}
         className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+          (dropdownPopoverShow ? 'block ' : 'hidden ') +
+          'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
         <a
           href="#pablo"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={(e) => e.preventDefault()}
         >
@@ -55,7 +74,7 @@ const UserDropdown = () => {
         <a
           href="#pablo"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={(e) => e.preventDefault()}
         >
@@ -64,7 +83,7 @@ const UserDropdown = () => {
         <a
           href="#pablo"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={(e) => e.preventDefault()}
         >
@@ -74,7 +93,7 @@ const UserDropdown = () => {
         <a
           href="#pablo"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
           }
           onClick={(e) => e.preventDefault()}
         >

@@ -12,7 +12,6 @@ const ValidateProfile = require('../validation/Profile');
 const axios = require('axios');
 
 const Register = async (req, res) => {
-  console.log('ena ons');
   const { errors, isValid } = await validatorRegister(req.body);
   try {
     if (!isValid) {
@@ -45,9 +44,9 @@ const generateResetToken = async (userid, email) => {
 
   const url = `http://localhost:3600/api/resetpassword/${tokken}`;
   if (sendMail(email, url)) {
-    console.log('mchet');
+    console.log('Done');
   } else {
-    console.log('mamchetech');
+    console.log('Not Done!');
   }
 };
 
@@ -170,10 +169,6 @@ const updateProfile = async (req, res) => {
 const uploadImage = async (req, res) => {
   try {
     const { image } = req.body;
-    console.log(
-      'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
-    );
-    console.log(image);
     const result = await cloudinary.uploader.upload(image, {
       folder: 'profilePictures',
     });
@@ -197,7 +192,6 @@ const loginImage = async (req, res) => {
       folder: 'loginPictures',
     });
     const url = result.secure_url;
-    console.log(url);
     //  await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage',{"imageUrl": url, "userId": id})
     //         .then(response => {
     //             console.log(response)
@@ -217,9 +211,6 @@ const loginImage = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-
-    console.log(result.public_id);
-    console.log(id);
     //  await cloudinary.uploader.destroy(result.public_id);
     res.status(200).json('done');
   } catch (error) {
@@ -273,7 +264,6 @@ const checkLoginByImage = async (req, res) => {
       await cloudinary.uploader.destroy(result.public_id);
       await UserModel.findById(userId).then((user) => {
         if (user) {
-          console.log('logged in ' + userId);
           var token = jwt.sign(
             {
               id: user._id,
@@ -368,7 +358,6 @@ const resetpassword = async (req, res, next) => {
   try {
     const passwordHash = bcrypt.hashSync(req.body.password, 10);
     const decoded = jwt.decode(req.params['token']);
-    console.log(decoded.id);
     await UserModel.findOneAndUpdate(
       { _id: decoded.id },
       {

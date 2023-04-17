@@ -16,12 +16,9 @@ function FormParticulier() {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
     setImage(data.image.url);
-    console.log(data);
     curr = new Date(data.birthDate);
-    console.log(curr);
     curr.setDate(curr.getDate());
     setDate(curr.toISOString().substring(0, 10));
-    console.log(date);
   }, [id]);
 
   useEffect(() => {
@@ -49,23 +46,17 @@ function FormParticulier() {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      console.log(errors);
       UpdateUser();
       navigate("/");
     }
   };
   const UpdateUser = async () => {
     setData({user: {data}})
-    console.log('dataaaa', data)
     const response = await axios.put(
       `http://localhost:3600/api/updateUser/${id}`,
       data
     );
-    
       UpdateImage();
-    
-
-    console.log(response.data);
   };
 
   //image
@@ -81,14 +72,12 @@ function FormParticulier() {
       `http://localhost:3600/api/getImage/${id}`,
       { image: image }
     );
-    console.log(response.data);
   };
 
   //handle and convert it in base 64
   const handleImage = (e) => {
     const file = e.target.files[0];
     setFileToBase(file);
-    console.log(file);
   };
 
   const setFileToBase = (file) => {
@@ -218,7 +207,6 @@ function FormParticulier() {
                     className="form-textbox"
                     value={date}
                     onChange={(e) => {
-                      console.log(e.target.value);
                       setDate(e.target.value);
                       setData((prev) => ({
                         ...prev,

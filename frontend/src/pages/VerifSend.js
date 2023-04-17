@@ -1,13 +1,11 @@
 import React from 'react'
 import "./VerifSend.css"
 import { useSearchParams  } from 'react-router-dom'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 import backgroundImage from '../assets/img/register_bg_2.png';
 function VerifSend() {
-//url  = http://localhost:3000/main/ride?type=send
-let [searchParams, setSearchParams] = useSearchParams();
-// console.log(searchParams.get('email'));
+let [searchParams,] = useSearchParams();
 const email  = searchParams.get('email');
 
 const navigate = useNavigate()

@@ -24,8 +24,6 @@ const Profile = (props) => {
   const capture = React.useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
     setPicture(pictureSrc);
-    console.log(pictureSrc);
-
     UpdateImage(pictureSrc);
   });
   const UpdateImage = async (image) => {

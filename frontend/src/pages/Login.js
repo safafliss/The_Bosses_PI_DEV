@@ -17,7 +17,6 @@ export default function Login() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.errors);
-  console.log('errors ', errors);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
 
@@ -49,10 +48,8 @@ export default function Login() {
       (dispatch(LoginAction(form, navigate)) && inputCode === captchaCode) ||
       inputCode === captchaCode
     ) {
-      console.log('Verification successful!');
       setError(false);
     } else {
-      console.log('Verification failed. Please try again.');
       setError(true);
     }
   };

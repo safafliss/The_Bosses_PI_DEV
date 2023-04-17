@@ -30,7 +30,6 @@ export const VerifValidation = (id,token, navigate) => (dispatch) => {
       const { token } = res.data;
       localStorage.setItem('jwt', token);
       const decode = jwt_decode(token);
-      console.log(decode);
       dispatch(setUser(decode));
       setAuth(token);
       navigate("/verified");
@@ -45,11 +44,9 @@ export const LoginAction = (form, navigate) => (dispatch) => {
   axios
     .post('http://localhost:3600/api/login', form)
     .then((res) => {
-      console.log(res);
       const { token } = res.data;
       localStorage.setItem('jwt', token);
       const decode = jwt_decode(token);
-      console.log(decode);
       dispatch(setUser(decode));
       setAuth(token);
     })

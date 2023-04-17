@@ -16,12 +16,9 @@ function FormTrash() {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
     setImage(data.image.url);
-    console.log(data);
     curr = new Date(data.birthDate);
-    console.log(curr);
     curr.setDate(curr.getDate());
     setDate(curr.toISOString().substring(0, 10));
-    console.log(date);
   }, [id]);
 
   useEffect(() => {
@@ -49,7 +46,6 @@ function FormTrash() {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      console.log(errors);
       UpdateUser();
       navigate("/");
     }
@@ -62,8 +58,6 @@ function FormTrash() {
     if (image != data.image.url) {
       UpdateImage();
     }
-
-    console.log(response.data);
   };
 
   //image
@@ -79,14 +73,12 @@ function FormTrash() {
       `http://localhost:3600/api/getImage/${id}`,
       { image: image }
     );
-    console.log(response.data);
   };
 
   //handle and convert it in base 64
   const handleImage = (e) => {
     const file = e.target.files[0];
     setFileToBase(file);
-    console.log(file);
   };
 
   const setFileToBase = (file) => {
@@ -217,7 +209,6 @@ function FormTrash() {
                     className="form-textbox"
                     value={date}
                     onChange={(e) => {
-                      console.log(e.target.value);
                       setDate(e.target.value);
                       setData((prev) => ({
                         ...prev,

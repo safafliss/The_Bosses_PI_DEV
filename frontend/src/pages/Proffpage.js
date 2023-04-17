@@ -1,5 +1,4 @@
 import React from "react";
-import { Fragment, useRef, useState } from "react";
 import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,9 +10,7 @@ function Proffpage() {
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
-  console.log(localStorage.getItem("jwt"));
   const token = localStorage.getItem("jwt");
-  console.log(jwt_decode(token));
   const id = jwt_decode(token).id;
   return (
     <>

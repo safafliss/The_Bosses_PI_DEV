@@ -11,7 +11,6 @@ function FormAssociation() {
   const getUser = useCallback(async () => {
     const { data } = await axios.get(`http://localhost:3600/api/getUser/${id}`);
     setData(data);
-    console.log(data);
   }, [id]);
 
   useEffect(() => {
@@ -43,7 +42,6 @@ function FormAssociation() {
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      console.log(errors);
       UpdateUser();
       navigate("/");
     }
@@ -53,7 +51,6 @@ function FormAssociation() {
       `http://localhost:3600/api/updateUser/${id}`,
       data
     );
-    console.log(response.data);
   };
 
   return (

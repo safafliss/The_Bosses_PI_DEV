@@ -10,7 +10,6 @@ function CheckVerif() {
     let [searchParams, setSearchParams] = useSearchParams();
     const id  = searchParams.get('id');
     const token  = searchParams.get('token');
-    console.log(id,token,)
     dispatch(VerifValidation(id,token,navigate));
     return ;
 }

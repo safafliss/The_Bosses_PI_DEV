@@ -22,10 +22,6 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       done(null, profile);
-      console.log('esm: ' + profile.name.givenName);
-      console.log('la9ab: ' + profile.name.familyName);
-      console.log('taswira: ' + profile.photos[0].value);
-      console.log('email' + profile);
       new UserModel({
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
@@ -57,7 +53,6 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       done(null, profile);
-      console.log('fb' + Object.entries(profile));
     }
   )
 );
