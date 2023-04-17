@@ -46,6 +46,7 @@ import LoggedFBG from './pages/LoggedFBG';
 import { useEffect, useState } from 'react';
 import SupportCenter from './pages/SupportCenter';
 import SideButton from './pages/sideButton';
+import Stat from './components/ReusableComponents/components/Cards/Stat';
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -159,10 +160,17 @@ function App() {
               
                   {/* Header */}
                   <HeaderStats />
-                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
-                   <CardListRatings/>
+                  <div className="flex flex-wrap mt-4">
+                      <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+                            <CardListRatings />
+                          </div>
+                          <div className="w-full xl:w-4/12 px-4">
+                            <Stat />
+                          </div>
+                    </div>
+               
                     <FooterAdmin />
-                  </div>
+                 
                 </div>
                 </AdminRouter>
                 </>

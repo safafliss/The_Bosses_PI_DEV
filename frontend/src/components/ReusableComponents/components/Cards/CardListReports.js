@@ -8,12 +8,17 @@ import { useEffect } from 'react';
 
 import TableDropdown from '../Dropdowns/TableDropdown';
 import axios, { Axios } from 'axios';
+import Pagination from './Pagination';
 
 export default function CardListReports({ color }) {
 
 
     const [Reports, setReports] = useState([]);
- 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(5);
+    const lastPostIndex = currentPage * postsPerPage;
+    const firstPostIndex = lastPostIndex - postsPerPage;
+    const currentPosts = Reports  .slice(firstPostIndex, lastPostIndex);
 
 
   const handleClick = (_id) => {
@@ -164,7 +169,7 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {Reports.map((user, index) => (
+            {currentPosts.map((user, index) => (
               <tr key={index}>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <span
@@ -202,7 +207,14 @@ useEffect(() => {
             ))}
           </tbody>
         </table>
+        <Pagination
+                totalPosts={Reports.length}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+            />
       </div>
+  
     </div>
   );
 }

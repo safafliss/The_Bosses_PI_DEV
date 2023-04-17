@@ -60,10 +60,11 @@ const getAllReports = async (req, res) => {
 
 
 const createReport = async (req, res) => {
-  const { email } = req.body;
-  const user = await UserModel.findOne({ email });
+  const {email} = req.body;
+  console.log("hedha el email ell back "+email)
+  const user = await UserModel.findOne({email});
   const {description}=req.body;
-  console.log("**"+{description})
+  //console.log("**"+{description})
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }

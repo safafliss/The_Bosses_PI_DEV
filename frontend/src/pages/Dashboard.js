@@ -5,6 +5,8 @@ import CardLineChart from '../components/ReusableComponents/components/Cards/Car
 import CardBarChart from '../components/ReusableComponents/components/Cards/CardBarChart';
 import CardSocialTraffic from '../components/ReusableComponents/components/Cards/CardSocialTraffic';
 import CardPageVisits from '../components/ReusableComponents/components/Cards/CardPageVisits';
+import CardListRatings from '../components/ReusableComponents/components/Cards/CardListRatings';
+import Stat from '../components/ReusableComponents/components/Cards/Stat';
 function Dashboard() {
   
   return (
@@ -28,6 +30,7 @@ function Dashboard() {
           <CardSocialTraffic />
         </div>
       </div>
+  
     </>
   );
 }

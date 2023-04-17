@@ -12,6 +12,15 @@ const getRating = async (req, res) => {
 };
 
 
+
+const getRatingStar = async (req, res) => {
+  const { idUser } = req.params;
+  const Rating = await RatingModel.find({username: idUser},'star')
+  res.setHeader("Cache-Control", "no-cache");
+  res.status(200).json(Rating);
+};
+
+
 const getAllRatings = async (req, res) => {
   const Rating = await RatingModel.find({});
   res.setHeader("Cache-Control", "no-cache");
@@ -72,4 +81,4 @@ const get1Rating = async (req, res) => {
 
 
 
-module.exports = { getRating,createRating, deleteRating,get1Rating,getAllRatings};
+module.exports = { getRating,createRating, deleteRating,get1Rating,getAllRatings,getRatingStar};
