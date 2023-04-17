@@ -11,6 +11,7 @@ import jwt_decode from 'jwt-decode';
 import NotFound from './pages/NotFound';
 import Recipes from './pages/Recipes';
 import FormRecipe from './pages/FormRecipe';
+import AddRecipe from './pages/AddRecipe';
 import RecipeDetails from './pages/RecipeDetails';
 import NoAccess from './pages/NoAccess';
 import AdminRouter from './components/AdminRouter';
@@ -30,10 +31,10 @@ import FooterAdmin from './components/ReusableComponents/components/Footers/Foot
 import { setAuth } from './util/setAuth';
 import { Logout } from './redux/actions/authActions';
 import Profile from './pages/Profile';
-import Indeex from './pages/indeex';
+import RecipesList from './pages/RecipesList';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './assets/styles/tailwind.css';
-
+import RecipeList from './pages/RecipesList';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import FormParticulier from './pages/FormParticulier';
@@ -43,6 +44,8 @@ import FormLivreur from './pages/FormLivreur';
 import FormTrash from './pages/FormTrash';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LoggedFBG from './pages/LoggedFBG';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -143,20 +146,20 @@ function App() {
             path="/recipes/add"
             element={
               
-                <FormRecipe user={user} />
+                <AddRecipe user={user} />
               
             }
           />
-       
-
-          <Route
-            path="/recipes/add"
+      
+       <Route
+            path="/recipes/recipesList"
             element={
               
-                <FormRecipe  />
+                <RecipeList user={user} />
               
             }
           />
+        
           
           <Route
             path="/recipes/edit/:id"
@@ -167,7 +170,7 @@ function App() {
             }
           />
           <Route path="/recipes/:id" 
-        element={<RecipeDetails /> }  />
+        element={<RecipeDetails user={user}/> }  />
 
 
           <Route

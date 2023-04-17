@@ -25,7 +25,7 @@ import {
           selectedRecipe: action.payload,
         };
       case GET_ALL_RECIPES:
-        console.log("dakhlet lahne")
+        
         return {
           ...state,
           recipes: action.payload,

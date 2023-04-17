@@ -13,14 +13,37 @@ export const createRecipe = (recipe) => {
   return async (dispatch) => {
     try {
       const res = await axios.post(`${BASE_URL}/add`, recipe);
+      console.log("hedhy res ",res)
       dispatch({
         type: CREATE_RECIPE,
         payload: res.data,
       });
+    
+
+      return res.data;
     } catch (error) {
       console.error(error);
     }
   };
+};
+export const UploadImage = async (image, newRecipeId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/recipe/uploadImageRecipe/${newRecipeId}`,
+      { image }
+    );
+    console.log("Image uploaded successfully");
+  } catch (error) {
+    console.log("Error uploading image", error);
+  }
+};
+
+export const UpdateImage = async (id, picture) => {
+  
+  const response = await axios.put(
+    `http://localhost:3600/recipe/updatePicture/${id}`,
+    { image: picture }
+  );
 };
 
 export const getRecipeById = (id) => {
@@ -68,7 +91,8 @@ export const getAllRecipes = () => {
 export const updateRecipe = (id, updates) => {
   return async (dispatch) => {
     try {
-      const res = await axios.patch(`${BASE_URL}/update/${id}`, updates);
+      console.log("dakhlettttttttttttttt");
+      const res = await axios.put(`${BASE_URL}/update/${id}`, updates);
       dispatch({
         type: UPDATE_RECIPE,
         payload: res.data,

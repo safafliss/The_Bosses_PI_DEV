@@ -5,9 +5,17 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picture: {
-    type: String,
-    required: true,
+  image: {
+    public_id: {
+      type: String,
+      //required: true,
+      //default: "default_public_id"
+    },
+    url: {
+      type: String,
+      //required: true,
+      //default: "default_url"
+    },
   },
   preparation: {
     type: String,

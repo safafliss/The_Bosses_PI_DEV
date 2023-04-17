@@ -12,12 +12,14 @@ router.get('/get/:_id', recipeController.getRecipeById);
 router.get('/getall', recipeController.getAllRecipes);
 
 // update 
-router.patch('/update/:_id', recipeController.updateRecipe);
+router.put('/update/:_id', recipeController.updateRecipe);
 
 //delete
 router.delete('/delete/:_id', recipeController.deleteRecipe);
 
-//Rate
-//router.post('/:_id/rate', recipeController.rateRecipe);
+//picture
+router.post('/uploadImageRecipe', recipeController.UploadImageRecipe);
+//updatepic
+router.put('/updatePicture/:id', recipeController.updateRecipPic);
 
 module.exports = router;

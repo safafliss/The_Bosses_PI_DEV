@@ -1,17 +1,42 @@
+const { log } = require('debug/src/browser');
 const RecipeModel = require('../models/recipeModell');
+const cloudinary = require("../utils/cloudinary");
 
-// Create a new recipe 
-exports.createRecipe = async (req, res) => {
+const createRecipe = async (req, res) => {
   try {
     const recipe = await RecipeModel.create(req.body);
-    res.status(201).json(recipe);
+   
+    res.status(201).json({ success: true, data: recipe });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
-// get a recipe 
-exports.getRecipeById = async (req, res) => {
+const UploadImageRecipe = async (req, res) => {
+  try {
+
+    const { image } = req.body;
+    console.log("hedha l id",req.params.id);
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "RecipePics",
+    });
+
+    const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, {
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+
+    res.status(200).json(recipe);
+  } catch (error) {
+    console.log("Error uploading image", error);
+    res.status(500).json({ error: "Error uploading image" });
+  }
+};
+
+
+const getRecipeById = async (req, res) => {
   try {
     const recipe = await RecipeModel.findById(req.params._id);
     if (!recipe) {
@@ -24,8 +49,7 @@ exports.getRecipeById = async (req, res) => {
   }
 };
 
-// Get all recipes
-exports.getAllRecipes = async (req, res) => {
+const getAllRecipes = async (req, res) => {
   try {
     const recipes = await RecipeModel.find();
     res.json(recipes);
@@ -34,9 +58,9 @@ exports.getAllRecipes = async (req, res) => {
   }
 };
 
-// Update a recipe 
-exports.updateRecipe = async (req, res) => {
+const updateRecipe = async (req, res) => {
   try {
+    console.log("dakhlet lenna");
     const recipe = await RecipeModel.findByIdAndUpdate(req.params._id, req.body, { new: true });
     if (!recipe) {
       res.status(404).json({ message: 'Recipe not found' });
@@ -48,8 +72,7 @@ exports.updateRecipe = async (req, res) => {
   }
 };
 
-// Delete a recipe 
-exports.deleteRecipe = async (req, res) => {
+const deleteRecipe = async (req, res) => {
   try {
     const recipe = await RecipeModel.findByIdAndDelete(req.params._id);
     if (!recipe) {
@@ -60,7 +83,39 @@ exports.deleteRecipe = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
 
+const updateRecipPic = async (req, res) => {
+  try {
+    const { image } = req.body;
+    console.log("hedha l id",image);
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "RecipePics",
+    });
+    const picture = await RecipeModel.findByIdAndUpdate(req.params.id, {
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+    
+    res.status(200).json("done");
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+module.exports = {
+  createRecipe,
+  UploadImageRecipe,
+  getRecipeById,
+  getAllRecipes,
+  updateRecipe,
+  deleteRecipe,
+  updateRecipPic
+};
+
+  
   // Rate a recipe 
 // exports.rateRecipe = async (req, res) => {
 //     try {
@@ -87,4 +142,4 @@ exports.deleteRecipe = async (req, res) => {
 //       res.status(400).json({ message: error.message });
 //     }
 //   };
-};
+
