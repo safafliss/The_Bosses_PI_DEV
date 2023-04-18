@@ -18,9 +18,9 @@ function Favoris() {
         dispatch(fetchAllFavoris(idUser));
       }, [dispatch]);
 
-
+//style={{ backgroundColor: "#adc7ea" }}
   return (
-    <div style={{ backgroundColor: "#adc7ea" }}>
+    <div>
     <Navbar />
     <br />
 

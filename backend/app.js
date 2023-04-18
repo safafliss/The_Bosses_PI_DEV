@@ -14,9 +14,11 @@ const session = require("express-session");
 const productRoutes = require("./routes/productRoutes");
 const galleryRoutes = require("./routes/galleryRoutes");
 const favorisRoutes = require("./routes/favorisRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 const cron = require("node-cron");
 const sendEmailProduct = require("./utils/sendEmailProduct");
 const automaticUpdateProduct = require("./utils/automaticUpdateProduct");
+const sendEmailToUsers = require("./utils/sendEmailToUsers");
 var app = express();
 
 app.use(
@@ -58,6 +60,7 @@ app.use("/api", indexRouter);
 app.use("/product", productRoutes);
 app.use("/gallery",galleryRoutes);
 app.use("/favoris", favorisRoutes);
+app.use("/comment", commentRoutes);
 // cron.schedule('*/2 * * * *', () => {
 //   console.log('running a task every two minutes');
 // });
@@ -68,10 +71,14 @@ app.use("/favoris", favorisRoutes);
 
 // cron.schedule("*/2 * * * *", () => {
 //   sendEmailProduct();
-//   console.log("heyy");
+//   console.log("heyy1");
 // });
 // cron.schedule("*/0.3 * * * *", () => {
 //   automaticUpdateProduct();
-//   console.log("heyy");
+//   console.log("heyy2");
+// });
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailToUsers();
+//   console.log("heyy3");
 // });
 module.exports = app;

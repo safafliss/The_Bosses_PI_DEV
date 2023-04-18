@@ -9,7 +9,8 @@ function FavorisDetails({product}) {
           <img
             src={product.image.url}
             alt={product.description}
-            className="img-fluid"
+            //className="img-fluid"
+            className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
           />
           <div className="cart-btn">
             <button className="btn btn-dark shadow-sm rounded-pill">
@@ -17,18 +18,18 @@ function FavorisDetails({product}) {
             </button>
           </div>
         </div>
-        <div className="product-info">
-          <div className="product-category">
+        <div className="product-info mt-4 flex justify-between">
+          {/* <div className="product-category">
             <h3>{product.category}</h3>
           </div>
           <div className="product-type">
             <span>
               <strong>Type:</strong> {product.type}
             </span>
-          </div>
+          </div> */}
           <div className="product-price">
             <span>
-              <strong>Price:</strong> {product.price}DT
+              {product.price}DT
             </span>
           </div>
           <div className="product-date">

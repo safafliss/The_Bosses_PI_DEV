@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Classnames from "classnames";
 import jwt_decode from "jwt-decode";
 import "./formProduct.css";
+import ProgressBarInput from "./ProgressBarInput";
 
 function FormProduct() {
   console.log(localStorage.getItem("jwt"));
@@ -59,6 +60,19 @@ function FormProduct() {
     });
   };
 
+ 
+    //promo
+    const [value1, setValue1] = useState(50);
+
+    const handleChange = (newValue) => {
+      setValue1(newValue);
+      setForm({
+        ...form,
+        promo: newValue,
+      });
+    }
+
+
   const handleSubmit = (e) => {
     e.preventDefault(); //pour ne rien afficher dans l'url
     //validate price
@@ -66,9 +80,21 @@ function FormProduct() {
     if (form.price < 0) {
       newErrors.price = "The price entered is incorrect";
     }
+    if(form.price>100000){
+      newErrors.price = "The price entered is incorrect";
+    }
+    if(!form.price){
+      newErrors.price = "The price is required";
+    }
     //validate quantity
     if (form.quantity < 0) {
       newErrors.quantity = "The quantity entered is incorrect";
+    }
+    if(form.quantity > 1000){
+      newErrors.quantity = "The quantity entered is incorrect";
+    }
+    if(!form.quantity){
+      newErrors.quantity = "The quantity is required";
     }
     //validate expiry date
     const curr = new Date().getTime();
@@ -76,12 +102,24 @@ function FormProduct() {
     if (expiryDate < curr) {
       newErrors.expiry_date = "The product has reached its expiry date!";
     }
+    if(!form.expiry_date){
+      newErrors.expiry_date = "The expiry date is required";
+    }
+    //validate type
+    if(!form.type){
+      newErrors.type = "The type is required";
+    }
+    //validate brand
+    if(!form.brand){
+      newErrors.brand = "The brand is required";
+    }
     setMochkla(newErrors);
     if (Object.keys(newErrors).length === 0) {
       console.log(mochkla);
       dispatch(AddProduct(form, idUser, navigate), UploadImage(image));
     }
   };
+
 
   return (
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
@@ -120,7 +158,7 @@ function FormProduct() {
                 type="text"
                 placeholder="category"
                 onChangeHandler={onChangeHandler}
-                errors={errors.category}
+                //errors={errors.category}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />)}
               <br />
@@ -130,9 +168,12 @@ function FormProduct() {
                 type="text"
                 placeholder="type"
                 onChangeHandler={onChangeHandler}
-                errors={errors.type}
+                //errors={errors.type}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.type && (
+                <span style={{ color: "red" }}>{mochkla.type}</span>
+              )}
               <br />
               <label>Brand:</label>
               <Inputs
@@ -140,30 +181,33 @@ function FormProduct() {
                 type="text"
                 placeholder="brand"
                 onChangeHandler={onChangeHandler}
-                errors={errors.brand}
+                //errors={errors.brand}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.brand && (
+                <span style={{ color: "red" }}>{mochkla.brand}</span>
+              )}
               <br />
-              <label>Price:</label>
+              <label>Price (DT):</label>
               <Inputs
                 name="price"
                 type="number"
                 placeholder="price"
                 onChangeHandler={onChangeHandler}
-                errors={errors.price}
+                //errors={errors.price}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
               {mochkla.price && (
                 <span style={{ color: "red" }}>{mochkla.price}</span>
               )}
               <br />
-              <label>Quantity:</label>
+              <label>Quantity (per piece):</label>
               <Inputs
                 name="quantity"
                 type="number"
                 placeholder="quantity"
                 onChangeHandler={onChangeHandler}
-                errors={errors.quantity}
+                //errors={errors.quantity}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
               {mochkla.quantity && (
@@ -176,7 +220,7 @@ function FormProduct() {
                 type="date"
                 placeholder="expiry_date"
                 onChangeHandler={onChangeHandler}
-                errors={errors.expiry_date}
+                //errors={errors.expiry_date}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
               {mochkla.expiry_date && (
@@ -191,19 +235,6 @@ function FormProduct() {
                 class={Classnames("form-control")}
                 onChange={onChangeHandler}
               />
-              {/* <label className="form-label form-label-top form-label-auto">
-                    Upload Picture
-                  </label>
-                  <div className="form-outline mb-4">
-                    <input
-                      onChange={handleImage}
-                      type="file"
-                      id="formupload"
-                      name="image"
-                      className="form-control"
-                    />
-                  </div>
-                  <img className="img-fluid" src={image} alt="" /> */}
               <br />
               <div className="mb-4 d-flex">
                 <img
@@ -229,9 +260,22 @@ function FormProduct() {
                     type="file"
                     className="form-control d-none"
                     id="customFile1"
+                    accept="image/*"
                     onChange={handleImage}
                   />
                 </div>
+              </div>
+              <br />
+              <div>
+                <p>How much of a percentage discount would you like to apply to the promotion before it expires in 5 days?</p>
+                <p>{value1}%</p>
+                <ProgressBarInput
+                  min={0}
+                  max={100}
+                  step={10}
+                  value={value1}
+                  onChange={handleChange}
+                />
               </div>
               <br />
               <button

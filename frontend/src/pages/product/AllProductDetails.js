@@ -71,7 +71,8 @@ function AllProductDetails({ product, idUser }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
-    setIsOpen(!isOpen);
+    navigate(`/slideShow/${product._id}`);
+    //setIsOpen(!isOpen);
   };
   const [images, setImages] = useState([]);
   useEffect(() => {
@@ -79,7 +80,7 @@ function AllProductDetails({ product, idUser }) {
     //dispatch(fetchAllFavoris(idUser));
   }, []);
 
-  const showGallery = async () => {
+  const showGallery = async () => { 
     const response = await axios.get(
       `http://localhost:3600/gallery/showGallery/${product._id}`
     );
@@ -203,7 +204,7 @@ function AllProductDetails({ product, idUser }) {
           {product.isValid === true && (
             <div className="onsale position-absolute top-0 start-0">
               <span className="badge rounded-0">
-                <i class="fa-solid fa-arrow-down"></i>PROMO
+                <i class="fa-solid fa-arrow-down"></i>PROMO {product.promo}%
               </span>
             </div>
           )}
@@ -211,7 +212,8 @@ function AllProductDetails({ product, idUser }) {
           <img
             src={product.image.url}
             alt={product.description}
-            className="img-fluid"
+            //className="img-fluid"
+            className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
           />
           <div className="cart-btn">
             <button className="btn btn-dark shadow-sm rounded-pill">
@@ -219,21 +221,21 @@ function AllProductDetails({ product, idUser }) {
             </button>
           </div>
         </div>
-        <div className="product-info">
-          <div className="product-category">
+        <div className="product-info mt-4 flex justify-between">
+          {/* <div className="product-category">
             <h3>{product.category}</h3>
-          </div>
-          <div className="product-type">
+          </div> */}
+          {/* <div className="product-type">
             <span>
               <strong>Type:</strong> {product.type}
             </span>
-          </div>
+          </div> */}
           {/* <div className="product-brand">
             <span>Brand: {product.brand}</span>
           </div> */}
           <div className="product-price">
             <span>
-              <strong>Price:</strong> {product.price}DT
+              {product.price}DT
             </span>
           </div>
           {/* <div className="product-quantity">

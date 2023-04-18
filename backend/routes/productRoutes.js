@@ -11,7 +11,8 @@ const {
   getAllProductsFilter,
   getAllProductsSortedByPrice,
   getAllProductsSortedByDate,
-  getProductsById
+  getProductsById,
+  getPromoProducts
 } = require("../controllers/productController");
 var router = express.Router();
 
@@ -32,6 +33,9 @@ router.get("/getAllProductsSortedByPrice", getAllProductsSortedByPrice);
 
 //get Sorted products by expiry date
 router.get("/getAllProductsSortedByDate", getAllProductsSortedByDate);
+
+//get promo products
+router.get("/getPromoProducts", getPromoProducts);
 
 //Post a new product
 router.post("/addProduct", createProduct);

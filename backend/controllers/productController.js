@@ -6,7 +6,9 @@ const cloudinary = require("../utils/cloudinary");
 //get user products
 const getProducts = async (req, res) => {
   const { idUser } = req.params;
-  const products = await ProductModel.find({username: idUser}).sort({ createdAt: -1 });
+  const products = await ProductModel.find({ username: idUser }).sort({
+    createdAt: -1,
+  });
   res.setHeader("Cache-Control", "no-cache");
   res.status(200).json(products);
 };
@@ -14,7 +16,7 @@ const getProducts = async (req, res) => {
 //get products by idProduct
 const getProductsById = async (req, res) => {
   const { id } = req.params;
-  const products = await ProductModel.findOne({_id: id});
+  const products = await ProductModel.findOne({ _id: id });
   res.status(200).json(products);
 };
 
@@ -26,7 +28,7 @@ const getAllProducts = async (req, res) => {
 };
 
 //get Filtered products
-const getAllProductsFilter =  async (req, res) => {
+const getAllProductsFilter = async (req, res) => {
   try {
     const { minPrice, maxPrice } = req.query;
     let products;
@@ -55,6 +57,20 @@ const getAllProductsSortedByDate = async (req, res) => {
   const products = await ProductModel.find({}).sort({ expiry_date: -1 });
   res.setHeader("Cache-Control", "no-cache");
   res.status(200).json(products);
+};
+
+//get products en promo
+const getPromoProducts = async (req, res) => {
+  const today = new Date();
+  today.setDate(today.getDate() + 5);
+  const expiredProducts = await ProductModel.find({
+    expiry_date: {
+      $lte: today,
+      $gt: new Date(),
+    },
+    promo: { $gt: 0 },
+  });
+  res.status(200).json(expiredProducts);
 };
 
 //create a new product
@@ -151,8 +167,6 @@ const updatePicture = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
   getProducts,
   createProduct,
@@ -165,5 +179,6 @@ module.exports = {
   getAllProductsFilter,
   getAllProductsSortedByPrice,
   getAllProductsSortedByDate,
-  getProductsById
+  getProductsById,
+  getPromoProducts,
 };

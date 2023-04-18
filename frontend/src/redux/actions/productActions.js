@@ -41,7 +41,7 @@ export const AddProduct = (form, idUser, navigate) => async (dispatch) => {
           type: ERRORS,
           payload: {},
         });
-      }, 3000); // 3000ms = 3 seconds
+      }, 3500); // 3000ms = 3 seconds
     })
     .catch((err) => {
       dispatch({
@@ -245,6 +245,28 @@ export const fetchAllProducts4 = () => async (dispatch) => {
   }
 };
 
+export const fetchAllProducts6 = () => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getPromoProducts",
+      {
+        params: {
+          random: Math.random(),
+        },
+      }
+    );
+    dispatch({
+      type: FETCH_PRODUCTS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
 export const deleteProduct = (id, navigate) => async (dispatch) => {
   try {
     const response = await axios.delete(
@@ -286,6 +308,26 @@ export const fetchSingleProduct = (id, navigate) => async (dispatch) => {
     );
     if (res.status === 200) {
       navigate("/updateProduct/" + id);
+      dispatch({
+        type: GET_SINGLE_PRODUCT,
+        payload: res.data,
+      });
+      console.log(res.data);
+    }
+  } catch (error) {
+    dispatch({
+      type: FETCH_PRODUCTS_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const fetchSingleProduct1 = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3600/product/getSingleProduct/" + id
+    );
+    if (res.status === 200) {
       dispatch({
         type: GET_SINGLE_PRODUCT,
         payload: res.data,

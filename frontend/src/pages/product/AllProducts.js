@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { Box, Button } from '@material-ui/core';
 import {
   fetchAllProducts,
   fetchAllProducts1,
@@ -8,12 +9,14 @@ import {
   fetchAllProducts3,
   fetchAllProducts4,
   fetchAllProducts5,
+  fetchAllProducts6,
 } from "../../redux/actions/productActions";
 import AllProductDetails from "./AllProductDetails";
 import Navbar from "../../components/ReusableComponents/components/Navbars/UserNavbar";
 import "./AllProducts.css";
 
 function AllProducts() {
+  
   console.log(localStorage.getItem("jwt"));
   const token = localStorage.getItem("jwt");
   console.log(jwt_decode(token));
@@ -70,12 +73,23 @@ function AllProducts() {
       dispatch(fetchAllProducts4());
     }else if (value == "Expiry Date"){
       dispatch(fetchAllProducts5());
+    }else if (value == "Promo"){
+      dispatch(fetchAllProducts6());
     }
     else{
       dispatch(fetchAllProducts());
     }
   };
 
+  //paginate
+  const items = 8
+  const [current, setCurrent] = useState(1);
+  const NbPage = Math.ceil(products.length / items);
+  const startIndex = (current - 1) * items
+  const endIndex = startIndex + items
+  const DataPerPage = products.slice(startIndex, endIndex);
+
+//style={{ backgroundColor: "#adc7ea" }}
   return (
     <div style={{ backgroundColor: "#adc7ea" }}>
       <Navbar />
@@ -241,6 +255,7 @@ function AllProducts() {
                     <option selected value="all">Open this select menu</option>
                     <option value="price">price</option>
                     <option value="Expiry Date">Expiry Date</option>
+                    <option value="Promo">Promo</option>
                   </select>
                 </div>
               </div>
@@ -261,7 +276,7 @@ function AllProducts() {
               <br />
               <div className="row">
                 {products &&
-                  products.map((product) => (
+                  DataPerPage.map((product) => (
                     <AllProductDetails
                       product={product}
                       key={product._id}
@@ -273,6 +288,13 @@ function AllProducts() {
           </div>
         </div>
       </div>
+      <Box sx = {{display: "flex", justifyContent: "center", mt:1, border : "solid 0.5px", width: "500px", marginLeft: "650px"}}>
+        {
+          Array.from({length: NbPage}, (_,i)=> i+1).map( page => {
+            return <Button onClick={()=> setCurrent(page)} style={{backgroundColor: "#efefef", marginLeft: "5px"}}>{page}</Button> 
+          })
+        }
+      </Box>
     </div>
   );
 }

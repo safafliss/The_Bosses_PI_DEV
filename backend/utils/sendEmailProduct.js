@@ -43,6 +43,22 @@ async function sendEmailProduct() {
           });
         });
       });
+      // expiredProducts.forEach(async (product) => {
+      //   const users = await UserModel.find({ _id: { $ne: product.username } }).exec();
+      //   users.forEach((user) => {
+      //     const response = transporter.sendMail({
+      //       from: "zerowasteprojectpi@gmail.com", // sender address
+      //       to: user.email, // list of receivers
+      //       subject: `OFFER`, // Subject line
+      //       html: `<div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
+      //                         <h2 style="text-align: center; text-transform: uppercase;color: teal;">Welcome to zeroWaste.</h2>
+      //                         <p>Please take a look at the products available on our website. Some of them are currently on promotion.
+      //                         </p>
+      //                         </div>
+      //                     `,
+      //     });
+      //   });
+      // });
     }
   } catch (error) {
     return false;
