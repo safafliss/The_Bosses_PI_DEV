@@ -73,6 +73,7 @@ export default function Navbar({ user1 }) {
     { name: t("Home"), href: "/", current: true },
     { name: t("Profile"), href: `/formPart/${id}`, current: false },
     { name: t("Recepies"), href: "#", current: false },
+    { name: t("Products"), href: `/allProducts`, current: false },
     { name: t("TrashSpot"), href: "/trashSpot", current: false },
     { name: t("Support Center"), href: "/support", current: false },
   ];
@@ -199,7 +200,33 @@ export default function Navbar({ user1 }) {
                             )}
                             to={`/formPart/${id}`}
                           >
-                            {t("Your Profile")}
+                            {t("My Profile")}
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                            to={`/productsCreated`}
+                          >
+                            MY Products
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                            to={`/favoris`}
+                          >
+                            My Favorites
                           </Link>
                         )}
                       </Menu.Item>

@@ -126,7 +126,7 @@ function SpotCard(props) {
               {props.trashSpots.secondary_spots.length ?
               <div>
                 <p style={{marginTop:"-10px"}}>{props.trashSpots.secondary_spots.length +1} Trash posted in (1km²)</p>
-                <select  className="align-self-center" onChange={(e)=>{props.swap_primary_secondary(props.trashSpots,props.trashSpots.secondary_spots[e.target.value])}}>
+                <select  className="align-self-center selectTrashSpot" onChange={(e)=>{props.swap_primary_secondary(props.trashSpots,props.trashSpots.secondary_spots[e.target.value])}}>
                   <option>{props.trashSpots.type}</option>
                   {/* {formatDate(props.trashSpots.createdAt)} - {formatDate(props.trashSpots.collected_at)} */}
                   {props.trashSpots.secondary_spots.map((secondary,index)=>

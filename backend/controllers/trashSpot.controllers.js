@@ -134,7 +134,7 @@ const checkPrimaryOrSecondarySpot = async(coords) =>{
             distanceField: "distance",
             query: { importanceLevel: "primary" },
             spherical: true,
-            maxDistance: 2000 // maximum distance in meters
+            maxDistance: 1100 // maximum distance in meters
           }
         }
       ])

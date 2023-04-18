@@ -6,8 +6,9 @@
         font-size: 20px;
         z-index: 9999;
 }
-
-
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+--tw-space-x-reverse: none !important;
+}
 
 /* style={{position: "sticky",
     top: 0,

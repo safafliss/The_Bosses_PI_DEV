@@ -63,7 +63,7 @@ function AddUpdateModal(props) {
               <select
                 onChange={handleChange}
                 name="trashType"
-                className="trashType w-100"
+                className="trashType w-100 selectTrashSpot"
               >
                 {props.options.map((option) => (
                   <option key={option.value} selected={props.type==option.value || option.value == "other" && ( props.type!="" && props.type!="plastic" && props.type!="steel" && props.type!="paper")} value={option.value}>
@@ -75,8 +75,8 @@ function AddUpdateModal(props) {
               <div className="specifyTrashType mt-2">
                 <label>Specify type: &nbsp;</label>
                 {props.type!="other" ?
-                <input onChange={handleChange} style={{"borderRadius":"10px"}} value={props.type} placeholder="Type..." maxLength={29} type="text" />:
-                <input onChange={handleChange} style={{"borderRadius":"10px"}} placeholder="Type..." maxLength={29} type="text" />}
+                <input onChange={handleChange} style={{"borderRadius":"10px"}} className='border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150' value={props.type} placeholder="Type..." maxLength={29} type="text" />:
+                <input onChange={handleChange} style={{"borderRadius":"10px"}} className='border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150' placeholder="Type..." maxLength={29} type="text" />}
               </div>
               }
             </div>
@@ -104,7 +104,7 @@ function AddUpdateModal(props) {
             </div>
             <div className="description mt-1">
                   
-              <textarea maxLength={100} onChange={(e)=>{setDescription(e.target.value)}} placeholder="Description.." defaultValue={props.description} style={{"width":400}} />
+              <textarea maxLength={100} className='border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150' onChange={(e)=>{setDescription(e.target.value)}} placeholder="Description.." defaultValue={props.description} style={{"width":400}} />
             </div>
             <div className="d-flex justify-content-center">
               {props.error == "Please wait..." ?

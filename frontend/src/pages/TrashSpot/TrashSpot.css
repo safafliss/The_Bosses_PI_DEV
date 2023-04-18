@@ -6,7 +6,7 @@ html {
 .trashSpotButtons{
     width: 32%;
     margin-left: 1%;
-    background-color: black !important;
+    background-color: #4c9aff !important;
     color: white !important;
 }
 
@@ -52,6 +52,7 @@ html {
   border: 1px black solid;
 }
 
+
 .modalHeader {
     min-height: 40px;
     border-top-right-radius: 20px;
@@ -76,11 +77,15 @@ html {
 .modalCollect{
   min-height: 800px;
 }
-select.trashType, select,  input{
-  height: 40px;
-  border-radius: 10px;
+select.trashType, select.selectTrashSpot{
+  height: 40px !important;
+  border-radius: 10px !important;
   /* background-color: green; */
-  color:black;
+  color:black !important;
+}
+
+input{
+  border: 1px solid black !important;
 }
 
 .footer{

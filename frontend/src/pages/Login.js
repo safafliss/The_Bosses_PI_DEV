@@ -105,7 +105,7 @@ export default function Login() {
                         <img
                           alt="..."
                           className="w-5 mr-1"
-                          src={require('../assets/img/github.svg').default}
+                          src={require('../assets/img/icons8-facebook.svg').default}
                         />
                         facebook
                       </a>
