@@ -3,9 +3,10 @@
         position: sticky;
         top: 0;
         background-color: white;
-        font-size: 25px;
+        font-size: 20px;
         z-index: 9999;
 }
+
 
 
 /* style={{position: "sticky",

@@ -14,6 +14,7 @@ import i18next from "i18next";
 import imgFr from "../../../../assets/img/icons8-france-32.png";
 import imgBr from "../../../../assets/img/icons8-great-britain-32.png";
 import imgTn from "../../../../assets/img/tunisia-flag-round-icon-32.png";
+import './nav.css'
 
 export default function Navbar({ user1 }) {
   const languages = [
@@ -69,10 +70,10 @@ export default function Navbar({ user1 }) {
   console.log(jwt_decode(token));
   const id = jwt_decode(token).id;
   const navigation = [
-    { name: t("Home"), href: "#", current: true },
+    { name: t("Home"), href: "/", current: true },
     { name: t("Profile"), href: `/formPart/${id}`, current: false },
     { name: t("Recepies"), href: "#", current: false },
-    { name: t("TrashSpot"), href: "#", current: false },
+    { name: t("TrashSpot"), href: "/trashSpot", current: false },
     { name: t("Support Center"), href: "/support", current: false },
   ];
 
@@ -83,7 +84,7 @@ export default function Navbar({ user1 }) {
   }, [currentLanguage, t]);
 
   return (
-    <Disclosure as="nav" className="bg-blue">
+    <Disclosure as="nav" className="bg-blue navbarClass">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

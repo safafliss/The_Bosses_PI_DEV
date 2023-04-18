@@ -30,6 +30,7 @@ import { Logout } from './redux/actions/authActions';
 import Profile from './pages/Profile';
 import CardListRatings  from './components/ReusableComponents/components/Cards/CardListRatings';
 import CardListReports from './components/ReusableComponents/components/Cards/CardListReports';
+import TrashSpotHome from './pages/TrashSpot/TrashSpotHome';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './assets/styles/tailwind.css';
@@ -308,7 +309,7 @@ function App() {
             path="/TrashSpot"
             element={
               // <ForceRedirect user={user}>
-              <TrashSpotHome user={user} />
+              <TrashSpotHome user1={user1} user={user} />
               // </ForceRedirect>
             }
           />

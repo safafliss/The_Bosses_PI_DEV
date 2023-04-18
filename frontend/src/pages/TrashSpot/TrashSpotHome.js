@@ -171,7 +171,6 @@ function TrashSpotHome(props) {
   };
 
   const addAndUpdateUntouchableDataBackend = (trash) =>{
-    console.log(trash)
     const filteredCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
     let index = filteredCopy.findIndex((a) => a._id === trash._id);
     if (index>-1){
@@ -212,30 +211,6 @@ function TrashSpotHome(props) {
     setTriggerWhichPage(1)
   }
 
-  // const addTrashSpot = (trash)=>{
-  //   const filteredCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
-  //   setAllTrashSpots(filteredCopy)
-  //   setAllTrashSpots(allTrashSpots.filter((tr)=> trash._id!= tr._id))
-  //   setAllTrashSpots(allTrashSpots=> [trash,...allTrashSpots]) 
-  //   addAndUpdateUntouchableDataBackend(trash)
-  //   setAddMapMarker({
-  //     id: trash._id,
-  //     longitude: trash.location.coordinates[1],
-  //     latitude: trash.location.coordinates[0],
-  //     ownerId: trash.ownerId._id,
-  //     type: trash.type,
-  //   })
-  //   removeTrashFromMap(trash._id)
-  //   setTrashMarks(()=>[...trashMarks,{
-  //     id: trash._id,
-  //     longitude: trash.location.coordinates[1],
-  //     latitude: trash.location.coordinates[0],
-  //     ownerId: trash.ownerId._id,
-  //     type: trash.type,
-  //   }])
-  //   setUpdateTrigger(updateTrigger+1)
-  // }
-
   const deleteTrashSpot = async(trashSpots) => {
     await axios
       .post("http://localhost:3600/api/deleteATrashSpot", {
@@ -243,7 +218,6 @@ function TrashSpotHome(props) {
       })
       .then((res) => {
         if (res.data) {
-          console.log(res.data)
           removeTrashFromAllTrashSpots(res.data,trashSpots._id);
           //show notification
         } else {
@@ -271,7 +245,6 @@ function TrashSpotHome(props) {
             })
             .then((res) => {
               if (res.data != "error") {
-                console.log(res.data)
                 addAndUpdateUntouchableDataBackend(res.data)
                 openCloseModal();
                 emptyModalVariables();
@@ -304,7 +277,6 @@ function TrashSpotHome(props) {
 
   const swap_primary_secondary = (primary,secondary) =>{
     if (secondary){
-      console.log(JSON.parse(JSON.stringify(untouchableDataBackend)),primary,secondary)
         secondary.importanceLevel = "primary"
         let newSecondary = primary.secondary_spots.slice()
         newSecondary.splice(primary.secondary_spots.indexOf(secondary),1)
@@ -385,7 +357,6 @@ function TrashSpotHome(props) {
 
   useEffect(()=> {
       setAllTrashSpots(JSON.parse(JSON.stringify(untouchableDataBackend)))
-      console.log(untouchableDataBackend)
     setTrashSpots(
       JSON.parse(JSON.stringify(untouchableDataBackend)).filter(trash => {
         if (trash.ownerId._id == id && trash.frontEndLevel=="primary") return trash;
@@ -409,7 +380,6 @@ function TrashSpotHome(props) {
     }else{
       let untouchableDataBackendCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
       untouchableDataBackendCopy.splice(index, 1);
-      console.log(untouchableDataBackendCopy)
       setUntouchableDataBackend(JSON.parse(JSON.stringify(untouchableDataBackendCopy)))
       setDeleteRoundedAndCreateAnother([trash,old_id])
     }
@@ -427,15 +397,6 @@ function TrashSpotHome(props) {
 
   const collectTrashUpdate = (trash) =>{
     addAndUpdateUntouchableDataBackend(trash)
-    // console.log("accessed",trash)
-    // setAllTrashSpots(allTrashSpots.filter((tr)=> trash._id!= tr._id))
-    // setAllTrashSpots(allTrashSpots =>[trash,...allTrashSpots])
-    // if (trash.ownerId._id==id){
-    // setUpdateTrigger(-1)
-    //   showMyTrashSpots()
-    // }else{
-    // setUpdateTrigger(-2)
-    // }
   }
 
   const viewOnMap = (coords) =>{
@@ -449,12 +410,12 @@ function TrashSpotHome(props) {
 
   return (
     <>
-      <Navbar />
+      <Navbar user1={props.user1}  />
       <div className="d-flex ">
-        <div className="leftSide" style={{ width: "710px","zIndex": 1 }}>
+        <div className="leftSide bg-green-800" style={{ width: "710px","zIndex": 1 }}>
           <div className="container ">
             <div
-              className="buttonsTrash"
+              className="buttonsTrash bg-green-800"
             >
               <button
                 className="trashSpotButtons btn"

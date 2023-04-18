@@ -119,8 +119,7 @@ function SupportCenter({ user1 }) {
                             }))
                           }
                           rows="4"
-                          cols="155"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white"
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white w-100"
                           placeholder="Type a message..."
                         />
                       </div>

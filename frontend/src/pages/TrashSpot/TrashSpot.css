@@ -15,7 +15,7 @@ html {
     height: fit-content;
     min-height: 100vh;
     /* background-image: url("https://w0.peakpx.com/wallpaper/728/790/HD-wallpaper-nature-animation-amoled-anime-landscape-thumbnail.jpg"); */
-    background-color: #69b550;
+    /* background-color: #69b550; */
     /* background-repeat: no-repeat; */
     background-attachment: fixed;
     
@@ -131,7 +131,7 @@ textarea{
 .buttonsTrash{
   position: sticky;
   top: 64px;
-  background: #69b550;
+  /* background: #69b550; */
   z-index: 6;
   padding: 1%;
 }
