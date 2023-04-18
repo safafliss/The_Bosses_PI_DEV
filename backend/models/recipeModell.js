@@ -29,18 +29,27 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  shoppingList: {
-    type: String,
+  ingredients: {
+    type: [String],
     required: true,
   },
   material: {
     type: String,
     required: true,
   },
-  rating: {
+  ratings: [{
     type: Number,
-    required: false,
-  },
+    min: 1,
+    max: 5,
+  }],
+});
+
+recipeSchema.virtual('averageRating').get(function() {
+  if (this.ratings.length === 0) {
+    return null;
+  }
+  const sum = this.ratings.reduce((total, rating) => total + rating, 0);
+  return sum / this.ratings.length;
 });
 
 const recipeModel = mongoose.model('Recipe', recipeSchema);

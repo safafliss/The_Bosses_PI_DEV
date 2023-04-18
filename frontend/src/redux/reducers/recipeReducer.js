@@ -1,12 +1,13 @@
 import {
-    CREATE_RECIPE,
+  CREATE_RECIPE,
     GET_RECIPE_BY_ID,
     GET_ALL_RECIPES,
     UPDATE_RECIPE,
     DELETE_RECIPE,
     RATE_RECIPE,
+    GET_RECIPES_BY_INGREDIENT,
   } from '../actions/recipeActions';
-  
+
   const initialState = {
     recipes: [],
     selectedRecipe: null,
@@ -31,12 +32,12 @@ import {
           recipes: action.payload,
         };
 
+        case GET_RECIPES_BY_INGREDIENT:
 
-
-
-     
-
-
+          return { 
+            ...state, 
+            recipes: action.payload
+           };
 
       case UPDATE_RECIPE:
         return {

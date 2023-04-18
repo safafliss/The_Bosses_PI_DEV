@@ -18,8 +18,13 @@ router.put('/update/:_id', recipeController.updateRecipe);
 router.delete('/delete/:_id', recipeController.deleteRecipe);
 
 //picture
-router.post('/uploadImageRecipe', recipeController.UploadImageRecipe);
+router.put('/uploadImageRecipe/:_id', recipeController.uploadImageRecipe);
 //updatepic
 router.put('/updatePicture/:id', recipeController.updateRecipPic);
+
+router.get('/:ingredient', recipeController.getRecipesByIngredient);
+
+router.post('/get/:id/rate', recipeController.rateRecipe);
+
 
 module.exports = router;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateRecipe, createRecipe , UploadImage} from '../redux/actions/recipeActions';
 import { getAllRecipes, deleteRecipe } from '../redux/actions/recipeActions';
 import { useParams } from 'react-router-dom';
+import { TagsInput } from "react-tag-input-component";
 
 const AddRecipe = () => {
     const { id } = useParams();
@@ -10,8 +11,8 @@ const AddRecipe = () => {
         "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
       ]);
     const [pic, setPic] = useState({});
- 
-
+    const [selected, setSelected] = useState(["papaya"]);
+console.log("hedha selected",selected)
   const dispatch = useDispatch();
   const recipes = useSelector(state => state.recipes.recipes);
   const [form, setForm] = useState({});
@@ -22,7 +23,7 @@ const AddRecipe = () => {
     preparation: '',
     cooking: '',
     quantity: '',
-    shoppingList: '',
+    ingredients: '',
     material: '',
     rating: 0
   });
@@ -46,15 +47,16 @@ const AddRecipe = () => {
       const newErrors = {};
       if (Object.keys(newErrors).length === 0) {
          const newRecipe = await dispatch(createRecipe(recipe));
+         console.log("hedhy l new recipeeeeeeeeeeeeeeeee",newRecipe);
 
-        console.log(newRecipe);
-       const newRecipeId = newRecipe._id;
+  
+       const newRecipeId = newRecipe.data._id;
         // window.alert(`Recipe ${newRecipeId} created successfully.`);
 
         // window.history.back();
-        setTimeout(() => {
-          dispatch(UploadImage(image, newRecipeId));
-        }, 1000); 
+        console.log("hedhy l new recipe",newRecipeId);
+         await dispatch(UploadImage(image, newRecipeId));
+      
         //dispatch(UploadImage(image, newRecipeId));
       }
     };
@@ -133,9 +135,14 @@ const AddRecipe = () => {
         </label>
         <br />
         <label>
-          Shopping List:
-          <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" value={recipe.shoppingList} onChange={(e) => setRecipe({ ...recipe, shoppingList: e.target.value })} required />
-        </label>
+  Ingredients:
+  <TagsInput
+    value={recipe.ingredients.split(',')}
+    onChange={(tags) => setRecipe({ ...recipe, ingredients: tags.join(',') })}
+    name="ingredients"
+    placeHolder="Enter ingredient and press enter"
+  />
+</label>
         <br />
         <label>
           Material:
@@ -149,7 +156,8 @@ const AddRecipe = () => {
         </label>
         <br />
        
-
+       
+    
 <button type="submit">create</button>
 
 </form>

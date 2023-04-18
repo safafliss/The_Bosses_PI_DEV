@@ -8,6 +8,10 @@ export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
 export const UPDATE_RECIPE = 'UPDATE_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const RATE_RECIPE = 'RATE_RECIPE';
+export const RATE_RECIPE_REQUEST = 'RATE_RECIPE_REQUEST';
+export const RATE_RECIPE_SUCCESS = 'RATE_RECIPE_SUCCESS';
+export const RATE_RECIPE_FAILURE = 'RATE_RECIPE_FAILURE';
+export const GET_RECIPES_BY_INGREDIENT = 'GET_RECIPES_BY_INGREDIENT';
 
 export const createRecipe = (recipe) => {
   return async (dispatch) => {
@@ -28,13 +32,26 @@ export const createRecipe = (recipe) => {
 };
 export const UploadImage = async (image, newRecipeId) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/recipe/uploadImageRecipe/${newRecipeId}`,
+    const response = await axios.put(
+      `${BASE_URL}/uploadImageRecipe/${newRecipeId}`,
       { image }
     );
     console.log("Image uploaded successfully");
   } catch (error) {
     console.log("Error uploading image", error);
+  }
+};
+export const getRecipesByIngredients = (ingredient) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/recipe/${ingredient}`, {
+    
+    });
+    dispatch({
+      type: 'GET_RECIPES_BY_INGREDIENT',
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -116,7 +133,23 @@ export const deleteRecipe = (id) => {
     }
   };
 };
+export const rateRecipe = (recipeId, rating) => async (dispatch) => {
+  dispatch({ type: RATE_RECIPE_REQUEST });
+console.log("recipeId",recipeId)
+  try {
+    const { data } = await axios.post(`${BASE_URL}/get/${recipeId}/rate`, { rating });
 
+    dispatch({ type: RATE_RECIPE_SUCCESS, payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: RATE_RECIPE_FAILURE,
+      payload:
+        error.response && error.response.data.error
+          ? error.response.data.error
+          : 'Failed to rate recipe',
+    });
+  }
+};
 // export const rateRecipe = (id, rating) => {
 //   return async (dispatch) => {
 //     try {

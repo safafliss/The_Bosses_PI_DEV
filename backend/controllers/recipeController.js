@@ -1,27 +1,40 @@
 const { log } = require('debug/src/browser');
 const RecipeModel = require('../models/recipeModell');
 const cloudinary = require("../utils/cloudinary");
+const mongoose = require('mongoose');
 
 const createRecipe = async (req, res) => {
   try {
-    const recipe = await RecipeModel.create(req.body);
-   
+    const{ingredients} = req.body;
+    
+    let arrayy=[] = ingredients.split(',')
+    console.log('hedhy re.body',arrayy)
+
+  
+    const recipe = new RecipeModel({
+                              ...req.body,
+                              ingredients : arrayy});
+     await recipe.save();
     res.status(201).json({ success: true, data: recipe });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
 };
 
-const UploadImageRecipe = async (req, res) => {
+const uploadImageRecipe = async (req, res) => {
   try {
 
     const { image } = req.body;
-    console.log("hedha l id",req.params.id);
+
+    const ObjectId = mongoose.Types.ObjectId;
+    let objecRecipId = new ObjectId(req.params._id);
+    console.log("hedha l ideee",req.params);
+    console.log("hedha l id",objecRecipId);
     const result = await cloudinary.uploader.upload(image, {
       folder: "RecipePics",
     });
 
-    const recipe = await RecipeModel.findByIdAndUpdate(req.params.id, {
+    const recipe = await RecipeModel.findByIdAndUpdate(objecRecipId, {
       image: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -32,6 +45,16 @@ const UploadImageRecipe = async (req, res) => {
   } catch (error) {
     console.log("Error uploading image", error);
     res.status(500).json({ error: "Error uploading image" });
+  }
+};
+const getRecipesByIngredient = async (req, res) => {
+  try {
+    const ingredients = req.params.ingredient;
+    const recipes = await RecipeModel.find({ ingredients: { $in: ingredients } });
+    console.log("heha ",recipes);
+    res.status(200).json({ success: true, data: recipes });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -104,15 +127,44 @@ const updateRecipPic = async (req, res) => {
     res.json(error);
   }
 };
+// POST /recipes/:id/rate
+
+const rateRecipe = async (req, res) => {
+  const { id } = req.params;
+  console.log("heha l back",id)
+  const { rating } = req.body;
+
+  if (!rating || rating < 1 || rating > 5) {
+    return res.status(400).json({ error: 'Invalid rating value' });
+  }
+
+  try {
+    const recipe = await RecipeModel.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+
+    recipe.ratings.push(rating);
+    await recipe.save();
+    res.json({ message: 'Recipe rated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
 
 module.exports = {
   createRecipe,
-  UploadImageRecipe,
+  uploadImageRecipe,
   getRecipeById,
   getAllRecipes,
   updateRecipe,
   deleteRecipe,
-  updateRecipPic
+  updateRecipPic,
+  getRecipesByIngredient,
+  rateRecipe
 };
 
   
@@ -142,4 +194,9 @@ module.exports = {
 //       res.status(400).json({ message: error.message });
 //     }
 //   };
+
+
+
+
+
 
