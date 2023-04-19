@@ -18,16 +18,19 @@ export default function CardListUsers({ color }) {
 
   const profiles = useSelector((state) => state.profiles);
   const dispatch = useDispatch();
-  const test = async () => {
+  const getusers = async () => {
     await dispatch(getUsers());
   };
+
   useEffect(() => {
-    test();
+    getusers();
   }, []);
+
   const data = profiles.profiles;
   const x = data.map((value) => {
     return value;
   });
+
   return (
     <div
       className={

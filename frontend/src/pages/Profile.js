@@ -15,11 +15,16 @@ function Profile() {
   id = id ? id : '';
   userId = id !== '' ? id : userId;
   const dispatch = useDispatch();
-  const test = async () => {
+  const getProfile = async () => {
     await dispatch(GetProfile(userId));
   };
+
+  async function updateProfile(user) {
+    await dispatch(UpdateProfile(user));
+  }
+
   useEffect(() => {
-    test();
+    getProfile();
   }, []);
 
   const user = useSelector((state) => state.profiles.profile);
@@ -115,7 +120,7 @@ function Profile() {
     user.state = state;
     user.gender = gender;
     user.bio = bio;
-    await dispatch(UpdateProfile(user));
+    updateProfile(user);
   };
 
   return (
