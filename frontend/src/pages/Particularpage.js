@@ -3,21 +3,27 @@ import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
-import jwt_decode from "jwt-decode"
-import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
+import jwt_decode from "jwt-decode";
+import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
+import zero from "../assets/img/zero.png";
+import rec from "../assets/img/rec.png";
+import img1 from "../assets/img/img1.png";
+import img2 from "../assets/img/img2.png";
+import img3 from "../assets/img/img3.png";
+import img4 from "../assets/img/img4.png";
 
 function Particularpage(props) {
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
-  console.log(localStorage.getItem("jwt"))
-  const token = localStorage.getItem("jwt")
-  console.log(jwt_decode(token))
-  const id = jwt_decode(token).id
+  console.log(localStorage.getItem("jwt"));
+  const token = localStorage.getItem("jwt");
+  console.log(jwt_decode(token));
+  const id = jwt_decode(token).id;
   return (
     <>
-    <Navbar  /> 
+      <Navbar />
       <main>
         {/* 
       
@@ -37,8 +43,7 @@ function Particularpage(props) {
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
-              width:"0px",
-       
+              width: "0px",
             }}
           >
             <span
@@ -97,7 +102,7 @@ function Particularpage(props) {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
                       <i className="fas fa-award"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">Awarded Agency</h6>
+                    <h6 className="text-xl font-semibold">Products</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       Divide details about your product or agency work into
                       parts. A paragraph describing a feature will be enough.
@@ -112,7 +117,7 @@ function Particularpage(props) {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400">
                       <i className="fas fa-retweet"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">Free Revisions</h6>
+                    <h6 className="text-xl font-semibold">Recipes</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       Keep you user engaged by providing meaningful information.
                       Remember that by this time, the user is curious.
@@ -127,7 +132,7 @@ function Particularpage(props) {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
                       <i className="fas fa-fingerprint"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">Verified Company</h6>
+                    <h6 className="text-xl font-semibold">TrashSpot</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       Write a few lines about each one. A paragraph describing a
                       feature will be enough. Keep you user engaged!
@@ -165,36 +170,160 @@ function Particularpage(props) {
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
                   <img
                     alt="..."
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
+                    src={zero}
                     className="w-full align-middle rounded-t-lg"
                   />
-                  <blockquote className="relative p-8 mb-4">
-                    <svg
-                      preserveAspectRatio="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 583 95"
-                      className="absolute left-0 w-full block h-95-px -top-94-px"
-                    >
-                      <polygon
-                        points="-30,95 583,95 583,65"
-                        className="text-lightBlue-500 fill-current"
-                      ></polygon>
-                    </svg>
-                    <h4 className="text-xl font-bold text-white">
-                      Top Notch Services
-                    </h4>
-                    <p className="text-md font-light mt-2 text-white">
-                      The Arctic Ocean freezes every winter and much of the
-                      sea-ice then thaws every summer, and that process will
-                      continue whatever happens.
-                    </p>
-                  </blockquote>
+                  <svg
+                    preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 583 95"
+                    className="absolute left-0 w-full block h-95-px -top-94-px"
+                  >
+                    <polygon
+                      points="-30,95 583,95 583,65"
+                      className="text-green-500 fill-current"
+                    ></polygon>
+                  </svg>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
+        <section className="pt-20 pb-48">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center text-center mb-24">
+              <div className="w-full lg:w-6/12 px-4">
+                <h2 className="text-4xl font-semibold">TrashSpot</h2>
+                <p className="text-lg leading-relaxed m-4 text-blueGray-500">
+                allows everyone to become an actor in the protection of their environment
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap">
+              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
+                <div className="px-6">
+                  <img
+                    alt="..."
+                    src={img1}
+                    className="shadow-lg rounded-full mx-auto max-w-230-px"
+                  />
+                  <div className="pt-6 text-center">
+                    <h5 className="text-xl font-bold">have you found any waste?</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                    report them with the function I spotted
+                    </p>
+                   
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
+                <div className="px-6">
+                  <img
+                    alt="..."
+                    src={img2}
+                    className="shadow-lg rounded-full mx-auto max-w-230-px"
+                  />
+                  <div className="pt-6 text-center">
+                    <h5 className="text-xl font-bold">Hhave you made a pickup?</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                    Take pictures of the collected waste to get pointes
+                    </p>
+                    {/* <div className="mt-6">
+                      <button
+                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-google"></i>
+                      </button>
+                      <button
+                        className="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-facebook-f"></i>
+                      </button>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
+                <div className="px-6">
+                  <img
+                    alt="..."
+                    src={img3}
+                    className="shadow-lg rounded-full mx-auto max-w-210-px"
+                  />
+                  <div className="pt-6 text-center">
+                    <h5 className="text-xl font-bold">Your actions are worth money</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                     Each of your actions will bring back points
+                    </p>
+                    {/* <div className="mt-6">
+                      <button
+                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-google"></i>
+                      </button>
+                      <button
+                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-twitter"></i>
+                      </button>
+                      <button
+                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-instagram"></i>
+                      </button>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
+                <div className="px-6">
+                  <img
+                    alt="..."
+                    src={img4}
+                    className="shadow-lg rounded-full mx-auto max-w-210-px"
+                  />
+                  <div className="pt-6 text-center">
+                    <h5 className="text-xl font-bold">Acting with an association?</h5>
+                    <p className="mt-1 text-sm text-blueGray-400  font-semibold">
+                    participate with the associations to collect larger scale
+                    </p>
+                    {/* <div className="mt-6">
+                      <button
+                        className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-dribbble"></i>
+                      </button>
+                      <button
+                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-google"></i>
+                      </button>
+                      <button
+                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-twitter"></i>
+                      </button>
+                      <button
+                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                      >
+                        <i className="fab fa-instagram"></i>
+                      </button>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className="relative py-20">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
@@ -218,19 +347,35 @@ function Particularpage(props) {
 
           <div className="container mx-auto px-4">
             <div className="items-center flex flex-wrap">
+              <svg
+                className="absolute bottom-0 overflow-hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+                version="1.1"
+                viewBox="0 0 2560 100"
+                x="0"
+                y="0"
+              >
+                <polygon
+                  className="text-white fill-current"
+                  points="2560 0 2560 100 0 100"
+                ></polygon>
+              </svg>
               <div className="w-full md:w-4/12 ml-auto mr-auto px-4">
                 <img
                   alt="..."
                   className="max-w-full rounded-lg shadow-lg"
-                  src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                  // src="https://img.freepik.com/premium-vector/people-recycling-with-trash-bin_23-2148524155.jpg"
+                  src={rec}
                 />
               </div>
+
               <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
                 <div className="md:pr-12">
                   <div className="text-lightBlue-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-lightBlue-300">
                     <i className="fas fa-rocket text-xl"></i>
                   </div>
-                  <h3 className="text-3xl font-semibold">A growing company</h3>
+                  <h3 className="text-3xl font-semibold">ZeroWaste Recipes</h3>
                   <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
                     The extension comes with three pre-built pages to help you
                     get started faster. You can change the text and images and
@@ -286,162 +431,7 @@ function Particularpage(props) {
           </div>
         </section>
 
-        <section className="pt-20 pb-48">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center text-center mb-24">
-              <div className="w-full lg:w-6/12 px-4">
-                <h2 className="text-4xl font-semibold">Here are our heroes</h2>
-                <p className="text-lg leading-relaxed m-4 text-blueGray-500">
-                  According to the National Oceanic and Atmospheric
-                  Administration, Ted, Scambos, NSIDClead scentist, puts the
-                  potentially record maximum.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap">
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-1-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Ryan Tompson</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Web Developer
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </button>
-                      <button
-                        className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-dribbble"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-2-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Romina Hadid</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Marketing Specialist
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-3-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Alexa Smith</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      UI/UX Designer
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-instagram"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-4-470x470.png").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Jenna Kardi</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Founder and CEO
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-dribbble"></i>
-                      </button>
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-instagram"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+     
 
         <section className="pb-20 relative block bg-blueGray-800">
           <div
