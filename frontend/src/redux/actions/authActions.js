@@ -30,6 +30,7 @@ export const VerifValidation = (id,token, navigate) => (dispatch) => {
       const { token } = res.data;
       localStorage.setItem('jwt', token);
       const decode = jwt_decode(token);
+      console.log(decode);
       dispatch(setUser(decode));
       setAuth(token);
       navigate("/verified");
@@ -44,9 +45,11 @@ export const LoginAction = (form, navigate) => (dispatch) => {
   axios
     .post('http://localhost:3600/api/login', form)
     .then((res) => {
+      console.log(res);
       const { token } = res.data;
       localStorage.setItem('jwt', token);
       const decode = jwt_decode(token);
+      console.log(decode);
       dispatch(setUser(decode));
       setAuth(token);
     })
@@ -55,6 +58,27 @@ export const LoginAction = (form, navigate) => (dispatch) => {
         type: ERRORS,
         payload: err.response.data,
       });
+    });
+};
+
+export const LoginFbGoogleAction = (form, navigate) => (dispatch) => {
+  axios
+    .post('http://localhost:3600/api/LoginFbGoogle', form)
+    .then((res) => {
+      const { token } = res.data;
+      localStorage.setItem('jwt', token);
+      const decode = jwt_decode(token);
+      console.log(decode);
+      dispatch(setUser(decode));
+      setAuth(token);
+      navigate("/");
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data,
+      });
+      navigate("/login");
     });
 };
 

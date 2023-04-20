@@ -54,6 +54,7 @@ function Checkout() {
     let {basket, loading, error, basketItems} = useSelector(
         (state) => state.basket
     );
+    console.log(basket)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -81,7 +82,7 @@ function Checkout() {
                         <ul>
                             {basket.products.map((product) => (
                                 <li key={product._id}>
-                                    {product._id} x {product.quantity} = TND
+                                    {product.name} x {product.quantity} = TND
                                     {product.price * product.quantity}
                                 </li>
                             ))}

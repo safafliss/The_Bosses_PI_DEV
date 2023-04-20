@@ -32,7 +32,8 @@ html {
 
 html {
   line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
+  /* -webkit-text-size-adjust: 100%;  */
+  /* 2 */
 }
 
 /*
@@ -244,11 +245,6 @@ Correct the cursor style of increment and decrement buttons in Safari.
 1. Correct the odd appearance in Chrome and Safari.
 2. Correct the outline style in Safari.
 */
-
-[type='search'] {
-  -webkit-appearance: textfield; /* 1 */
-  outline-offset: -2px; /* 2 */
-}
 
 /**
 Remove the inner padding in Chrome and Safari on macOS.
@@ -525,7 +521,6 @@ video {
       [type='number'],
       [type='date'],
       [type='month'],
-      [type='search'],
       [type='tel'],
       [type='time'],
       [type='week'],
@@ -547,7 +542,7 @@ video {
   line-height: 1.5rem;
 }
 
-[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='month']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
@@ -1512,9 +1507,7 @@ select {
   height: auto;
 }
 
-.h-full {
-  height: 100%;
-}
+
 
 .h-95-px {
   height: 95px;
@@ -1602,10 +1595,6 @@ select {
 
 .m-4 {
   margin: 1rem;
-}
-
-.-m-10 {
-  margin: -2.5rem;
 }
 
 .-m-16 {
@@ -1806,10 +1795,6 @@ select {
   max-width: 100%;
 }
 
-.max-w-100-px {
-  max-width: 100px;
-}
-
 .max-w-120-px {
   max-width: 120px;
 }
@@ -1945,11 +1930,6 @@ select {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
 }
 
 .py-10 {
@@ -2775,10 +2755,6 @@ select {
 
   .lg\:w-9\/12 {
     width: 75%;
-  }
-
-  .lg\:w-10\/12 {
-    width: 83.333333%;
   }
 }
 

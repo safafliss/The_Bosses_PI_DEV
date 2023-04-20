@@ -18,19 +18,18 @@ export default function CardListUsers({ color }) {
 
   const profiles = useSelector((state) => state.profiles);
   const dispatch = useDispatch();
-  const getusers = async () => {
+  const test = async () => {
     await dispatch(getUsers());
   };
-
   useEffect(() => {
-    getusers();
+    test();
   }, []);
-
   const data = profiles.profiles;
+  console.log('this is data', profiles.profiles);
   const x = data.map((value) => {
+    console.log(value);
     return value;
   });
-
   return (
     <div
       className={
@@ -124,7 +123,9 @@ export default function CardListUsers({ color }) {
               <tr key={index}>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                   <img
-                    src={user.image != null ? user.image.url : ''}
+                    src={
+                      require('../../../../assets/img/bootstrap.jpg').default
+                    }
                     className="h-12 w-12 bg-white rounded-full border"
                     alt="..."
                   ></img>{' '}

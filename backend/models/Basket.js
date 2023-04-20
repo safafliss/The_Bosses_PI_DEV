@@ -5,6 +5,7 @@ const BasketSchema = new Schema({
   products: [
     {
       productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+      name: {type: String},
       quantity: { type: Number, default: 1 },
       price: { type: Number, required: true },
     },

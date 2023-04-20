@@ -12,7 +12,7 @@ function RowDetails({_id, user}) {
       <th>{user.firstName}</th>
      
       <td>
-        <button className="btn btn-outline-danger" onClick={()=>DeleteHandler(_id)}>Delete</button>
+        <button class="btn btn-outline-danger" onClick={()=>DeleteHandler(_id)}>Delete</button>
       </td>
     </tr>
   );

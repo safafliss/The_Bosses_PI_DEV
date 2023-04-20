@@ -1,15 +1,24 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import authReducer from './authReducer';
-import errorsReducer from './errorsReducer';
-import profileReducer from './profileReducer';
+import authReducer from "./authReducer";
+import errorsReducer from "./errorsReducer";
+import profileReducer from "./profileReducer";
+import productReducer from "./productReducer";
+import commentReducer from "./commentReducer";
+import recipeReducer from "./recipeReducer";
+import basketReducer from "./basketReducer";
 import productListReducer from './productReducer';
-import basketReducer from './basketReducer';
+
 export default combineReducers({
   auth: authReducer,
   errors: errorsReducer,
   profiles: profileReducer,
-  productList: productListReducer,
+  products: productReducer,
+  comments: commentReducer,
+  recipes: recipeReducer,
   basket: basketReducer,
-  basketList: basketReducer
+  basketList: basketReducer,
+  productList: productListReducer,
+
+
 });

@@ -1,9 +1,13 @@
 const Basket = require('../models/Basket');
 const mongoose = require('mongoose');
+const Product = require('../models/productModel');
 
 const addToBasket = async (productId, price, quantity, userId) => {
   const ObjectId = mongoose.Types.ObjectId;
   let objectProductId = new ObjectId(productId);
+  let prod = await Product.findById(productId).exec();
+  let name = prod.brand;
+  console.log('name ', name);
   try {
     const basketQuery = Basket.where({ user: userId });
     let basket = await basketQuery.findOne();
@@ -22,7 +26,7 @@ const addToBasket = async (productId, price, quantity, userId) => {
         prod.price = prod.price * quantity;
         basket.totalPrice += prod.price;
       } else {
-        basket.products.push({ productId, price, quantity });
+        basket.products.push({ productId,name, price, quantity });
         basket.totalPrice += price;
       }
 
@@ -30,7 +34,7 @@ const addToBasket = async (productId, price, quantity, userId) => {
     } else {
       const newBasket = new Basket({
         user: userId,
-        products: [{ productId, price, quantity }],
+        products: [{ productId, name, price, quantity }],
         totalPrice: price,
       });
 
@@ -51,7 +55,7 @@ const updateBasket = async (basket) => {
     const doc = await Basket.findById(objectBaskettId);
     console.log('basket before update', basket);
     let totalPrice = 0;
-    basket.products.forEach((p) => (totalPrice += (p.price * p.quantity)));
+    basket.products.forEach((p) => (totalPrice += p.price * p.quantity));
     console.log('total price ', totalPrice);
     basket.totalPrice = totalPrice;
     let basketDB = await Basket.findByIdAndUpdate(

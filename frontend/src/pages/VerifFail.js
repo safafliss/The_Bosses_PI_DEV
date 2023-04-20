@@ -7,7 +7,7 @@ function VerifFail() {
     const navigate = useNavigate()
     
         setTimeout(()=>{
-            navigate("/")
+            navigate("/register")
         },3000)
   return (
     <>

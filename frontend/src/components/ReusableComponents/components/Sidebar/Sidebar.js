@@ -92,17 +92,17 @@ export default function Sidebar() {
                       ? 'text-lightBlue-500 hover:text-lightBlue-600'
                       : 'text-blueGray-700 hover:text-blueGray-500')
                   }
-                  to="/products"
+                  to="/admin/dashboard"
                 >
                   <i
                     className={
                       'fas fa-tv mr-2 text-sm ' +
-                      (window.location.href.indexOf('/products') !== -1
+                      (window.location.href.indexOf('/admin/dashboard') !== -1
                         ? 'opacity-75'
                         : 'text-blueGray-300')
                     }
                   ></i>{' '}
-                  Products
+                  Dashboard
                 </Link>
               </li>
 
@@ -136,7 +136,7 @@ export default function Sidebar() {
                       ? 'text-lightBlue-500 hover:text-lightBlue-600'
                       : 'text-blueGray-700 hover:text-blueGray-500')
                   }
-                  to="/admin/tables"
+                  to="/admin/listOfRatings"
                 >
                   <i
                     className={
@@ -146,7 +146,7 @@ export default function Sidebar() {
                         : 'text-blueGray-300')
                     }
                   ></i>{' '}
-                  Tables
+                  List of Ratings
                 </Link>
               </li>
 
@@ -158,7 +158,7 @@ export default function Sidebar() {
                       ? 'text-lightBlue-500 hover:text-lightBlue-600'
                       : 'text-blueGray-700 hover:text-blueGray-500')
                   }
-                  to="/admin/maps"
+                  to="/admin/listOfReports"
                 >
                   <i
                     className={
@@ -167,8 +167,9 @@ export default function Sidebar() {
                         ? 'opacity-75'
                         : 'text-blueGray-300')
                     }
+                    
                   ></i>{' '}
-                  Maps
+                  List of Reports
                 </Link>
               </li>
             </ul>

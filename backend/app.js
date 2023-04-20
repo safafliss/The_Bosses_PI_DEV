@@ -5,38 +5,44 @@ var logger = require('morgan');
 require('dotenv').config();
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
-var productRouter = require('./routes/product');
-var basketRouter = require('./routes/basket');
 const passport = require('passport');
 const cors = require('cors');
 const cookieSession = require('cookie-session');
 const authRouters = require('./routes/auth');
 const session = require('express-session');
+//product
+const productRoutes = require('./routes/productRoutes');
+const galleryRoutes = require('./routes/galleryRoutes');
+const favorisRoutes = require('./routes/favorisRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+const basketRoutes = require('./routes/basketRoutes');
+
+const cron = require('node-cron');
+const sendEmailProduct = require('./utils/sendEmailProduct');
+const automaticUpdateProduct = require('./utils/automaticUpdateProduct');
+const sendEmailToUsers = require('./utils/sendEmailToUsers');
+
+const Report = require('./routes/Report');
+const Rate = require('./routes/Rate');
 var app = express();
+const recipeRoute = require('./routes/recipeRoute');
+
 app.use(
-  session({
-    secret: 'ilovescotchscotchyscotchscotch1',
+  cookieSession({ name: 'session', keys: ['lama'], maxAge: 24 * 60 * 60 * 100 })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
   })
 );
-/*app.use(cors({
-    credentials: true,
-  }))*/
-//const cors = require('cors');
-const whitelist = ['http://localhost:3000', 'http://localhost:3600'];
-
-const corsOptions = {
-  credentials: true, // This is important.
-  origin: (origin, callback) => {
-    if (1 == 1) return callback(null, true);
-
-    callback(new Error('Not allowed by CORS'));
-  },
-};
-app.use(cors(corsOptions));
 
 app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(
@@ -56,6 +62,34 @@ mongoose
   .then(() => console.log('connected to db'))
   .catch((err) => console.log(err));
 
-app.use('/api', [indexRouter, productRouter, basketRouter]);
+app.use('/support', Report);
+app.use('/rate', Rate);
+app.use('/api', indexRouter);
+app.use('/product', productRoutes);
+app.use('/gallery', galleryRoutes);
+app.use('/favoris', favorisRoutes);
+app.use('/comment', commentRoutes);
+app.use('/basket', basketRoutes);
+// cron.schedule('*/2 * * * *', () => {
+//   console.log('running a task every two minutes');
+// });
+// cron.schedule("0 0 * * *", () => {
+//   sendEmailProduct();
+//   console.log("heyy");
+// });
+
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailProduct();
+//   console.log("heyy1");
+// });
+// cron.schedule("*/0.3 * * * *", () => {
+//   automaticUpdateProduct();
+//   console.log("heyy2");
+// });
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailToUsers();
+//   console.log("heyy3");
+// });
+app.use('/recipe', recipeRoute);
 
 module.exports = app;

@@ -19,7 +19,7 @@ export const addToBasket = (productId, price, quantity, userId) => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3600/api/basket/add',
+                'http://localhost:3600/basket/add',
                 {
                     productId,
                     price,
@@ -41,7 +41,7 @@ export const getBasket = (userId) => async (dispatch) => {
 
     try {
         const response = await axios.get(
-            `http://localhost:3600/api/basket/${userId}`
+            `http://localhost:3600/basket/${userId}`
         );
         const basket = response.data;
         dispatch({type: GET_BASKET_SUCCESS, payload: basket});
@@ -62,7 +62,7 @@ export const getBasket = (userId) => async (dispatch) => {
 }*/
 
 export const updateBasket = (basket) => (dispatch) => {
-    axios.put('http://localhost:3600/api/basket', basket)
+    axios.put('http://localhost:3600/basket', basket)
         .then((res) => {
             dispatch({type: PUT_BASKET_SUCCESS, payload: basket})
         })

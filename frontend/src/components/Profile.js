@@ -4,6 +4,9 @@ import axios from "axios";
 import {setUser} from "../redux/actions/authActions"
 import jwt_decode from 'jwt-decode';
 import { setAuth } from '../util/setAuth';
+import { useDispatch } from 'react-redux';
+import "./Profile.css"
+import {  useNavigate } from 'react-router-dom';
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
   width: 400,
@@ -12,6 +15,8 @@ const videoConstraints = {
 };
 
 const Profile = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { handleClose, show } = props;
   const type = Object.keys(props).includes("show")
   const showHideClassName = "modal" //show ? "modal display-block" : "modal display-none";
@@ -24,6 +29,8 @@ const Profile = (props) => {
   const capture = React.useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
     setPicture(pictureSrc);
+    console.log(pictureSrc);
+
     UpdateImage(pictureSrc);
   });
   const UpdateImage = async (image) => {
@@ -39,19 +46,22 @@ const Profile = (props) => {
         const { token } = response.data;
         localStorage.setItem('jwt', token);
         const decode = jwt_decode(token);
-        setUser(decode);
+        dispatch(setUser(decode));
         setAuth(token);
+        console.log("navigate")
       })
     }
   
   };
   return (
-    <div className={showHideClassName} style={showHideStyle}>
+    show ?
+    <div className={showHideClassName}  style={showHideStyle}>
       <section className="modal-main">
-        <h2 className="mb-5 text-center">
+        <h2 className="mb-5 text-center" style={{"background":"white"}}>
           React Photo Capture using Webcam Examle
         </h2>
-        <div>
+        <div className="camModal">
+        <div style={{textAlign:"center"}} className="innerCamModal">
           {picture == "" ? (
             <Webcam
               audio={false}
@@ -64,7 +74,6 @@ const Profile = (props) => {
           ) : (
             <img src={picture} />
           )}
-        </div>
         <div>
           {picture != "" ? (
             <button
@@ -88,9 +97,12 @@ const Profile = (props) => {
             </button>
           )}
         </div>
-        <button onClick={handleClose}>Close</button>
+        <button type="button" onClick={handleClose}>Close</button>
+        
+        </div>  
+        </div>
       </section>
     </div>
-  );
+  :<></>);
 };
 export default Profile;

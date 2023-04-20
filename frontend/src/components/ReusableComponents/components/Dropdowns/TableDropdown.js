@@ -5,7 +5,7 @@ import { createPopper } from '@popperjs/core';
 import {
   DeleteProfile,
   GetProfile,
-  BanProfile,
+  BanProfile
 } from '../../../../redux/actions/profileActions';
 import { useDispatch } from 'react-redux';
 
@@ -19,13 +19,17 @@ const NotificationDropdown = (user) => {
 
   const ShowHandler = (id) => {
     dispatch(GetProfile(id));
+    console.log('id li hachti bih' , id)
     navigate('/admin/profile/' + id);
   };
 
   const BanHandler = (id) => {
+    
     dispatch(BanProfile(user.user._id, 1));
-  };
+    console.log('user to ban', user.user)
+  }
 
+  console.log('user', user.user._id);
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();

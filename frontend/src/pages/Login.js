@@ -7,6 +7,7 @@ import { LoginAction } from '../redux/actions/authActions';
 import CaptchaCode from 'react-captcha-code';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import './Login.css'
 import Profile from '../components/Profile';
 export default function Login() {
   const [showModal, setShowModal] = useState(false);
@@ -17,6 +18,7 @@ export default function Login() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.errors);
+  console.log('errors ', errors);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
 
@@ -48,8 +50,10 @@ export default function Login() {
       (dispatch(LoginAction(form, navigate)) && inputCode === captchaCode) ||
       inputCode === captchaCode
     ) {
+      console.log('Verification successful!');
       setError(false);
     } else {
+      console.log('Verification failed. Please try again.');
       setError(true);
     }
   };
@@ -95,13 +99,13 @@ export default function Login() {
                     </div>
                     <div className="btn-wrapper text-center">
                       <a
-                        href="http://localhost:3600/auth/facebook/callback"
+                        href="http://localhost:3600/auth/facebook"
                         className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                       >
                         <img
                           alt="..."
                           className="w-5 mr-1"
-                          src={require('../assets/img/github.svg').default}
+                          src={require('../assets/img/icons8-facebook.svg').default}
                         />
                         facebook
                       </a>
@@ -203,6 +207,7 @@ export default function Login() {
                       </div>
                       <div className="text-center mt-6">
                         <button
+                        type="button"
                           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                           name="faceId"
                           style={{ backgroundColor: ' #2dce89' }}
@@ -210,6 +215,10 @@ export default function Login() {
                         >
                           Use Face ID
                         </button>
+                      </div>
+                      
+                      <div className='backGroundModal' style={showModal?{"display":"block"}:{"display":"none"}}>
+
                       </div>
                       <Profile show={showModal} handleClose={handleClose} />
                     </form>

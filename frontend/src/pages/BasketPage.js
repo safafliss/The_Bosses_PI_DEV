@@ -18,11 +18,11 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
+  IconButton, 
   Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { fetchProducts } from '../redux/actions/productActions';
+import { fetch_Products } from '../redux/actions/productActions';
 
 import TableDropdown from '../components/ReusableComponents/components/Dropdowns/TableDropdown';
 function BasketPage() {
@@ -39,7 +39,7 @@ function BasketPage() {
   }
 
   async function getProducts() {
-    await dispatch(fetchProducts());
+    await dispatch(fetch_Products());
   }
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function BasketPage() {
   };
 
   function handleBackToProductsList() {
-    navigate('/products');
+    navigate('/allProducts');
   }
 
   function handleProceedToCheckout() {
@@ -116,70 +116,11 @@ function BasketPage() {
   if (location.pathname === '/basket') {
     return (
       <>
-        <TableContainer component={Paper}>
-          <Table aria-label="product table">
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Remove</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {basketItems.map((product, index) => (
-                <TableRow key={product._id}>
-                  <TableCell component="th" scope="row">
-                    {product._id}
-                  </TableCell>
-                  <TableCell align="right">
-                    ${product.price.toFixed(2)}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button onClick={() => onDecreaseQuantity(index)}>-</Button>
-                    {product.quantity}
-                    <Button onClick={() => onIncreaseQuantity(index)}>+</Button>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button onClick={() => oneDeleteProduct(index)}>X</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div
-            style={{
-              marginTop: '1rem',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleBackToProductsList}
-            >
-              Back to Products List
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleProceedToCheckout}
-            >
-              Proceed to Checkout
-            </Button>
-          </div>
-        </TableContainer>
+        
 
         {/* Table notus */}
         <>
-          <div className="flex flex-wrap">
-            <div className="w-full lg:w-10/12 px-4">
-              <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                aa
-              </div>
-            </div>
-          </div>
+          
           <div
             className={
               'relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded ' +

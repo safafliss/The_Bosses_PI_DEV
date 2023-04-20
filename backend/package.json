@@ -1,5 +1,5 @@
 {
-  "proxy" : "http://localhost:3600",
+  "proxy": "http://localhost:3600",
   "name": "multi-user",
   "version": "0.0.0",
   "private": true,
@@ -23,9 +23,10 @@
     "jwt-decode": "^3.1.2",
     "mongoose": "^7.0.0",
     "morgan": "~1.9.1",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "nodemailer-smtp-transport": "^2.7.4",
-    "passport": "^0.6.0",
+    "passport": "^0.5.3",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
     "passport-jwt": "^4.0.1",

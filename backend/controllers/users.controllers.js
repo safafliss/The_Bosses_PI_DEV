@@ -11,7 +11,10 @@ const sendMail = require('../utils/sendEmail');
 const ValidateProfile = require('../validation/Profile');
 const axios = require('axios');
 
+
+
 const Register = async (req, res) => {
+  console.log('ena ons');
   const { errors, isValid } = await validatorRegister(req.body);
   try {
     if (!isValid) {
@@ -42,13 +45,61 @@ const generateResetToken = async (userid, email) => {
   tokken = crypto.randomBytes(32).toString('hex');
   await resetPasswordToken.create({ userId: userid, token: tokken });
 
-  const url = `http://localhost:3600/api/resetpassword/${tokken}`;
+  const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
   if (sendMail(email, url)) {
-    console.log('Done');
+    console.log('mchet');
   } else {
-    console.log('Not Done!');
+    console.log('mamchetech');
   }
 };
+
+
+const LoginFbGoogle = (req,res)=>{
+ console.log("hedha l userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",req.body)
+ if( Object.keys(req.body).length > 0 ){
+  var {googleId,email,firstName,lastName} = req.body
+ 
+  if (!firstName){
+    firstName = req.body.name.givenName;
+   
+    lastName = req.body.name.familyName;
+    email = req.body.emails[0].value;
+    googleId = req.body.id;
+  }
+
+
+  try{
+    const userTest = UserModel.findOne({googleId:googleId,lastName:lastName,email:email,firstName:firstName}).then((user) => {
+      if (user){
+        
+        var token = jwt.sign(
+          {
+            id: user._id,
+
+            role: user.role,
+          },
+          process.env.PRIVATE_KEY,
+          { expiresIn: '90h' }
+        );
+        res.status(200).json({
+          message: 'success',
+          token: 'Bearer ' + token,
+        });
+      }else{
+       
+        res.status(403).json("not found");
+      }
+    })
+
+  }catch (error) {
+   
+    res.status(400).json("Bad request");
+  }
+}
+else{
+  res.status(400).json("faceboookkkkk");
+}
+}
 
 const Login = async (req, res) => {
   const { errors, isValid } = await validateLogin(req.body);
@@ -141,34 +192,49 @@ const AddProfile = async (req, res) => {
   }
 };
 
-const updateProfile = async (req, res) => {
+// const updateProfile = async (req, res) => {
+//   try {
+//     //
+//     // if ('password' in req.body) {
+//     //   const hash = bcrypt.hashSync(req.body.password, 10);
+//     //   req.body.password = hash;
+//     //   console.log('password')
+//     // }
+//     console.log(req.body);
+//     const data = await UserModel.findByIdAndUpdate(req.user._id, {
+//       $set: req.body,
+//     });
+//     res.status(200).json(await UserModel.findById(req.user._id));
+//   } catch (error) {
+//     res.json(error);
+//   }
+// };
+const updateProfile = async (req, res, next) => {
   try {
-    //
-    // if ('password' in req.body) {
-    //   const hash = bcrypt.hashSync(req.body.password, 10);
-    //   req.body.password = hash;
-    //   console.log('password')
-    // }
-    if (req.user) {
-      const data = await UserModel.findByIdAndUpdate(req.user._id, {
-        $set: req.body,
-      });
-      res.status(200).json(await UserModel.findById(req.user._id));
-    } else {
-      console.log('fsdf', req.body);
-      const data = await UserModel.findByIdAndUpdate(req.body._id, {
-        $set: req.body,
-      });
-      res.status(200).json(await UserModel.findById(req.body._id));
-    }
+    await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.status(200).json(Object.keys(req.body));
   } catch (error) {
     res.json(error);
   }
+};
+const updateUser = async (req, res) => {
+  console.log("aaaaaaaaaaah")
+    try {
+      await UserModel.findByIdAndUpdate(req.params.id, { $set: req.body });
+      res.status(200).json(Object.keys(req.body));
+    } catch (error) {
+      res.json(error);
+    }
+  
 };
 
 const uploadImage = async (req, res) => {
   try {
     const { image } = req.body;
+    console.log(
+      'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    );
+    console.log(image);
     const result = await cloudinary.uploader.upload(image, {
       folder: 'profilePictures',
     });
@@ -192,6 +258,7 @@ const loginImage = async (req, res) => {
       folder: 'loginPictures',
     });
     const url = result.secure_url;
+    console.log(url);
     //  await axios.post('https://c133-41-225-168-41.eu.ngrok.io/uploadImage',{"imageUrl": url, "userId": id})
     //         .then(response => {
     //             console.log(response)
@@ -211,6 +278,9 @@ const loginImage = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+
+    console.log(result.public_id);
+    console.log(id);
     //  await cloudinary.uploader.destroy(result.public_id);
     res.status(200).json('done');
   } catch (error) {
@@ -264,6 +334,7 @@ const checkLoginByImage = async (req, res) => {
       await cloudinary.uploader.destroy(result.public_id);
       await UserModel.findById(userId).then((user) => {
         if (user) {
+          console.log('logged in ' + userId);
           var token = jwt.sign(
             {
               id: user._id,
@@ -358,6 +429,7 @@ const resetpassword = async (req, res, next) => {
   try {
     const passwordHash = bcrypt.hashSync(req.body.password, 10);
     const decoded = jwt.decode(req.params['token']);
+    console.log(decoded.id);
     await UserModel.findOneAndUpdate(
       { _id: decoded.id },
       {
@@ -409,6 +481,8 @@ const forgotpassword = async (req, res, next) => {
   }
 };
 
+
+
 module.exports = {
   Register,
   Login,
@@ -428,4 +502,6 @@ module.exports = {
   AddProfile,
   FindAllProfiles,
   FindSingleProfile,
+  updateUser,
+  LoginFbGoogle
 };
