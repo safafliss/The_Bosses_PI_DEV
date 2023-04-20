@@ -12,7 +12,9 @@ import HeaderStats from '../components/ReusableComponents/components/Headers/Hea
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-const FormRecipe = () => {
+import NoAccess from "./NoAccess";
+
+const FormRecipe = (props) => {
   const navigate = useNavigate();
     const { id } = useParams();
     const [image, setImage] = useState([
@@ -76,6 +78,11 @@ const FormRecipe = () => {
 
     }   
   };
+  if (props.user.isConnected && props.user.role == "ADMIN") {
+  } else {
+    return <NoAccess />;
+  }
+  
 
   return (
     
@@ -94,6 +101,8 @@ const FormRecipe = () => {
 
         <div className="container mx-auto">
           <div className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10 mx-auto max-w-2xl text-center" style={{flexDirection:"column"}}>
+          <div className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10" style={{}}>
+
           <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>Update Recipe</h2>
       
       <form onSubmit={handleSubmit} className='mx-auto mt-16 max-w-xl sm:mt-20'>
@@ -121,7 +130,8 @@ const FormRecipe = () => {
                     objectFit: "cover",
                   }}
                 />
-              </div>          <div className="d-flex">
+              </div>          
+              <div className="d-flex">
                 <div className="btn btn-primary  btn-rounded">
                   <label
                     className="form-label text-white m-1"
@@ -152,7 +162,8 @@ const FormRecipe = () => {
         <div className="sm:col-span-2">
         <label className="block text-sm font-semibold leading-6 text-gray-900">
           Cooking:
-          <textarea style={{width:"30rem"}}  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={recipe.cooking} onChange={(e) => setRecipe({ ...recipe, cooking: e.target.value })} required />
+          <textarea style={{width:"30rem"}}  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+           value={recipe.cooking} onChange={(e) => setRecipe({ ...recipe, cooking: e.target.value })} required />
         </label>
         </div>
         <br />
@@ -173,7 +184,8 @@ const FormRecipe = () => {
         <div className="sm:col-span-2">
         <label className="block text-sm font-semibold leading-6 text-gray-900">
           Material:
-          <textarea  style={{width:"30rem"}}  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={recipe.material} onChange={(e) => setRecipe({ ...recipe, material: e.target.value })} required />
+          <textarea  style={{width:"30rem"}}  
+          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={recipe.material} onChange={(e) => setRecipe({ ...recipe, material: e.target.value })} required />
         </label>
         </div>
         <br />
@@ -193,6 +205,7 @@ const FormRecipe = () => {
 </div>
 </form>
           </div>
+        </div>
         </div>
       </section> 
 </div>

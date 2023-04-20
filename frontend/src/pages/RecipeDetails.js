@@ -6,11 +6,11 @@ import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
-
+import NoAccess from "./NoAccess";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const RecipeDetails = ({ recipeId }) => {
+const RecipeDetails = (props) => {
   const [rating, setRating] = useState(null);
   const dispatch = useDispatch();
   const [averageRating, setAverageRating] = useState(null);
@@ -55,6 +55,10 @@ const RecipeDetails = ({ recipeId }) => {
   if (!recipe) {
     return <div>Loading...</div>;
   }
+  if (props.user.isConnected && props.user.role == "PARTICULAR") {
+  } else {
+    return <NoAccess />;
+  }
 
   return (
     <div>
@@ -63,9 +67,13 @@ const RecipeDetails = ({ recipeId }) => {
           <Navbar />
           <div className="bg-white">
             <div className="pt-6">
-              <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+              <div
+                className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8"
+                style={{ height: "320px" }}
+              >
                 <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                   <img
+                    style={{ height: "330px" }}
                     src={recipe.image.url}
                     alt={recipe.name}
                     className="h-full w-full object-cover object-center"
@@ -74,6 +82,7 @@ const RecipeDetails = ({ recipeId }) => {
                 <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
                   <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                     <img
+                      style={{ height: "150px" }}
                       src={recipe.image.url}
                       alt={recipe.name}
                       className="h-full w-full object-cover object-center"
@@ -81,6 +90,7 @@ const RecipeDetails = ({ recipeId }) => {
                   </div>
                   <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                     <img
+                      style={{ height: "150px" }}
                       src={recipe.image.url}
                       alt={recipe.name}
                       className="h-full w-full object-cover object-center"
@@ -89,6 +99,7 @@ const RecipeDetails = ({ recipeId }) => {
                 </div>
                 <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                   <img
+                    style={{ height: "320px" }}
                     src={recipe.image.url}
                     alt={recipe.name}
                     className="h-full w-full object-cover object-center"
@@ -99,7 +110,10 @@ const RecipeDetails = ({ recipeId }) => {
               {/* Product info */}
               <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
                 <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                  <h1
+                    className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
+                    style={{ fontSize: "80px", fontFamily: "auto" }}
+                  >
                     {recipe.name}
                   </h1>
                 </div>
@@ -107,9 +121,9 @@ const RecipeDetails = ({ recipeId }) => {
                 {/* Options */}
                 <div className="mt-4 lg:row-span-3 lg:mt-0">
                   <h2 className="sr-only">recipe information</h2>
-                  <p className="text-3xl tracking-tight text-gray-900">
-                    {recipe.preparation}
-                  </p>
+                  <h1 className="text-3xl tracking-tight text-gray-900">
+                 <h5>Preparation: </h5>  {recipe.preparation}
+                  </h1>
 
                   {/* Reviews */}
                   <div className="mt-6">
@@ -144,12 +158,7 @@ const RecipeDetails = ({ recipeId }) => {
                           <option value="4">4</option>
                           <option value="5">5</option>
                         </select>
-                        <button type="submit">Rate</button>
-                      </form>
-                    </div>
-                  </div>
-                  {/* Product rating */}
-                  <div className="mt-4">
+                        <div className="mt-4">
                     <h2 className="sr-only">Product rating</h2>
                     <div className="flex items-center">
                       <div className="flex items-center mt-4">
@@ -176,37 +185,19 @@ const RecipeDetails = ({ recipeId }) => {
                       </p>
                     </div>
                   </div>
-
-                  <form className="mt-10">
-                    {/* Colors */}
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-900">
-                        Color
-                      </h3>
-                    </div>
-
-                    {/* Sizes */}
-                    <div className="mt-10">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-gray-900">
-                          Size
-                        </h3>
-                        <a
-                          href="#"
-                          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                        <button
+                          type="submit"
+                          className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                          Size guide
-                        </a>
-                      </div>
+                          Rate
+                        </button>
+                      </form>
                     </div>
+                  </div>
+                  {/* Product rating */}
+               
 
-                    <button
-                      type="submit"
-                      className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Add to bag
-                    </button>
-                  </form>
+                 
                 </div>
 
                 <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -232,7 +223,7 @@ const RecipeDetails = ({ recipeId }) => {
 
                   <div className="mt-10">
                     <h3 className="text-sm font-medium text-gray-900">
-                      Highlights
+                     
                     </h3>
 
                     <div className="mt-4">
@@ -248,11 +239,11 @@ const RecipeDetails = ({ recipeId }) => {
 
                   <div className="mt-10">
                     <h2 className="text-sm font-medium text-gray-900">
-                      Details
+                    quantity: {recipe.quantity}
                     </h2>
 
                     <div className="mt-4 space-y-6">
-                      <p className="text-sm text-gray-600">{recipe.material}</p>
+                      <h2 className="text-sm text-gray-600">{recipe.material}</h2>
                     </div>
                   </div>
                 </div>

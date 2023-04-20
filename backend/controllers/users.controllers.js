@@ -14,7 +14,7 @@ const axios = require('axios');
 
 
 const Register = async (req, res) => {
-
+  console.log('ena ons');
   const { errors, isValid } = await validatorRegister(req.body);
   try {
     if (!isValid) {

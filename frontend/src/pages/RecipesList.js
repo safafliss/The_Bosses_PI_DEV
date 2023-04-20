@@ -12,10 +12,11 @@ import patternReact from "../assets/img/recipelandinggg.png";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { StarIcon } from "@heroicons/react/20/solid";
+import NoAccess from "./NoAccess";
 
 import classNames from "classnames";
 
-export default function RecipeList() {
+export default function RecipeList(props) {
   const recipes = useSelector((state) => state.recipes.recipes);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,6 +53,10 @@ export default function RecipeList() {
 
   if (!recipes) {
     return <div>Loading...</div>;
+  }
+  if (props.user.isConnected && props.user.role == "PARTICULAR") {
+  } else {
+    return <NoAccess />;
   }
   return (
     <div className="bg-white">
@@ -105,8 +110,10 @@ export default function RecipeList() {
             <p>No recipes found with "{searchQuery}"</p>
           ) : (
             filteredRecipes.map((recipe) => (
-              <div key={recipe._id}>
-                <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                    <div className=" px-12 md:px-4 mr-auto ml-auto -mt-32"   style={{ marginTop: "10px", width: "300px" }}>
+              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg " key={recipe._id}  >
+
+                <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 " >
                   <img
                     src={
                       recipe?.image?.url
@@ -117,44 +124,65 @@ export default function RecipeList() {
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <h4 className="text-xl font-bold text-black">
-                        <Link to={`/recipes/${recipe._id}`}>{recipe.name}</Link>
-                      </h4>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {recipe.preparation}
-                    </p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {recipe.cooking}
-                  </p>
-                  <div className="mt-4">
-                  
-                  
-                    <div className="mt-4">
-                      <h2 className="sr-only">Product rating</h2>
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <StarIcon
-                            key={i}
-                            className={classNames(
-                              "h-5 w-5 flex-shrink-0",
-                              getAverageRating(recipe.ratings) > i
-                                ? "filled text-gray-900"
-                                : "text-gray-200"
-                            )}
-                            aria-hidden="true"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  {/* //  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(recipe._id)}>Delete</Button> */}
-                </div>
+                <blockquote className="relative p-8 mb-4" style={{height:"140px" }}>
+                <svg
+                            preserveAspectRatio="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 583 95"
+                            className="absolute left-0 w-full block h-95-px -top-94-px"
+                          >
+                            <polygon
+                              points="-30,95 583,95 583,65"
+                              className=" fill-current"
+                              style={{ color: "#24b765" }}
+                            ></polygon>
+                          </svg>
+                          <section className="recipe-details">
+  <div className="recipe-header">
+    <h1 className="text-2xl font-bold tracking-tight mb-2 " style={{marginTop:"-20px", color:"#374151", fontFamily: "auto" , fontSize:"30px"}}>                       
+     <Link style={{color:"#374151",textDecoration: "none"}} to={`/recipes/${recipe._id}`}>{recipe.name}</Link>
+</h1>
+    <div className="flex items-center" style={{justifyContent: "space-around"}}>
+   
+      <div className="recipe-rating flex items-center" >
+        {[...Array(5)].map((_, i) => (
+          <StarIcon
+            key={i}
+            className={classNames(
+              "h-4 w-4 flex-shrink-0",
+              getAverageRating(recipe.ratings) > i
+                ? "filled text-yellow-500"
+                : "text-gray-300"
+            )}
+            aria-hidden="true"
+          />
+        ))}
+      </div>
+      
+    </div>
+  </div>
+  <div className="recipe-content mt-4 flex flex-col md:flex-row">
+    
+    <div className="recipe-info flex-1">
+      <div className="recipe-preparation mb-4">
+        <h6 className=" font-bold mb-2" style={{fontSize:"12px",marginTop:"-10px",color:"#374151"}}>Preparation:   {recipe.preparation}</h6>
+     
+      </div>
+      <div className="recipe-cooking mb-4">
+        <h6 className="text-lg font-bold mb-2" style={{fontSize:"12px",marginTop:"-10px",color:"#374151"}}>Cooking:  {recipe.cooking}</h6>
+       
+      </div>
+    </div>
+  </div>
+  <div className="recipe-actions mt-4">
+    {/* Uncomment the following line if you want to add a delete button */}
+    {/* <Button variant="outline-danger" size="sm" onClick={() => handleDelete(recipe._id)}>Delete</Button> */}
+  </div>
+</section>
+
+                </blockquote>
               </div>
+               </div>
             ))
           )}
         </div>

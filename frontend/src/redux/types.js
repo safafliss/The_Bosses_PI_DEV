@@ -1,7 +1,19 @@
-export const SET_USER = 'SET_USER';
-export const ERRORS = 'ERRORS';
-export const SET_PROFILE = 'SET_PROFILE';
-export const SET_PROFILES = 'SET_PROFILES';
-export const DELETE_PROFILE = 'DELETE_PROFILE';
-export const UPDATE_PROFILE = 'UPDATE_PROFILE';
-export const BAN_PROFILE = 'BAN_PROFILE';
+export const SET_USER = "SET_USER";
+export const ERRORS = "ERRORS";
+export const SET_PROFILE = "SET_PROFILE";
+export const SET_PROFILES = "SET_PROFILES";
+export const DELETE_PROFILE = "DELETE_PROFILE";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const BAN_PROFILE = "BAN_PROFILE";
+
+
+//product
+export const SET_PRODUCT = "SET_PRODUCT";
+export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
+export const FETCH_PRODUCTS_ERROR = "FETCH_PRODUCTS_ERROR";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const GET_SINGLE_PRODUCT = "GET_SINGLE_PRODUCT";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const SET_COMMENT = "SET_COMMENT";
+export const FETCH_COMMENTS_SUCCESS = "FETCH_COMMENTS_SUCCESS";
+export const FETCH_COMMENTS_ERROR = "FETCH_COMMENTS_ERROR";
