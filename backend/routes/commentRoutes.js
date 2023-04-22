@@ -7,5 +7,4 @@ router.post("/addComment", addComment);
 
 //get comments per product
 router.get("/getComments/:id", getComments);
-
 module.exports = router;

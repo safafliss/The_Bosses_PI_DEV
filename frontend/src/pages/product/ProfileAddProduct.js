@@ -35,12 +35,13 @@ function ProfileAddProduct() {
     >
       <div className="card1 p-4">
         <div className=" image d-flex flex-column justify-content-center align-items-center">
-          <button className="btn btn-secondary">
+          <button>
             <img
               //   src={"https://i.imgur.com/wvxPV9S.png"}
               src={image}
-              height="100"
-              width="100"
+              //height="100"
+              style={{ borderRadius: "50%", width: "140px", height: "140px" }}
+              //width="100"
             />
           </button>
           <br />

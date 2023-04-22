@@ -191,7 +191,7 @@ function FormProduct() {
               <label>Price (DT):</label>
               <Inputs
                 name="price"
-                type="number"
+                //type="number"
                 placeholder="price"
                 onChangeHandler={onChangeHandler}
                 //errors={errors.price}
@@ -249,7 +249,7 @@ function FormProduct() {
               </div>
 
               <div className="d-flex">
-                <div className="btnn btn-primary btn-rounded">
+                <div className="btn btn-primary btn-rounded">
                   <label
                     className="form-label text-white m-1"
                     htmlFor="customFile1"

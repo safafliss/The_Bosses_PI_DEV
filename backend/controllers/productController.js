@@ -2,6 +2,7 @@ const ProductModel = require("../models/productModel");
 const mongoose = require("mongoose");
 const validatorProduct = require("../validation/Product");
 const cloudinary = require("../utils/cloudinary");
+const FavorisModel = require("../models/favorisModel");
 
 //get user products
 const getProducts = async (req, res) => {
@@ -118,6 +119,15 @@ const deleteProduct = async (req, res) => {
     return res.status(400).json({ error: "No such product" });
   }
 
+  const favorisList = await FavorisModel.find({});
+  favorisList.forEach((element)=> {
+    for(i=0; i<element.productsFavoris.length; i++){
+      if (element.productsFavoris[i] == id){
+        element.productsFavoris.splice(i, 1);
+        element.save();
+      }
+    }
+  })
   const product = await ProductModel.findOneAndDelete({ _id: id });
 
   if (!product) {
@@ -167,19 +177,6 @@ const updatePicture = async (req, res) => {
   }
 };
 
-// ----------- SKANDER products
-// Get all products
-const get_Products = async () => {
-  const products = await ProductModel.find({});
-  return products;
-};
-
-// Get a single product by ID
-const getProductById = async (id) => {
-  const product = await ProductModel.findById(id);
-  return product;
-};
-
 module.exports = {
   getProducts,
   createProduct,
@@ -194,6 +191,4 @@ module.exports = {
   getAllProductsSortedByDate,
   getProductsById,
   getPromoProducts,
-  get_Products,
-  getProductById
 };

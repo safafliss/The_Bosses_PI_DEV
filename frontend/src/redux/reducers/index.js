@@ -8,6 +8,7 @@ import commentReducer from "./commentReducer";
 import recipeReducer from "./recipeReducer";
 import basketReducer from "./basketReducer";
 import productListReducer from './productReducer';
+import favorisReducer from "./favorisReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   productList: productListReducer,
 
 
+  favoris: favorisReducer
 });

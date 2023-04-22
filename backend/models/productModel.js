@@ -53,10 +53,10 @@ const ProductSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isFavorite: {
-      type: Boolean,
-      default: false,
-    },
+    // isFavorite: { 
+    //   type: Boolean,
+    //   default: false,
+    // },
     promo: {
       type: Number,
       default: 50

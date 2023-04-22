@@ -4,11 +4,8 @@ import {
   FETCH_PRODUCTS_SUCCESS,
   DELETE_PRODUCT,
   GET_SINGLE_PRODUCT,
-  UPDATE_PRODUCT,
-  PRODUCT_LIST_REQUEST,
-  PRODUCT_LIST_SUCCESS,
-  PRODUCT_LIST_FAIL,
-} from '../types';
+  UPDATE_PRODUCT
+} from "../types";
 
 const initialState = {
   product: {},
@@ -47,12 +44,6 @@ export default function (state = initialState, action) {
         ...state,
         product: action.payload,
       };
-    case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] };
-    case PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: action.payload };
-    case PRODUCT_LIST_FAIL:
-      return { loading: false, error: action.payload };
     default:
       return state;
   }

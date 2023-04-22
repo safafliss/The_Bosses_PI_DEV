@@ -92,4 +92,31 @@ app.use('/basket', basketRoutes);
 // });
 app.use('/recipe', recipeRoute);
 
+app.use("/support", Report);
+app.use("/rate", Rate);
+app.use("/api", indexRouter);
+app.use("/product", productRoutes);
+app.use("/gallery",galleryRoutes);
+app.use("/favoris", favorisRoutes);
+app.use("/comment", commentRoutes);
+// cron.schedule('*/2 * * * *', () => {
+//   console.log('running a task every two minutes');
+// });
+// cron.schedule("0 0 * * *", () => {
+//   sendEmailProduct();
+//   console.log("heyy");
+// });
+
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailProduct();
+//   console.log("heyy1");
+// });
+// cron.schedule("*/0.3 * * * *", () => {
+//   automaticUpdateProduct();
+//   console.log("heyy2");
+// });
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailToUsers();
+//   console.log("heyy3");
+// });
 module.exports = app;
