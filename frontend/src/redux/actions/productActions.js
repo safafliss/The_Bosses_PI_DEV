@@ -6,6 +6,7 @@ import {
   FETCH_PRODUCTS_SUCCESS,
   DELETE_PRODUCT,
   GET_SINGLE_PRODUCT,
+  PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL
 } from "../types";
 
 // export const AddProduct = (form, navigate) => async (dispatch) => {
@@ -25,6 +26,29 @@ import {
 //       });
 //     });
 // };
+
+// ------------------- SKANDER actions 
+export const fetch_Products = () => async dispatch => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
+
+    const { data } = await axios.get('http://localhost:3600/product/products');
+
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+// -----------------
 
 export const AddProduct = (form, idUser, navigate) => async (dispatch) => {
   const product = {

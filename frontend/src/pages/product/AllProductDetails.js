@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { useDispatch, useSelector } from 'react-redux';
-import './cardStyle.css';
-import Dialog from './Dialog';
-import './Popup.css';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
+import { addToBasket, getBasket } from '../../redux/actions/basketActions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./cardStyle.css";
+import "./Popup.css";
 import {
   deleteProduct1,
   fetchSingleProduct,
-  fetchAllFavoris,
-} from '../../redux/actions/productActions';
-
-import { addToBasket, getBasket } from '../../redux/actions/basketActions';
-
-import { useNavigate } from 'react-router-dom';
+} from "../../redux/actions/productActions";
+import { AddFavoris, fetchFavoris } from "../../redux/actions/favorisActions";
+import Dialog from "./Dialog";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faHeartbeat } from "@fortawesome/free-solid-svg-icons";
 
 function AllProductDetails({ product, idUser }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [dialog, setDialog] = useState({
-    message: '',
+    message: "",
     isLoading: false,
   });
   const handleDialog = (message, isLoading) => {
@@ -28,6 +29,7 @@ function AllProductDetails({ product, idUser }) {
       isLoading,
     });
   };
+
   const [isHover, setIsHover] = useState(false);
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -84,12 +86,10 @@ function AllProductDetails({ product, idUser }) {
     });
     //console.log(images.flat());
   };
-  const [isFavorite, setIsFavorite] = useState(product.isFavorite);
+
+  const [isFavorite, setIsFavorite] = useState(false);
   const addToFavoris = async () => {
-    const response = await axios.post(
-      `http://localhost:3600/favoris/addFavoris`,
-      { username: idUser, productsFavoris: product }
-    );
+    dispatch(AddFavoris(idUser, product));
     setIsFavorite(!isFavorite);
   };
 
@@ -217,3 +217,4 @@ function AllProductDetails({ product, idUser }) {
     </div>
   );
 }
+export default AllProductDetails;
