@@ -1,3 +1,18 @@
+import './App.css';
+import Associationpage from './pages/Associationpage';
+import Particularpage from './pages/Particularpage';
+import Proffpage from './pages/Proffpage';
+// Dashboard imports
+import CardListRatings  from './components/ReusableComponents/components/Cards/CardListRatings';
+import CardListReports from './components/ReusableComponents/components/Cards/CardListReports';
+import TrashSpotHome from './pages/TrashSpot/TrashSpotHome';
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import './assets/styles/tailwind.css';
+
+import SupportCenter from './pages/SupportCenter';
+import SideButton from './pages/sideButton';
+import Stat from './components/ReusableComponents/components/Cards/Stat';
 import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -50,6 +65,7 @@ import Popup from "./pages/product/Popup";
 import Favoris from "./pages/product/Favoris";
 import ProductSlideShowAndDetails from "./pages/product/ProductSlideShowAndDetails";
 import Test from "./pages/product/Test";
+import Example from './pages/product/Example';
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -62,7 +78,10 @@ if (window.localStorage.jwt) {
   }
 }
 
+
 function App() {
+
+
   const auth = useSelector((state) => state.auth);
   const user = {
     isConnected: auth.isConnected,
@@ -97,12 +116,37 @@ function App() {
   console.log(user1);
   return (
     <BrowserRouter>
-      <div>
+      <div className="bg-light" style={{ height: "fit-content" }}>
+        {" "}
+        {/* kent style={{ height: '100vh' }} */}
         <Routes>
           <Route
             path="/"
+            element={<PrivateRouter user1={user1} user={user}></PrivateRouter>}
+          />
+          {/* <Route
+            path="/profile"
             element={<PrivateRouter user={user}></PrivateRouter>}
           />
+          <Route
+            path="/particpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/associpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/proffpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          /> */}
+          {/* <Route path="/"> */}
+          {/* <Route path="/proffpage" element={<Proffpage />} />
+            <Route path="/particpage" element={<Particularpage />} />
+            <Route path="/associpage" element={<Associationpage />} />
+            <Route path="/profile" element={<Profile />} /> */}
+          {/* </Route> */}
+
           <Route
             path="/admin/profile/:id"
             element={
@@ -128,6 +172,51 @@ function App() {
               </AdminRouter>
             }
           />
+           <Route
+            path="/admin/listOfRatings"
+            element={
+              <>
+              <AdminRouter user={user}>
+                <Sidebar />
+                <div className="relative md:ml-64 bg-blueGray-100">
+              
+                  {/* Header */}
+                  <HeaderStats />
+                  <div className="flex flex-wrap mt-4">
+                      <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+                            <CardListRatings />
+                          </div>
+                          <div className="w-full xl:w-4/12 px-4">
+                            <Stat />
+                          </div>
+                    </div>
+               
+                    <FooterAdmin />
+                 
+                </div>
+                </AdminRouter>
+                </>
+            }
+          />
+            <Route
+            path="/admin/listOfReports"
+            element={
+              <>
+              <AdminRouter user={user}>
+                <Sidebar />
+                <div className="relative md:ml-64 bg-blueGray-100">
+              
+                  {/* Header */}
+                  <HeaderStats />
+                  <div className="px-4 md:px-10 mx-auto w-full -m-24">
+                   <CardListReports/>
+                    <FooterAdmin />
+                  </div>
+                </div>
+                </AdminRouter>
+                </>
+            }
+          />
           <Route
             path="/login"
             element={
@@ -147,7 +236,7 @@ function App() {
           <Route
             path="/registerPartner"
             element={
-              <PrivateRouter user={user}>
+              <PrivateRouter user={user} user1={user1}>
                 <RegisterPartner />
               </PrivateRouter>
             }
@@ -189,7 +278,7 @@ function App() {
             path="/logged"
             element={
               // <ForceRedirect user={user}>
-              <LoggedFBG user1={user1} />
+              <LoggedFBG  user1={user1}/>
               // </ForceRedirect>
             }
           />
@@ -223,21 +312,47 @@ function App() {
             path="/formAssoc/:id"
             element={<FormAssociation user={user} />}
           />
+             <Route
+            path="/support"
+            element={<SupportCenter user1={user1} />}
+          />
+
+              
+       
           <Route
             path="/formLivreur/:id"
             element={<FormLivreur user={user} />}
+          />
+
+          <Route
+            path="/TrashSpot"
+            element={
+              // <ForceRedirect user={user}>
+              <TrashSpotHome user1={user1} user={user} />
+              // </ForceRedirect>
+            }
+          />
+          <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
+          {/* <Route path="/profile" element={<Profile user={user} />} />*/}
+          <Route path="/admin/profiles/" element={<Profile user={user} />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/accesDenied" element={<NoAccess />} />
+          <Route
+            path="/rate"
+            element={<SideButton user1={user1} user={user}/>}
           />
           <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
           {/* <Route path="/profile" element={<Profile user={user} />} />*/}
           <Route path="/admin/profiles/" element={<Profile user={user} />} />
 
           <Route path="/addProduct" element={<FormProduct />} />
-          <Route path="/productsCreated" element={<ProductsCreated />} />
+          <Route path="/productsCreated" user1={user1} element={<ProductsCreated />} />
           <Route path="/updateProduct/:id" element={<FormUpdateProduct />} />
           <Route path="/allProducts" element={<AllProducts />} />
           <Route path="/favoris" element={<Favoris/>}/> 
           <Route path="/slideShow/:id" element={<ProductSlideShowAndDetails/>}/>
           <Route path="/test" element={<Test/>}/> 
+          <Route path="/example" element={<Example/>}/>
  
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

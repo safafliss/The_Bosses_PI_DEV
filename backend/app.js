@@ -19,6 +19,9 @@ const cron = require("node-cron");
 const sendEmailProduct = require("./utils/sendEmailProduct");
 const automaticUpdateProduct = require("./utils/automaticUpdateProduct");
 const sendEmailToUsers = require("./utils/sendEmailToUsers");
+
+const Report = require("./routes/Report");
+const Rate = require("./routes/Rate");
 var app = express();
 
 app.use(
@@ -56,6 +59,10 @@ mongoose
   .then(() => console.log("connected to db"))
   .catch((err) => console.log(err));
 
+
+
+app.use("/support", Report);
+app.use("/rate", Rate);
 app.use("/api", indexRouter);
 app.use("/product", productRoutes);
 app.use("/gallery",galleryRoutes);

@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
 import jwt_decode from "jwt-decode"
 import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
- 
+import SideButton from "./sideButton";
+import { useTranslation } from "react-i18next";
+
 function Particularpage(props) {
+ //console.log("***"+Object.entries(props.user1?.email))
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
-  console.log("fggg" + localStorage.getItem("jwt"))
+  const {t}=useTranslation();
+  console.log(localStorage.getItem("jwt"))
   const token = localStorage.getItem("jwt")
-  console.log("fff" + jwt_decode(token))
+  console.log(jwt_decode(token))
   const id = jwt_decode(token).id
+  console.log("-->"+id)
   return (
     <>
-    <Navbar  /> 
+    <Navbar  user1={props.user1} /> 
       <main>
         {/* 
       
@@ -56,7 +61,7 @@ function Particularpage(props) {
                       color: "#2aafbe",
                     }}
                   >
-                    Welcome to Zero Waste.
+                    {t('Welcome to Zero Waste')}
                   </h1>
                   <p className="mt-4 text-lg ">
                     This is a simple example of a Landing Page you can build
@@ -363,6 +368,7 @@ function Particularpage(props) {
                   </div>
                 </div>
               </div>
+       
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
                   <img
@@ -442,7 +448,10 @@ function Particularpage(props) {
             </div>
           </div>
         </section>
+<div> 
+      <SideButton/>
 
+</div>
         <section className="pb-20 relative block bg-blueGray-800">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
