@@ -15,7 +15,7 @@ import imgFr from '../../../../assets/img/icons8-france-32.png';
 import imgBr from '../../../../assets/img/icons8-great-britain-32.png';
 import imgTn from '../../../../assets/img/tunisia-flag-round-icon-32.png';
 import './nav.css';
-import BasketPage from '../../../../pages/BasketPage';
+import BasketPage from '../../../../pages/Basket/BasketPage';
 
 export default function Navbar({ user1 }) {
   const languages = [

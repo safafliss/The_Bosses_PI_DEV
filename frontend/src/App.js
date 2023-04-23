@@ -70,8 +70,11 @@ import Popup from './pages/product/Popup';
 import Favoris from './pages/product/Favoris';
 import ProductSlideShowAndDetails from './pages/product/ProductSlideShowAndDetails';
 import Test from './pages/product/Test';
-import BasketPage from './pages/BasketPage';
-import Checkout from './pages/Checkout';
+import BasketPage from './pages/Basket/BasketPage';
+import Checkout from './pages/Basket/Checkout';
+
+//stripe
+import Completion from './pages/Basket/Completion';
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -350,6 +353,7 @@ function App() {
           <Route path="/recipes/:id" element={<RecipeDetails user={user} />} />
           <Route path="/basket" element={<BasketPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/completion" element={<Completion />} />
 
           <Route path="*" element={<NotFound />} />
           <Route path="/accesDenied" element={<NoAccess />} />

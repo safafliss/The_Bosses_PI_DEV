@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBasket, updateBasket } from '../redux/actions/basketActions';
+import { getBasket, updateBasket } from '../../redux/actions/basketActions';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,9 +22,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { fetch_Products } from '../redux/actions/productActions';
+import { fetch_Products } from '../../redux/actions/productActions';
 
-import TableDropdown from '../components/ReusableComponents/components/Dropdowns/TableDropdown';
+import TableDropdown from '../../components/ReusableComponents/components/Dropdowns/TableDropdown';
 function BasketPage() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -194,7 +194,7 @@ function BasketPage() {
                     <tr key={product._id}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
-                          src={require('../assets/img/bootstrap.jpg')}
+                          src={require('../../assets/img/bootstrap.jpg')}
                           className="h-12 w-12 bg-white rounded-full border"
                           alt="..."
                         ></img>{' '}

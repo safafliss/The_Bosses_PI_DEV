@@ -1,5 +1,11 @@
 var express = require('express');
 var path = require('path');
+//stripe
+const { resolve } = require('path');
+//const env = require("dotenv").config({ path: "./.env" });
+
+
+//-----
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
@@ -16,6 +22,8 @@ const galleryRoutes = require('./routes/galleryRoutes');
 const favorisRoutes = require('./routes/favorisRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const basketRoutes = require('./routes/basketRoutes');
+const stripe = require('./routes/stripe');
+const deliveryRoutes = require('./routes/deliveryRoutes')
 
 const cron = require('node-cron');
 const sendEmailProduct = require('./utils/sendEmailProduct');
@@ -70,6 +78,8 @@ app.use('/gallery', galleryRoutes);
 app.use('/favoris', favorisRoutes);
 app.use('/comment', commentRoutes);
 app.use('/basket', basketRoutes);
+app.use('/delivery', deliveryRoutes);
+
 // cron.schedule('*/2 * * * *', () => {
 //   console.log('running a task every two minutes');
 // });
@@ -91,5 +101,10 @@ app.use('/basket', basketRoutes);
 //   console.log("heyy3");
 // });
 app.use('/recipe', recipeRoute);
+
+// STRIPE
+
+app.use(express.static(process.env.STATIC_DIR));
+app.use('/stripe', stripe);
 
 module.exports = app;

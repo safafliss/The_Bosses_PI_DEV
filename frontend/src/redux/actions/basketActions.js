@@ -2,53 +2,51 @@
 
 import axios from 'axios';
 import {
-    ADD_TO_BASKET_REQUEST,
-    ADD_TO_BASKET_SUCCESS,
-    ADD_TO_BASKET_FAILURE,
-    GET_BASKET_REQUEST,
-    GET_BASKET_SUCCESS,
-    GET_BASKET_FAILURE,
-    PUT_BASKET_REQUEST,
-    PUT_BASKET_SUCCESS,
-    PUT_BASKET_FAILURE
+  ADD_TO_BASKET_REQUEST,
+  ADD_TO_BASKET_SUCCESS,
+  ADD_TO_BASKET_FAILURE,
+  GET_BASKET_REQUEST,
+  GET_BASKET_SUCCESS,
+  GET_BASKET_FAILURE,
+  PUT_BASKET_REQUEST,
+  PUT_BASKET_SUCCESS,
+  PUT_BASKET_FAILURE,
+  DELETE_BASKET_REQUEST,
+  DELETE_BASKET_SUCCESS,
+  DELETE_BASKET_FAILURE
 } from '../types';
 
 export const addToBasket = (productId, price, quantity, userId) => {
-    return async (dispatch) => {
-        dispatch({type: ADD_TO_BASKET_REQUEST});
+  return async (dispatch) => {
+    dispatch({ type: ADD_TO_BASKET_REQUEST });
 
-        try {
-            const response = await axios.post(
-                'http://localhost:3600/basket/add',
-                {
-                    productId,
-                    price,
-                    quantity,
-                    userId,
-                }
-            );
-            const basket = response.data;
+    try {
+      const response = await axios.post('http://localhost:3600/basket/add', {
+        productId,
+        price,
+        quantity,
+        userId,
+      });
+      const basket = response.data;
 
-            dispatch({type: ADD_TO_BASKET_SUCCESS, payload: basket});
-        } catch (error) {
-            dispatch({type: ADD_TO_BASKET_FAILURE, payload: error.message});
-        }
-    };
+      dispatch({ type: ADD_TO_BASKET_SUCCESS, payload: basket });
+    } catch (error) {
+      dispatch({ type: ADD_TO_BASKET_FAILURE, payload: error.message });
+    }
+  };
 };
 
 export const getBasket = (userId) => async (dispatch) => {
-    dispatch({type: GET_BASKET_REQUEST});
+  dispatch({ type: GET_BASKET_REQUEST });
 
-    try {
-        const response = await axios.get(
-            `http://localhost:3600/basket/${userId}`
-        );
-        const basket = response.data;
-        dispatch({type: GET_BASKET_SUCCESS, payload: basket});
-    } catch (error) {
-        dispatch({type: GET_BASKET_FAILURE, payload: error.message});
-    }
-}
+  try {
+    const response = await axios.get(`http://localhost:3600/basket/${userId}`);
+    const basket = response.data;
+    dispatch({ type: GET_BASKET_SUCCESS, payload: basket });
+  } catch (error) {
+    dispatch({ type: GET_BASKET_FAILURE, payload: error.message });
+  }
+};
 
 /*export const updateBasket = (basket) => (dispatch) => {
     dispatch({type: PUT_BASKET_REQUEST});
@@ -62,12 +60,29 @@ export const getBasket = (userId) => async (dispatch) => {
 }*/
 
 export const updateBasket = (basket) => (dispatch) => {
-    axios.put('http://localhost:3600/basket', basket)
-        .then((res) => {
-            dispatch({type: PUT_BASKET_SUCCESS, payload: basket})
-        })
-        .catch((err) => {
-            dispatch({type: PUT_BASKET_FAILURE, payload: err.message})
-        });
-}
+  axios
+    .put('http://localhost:3600/basket', basket)
+    .then((res) => {
+      dispatch({ type: PUT_BASKET_SUCCESS, payload: basket });
+    })
+    .catch((err) => {
+      dispatch({ type: PUT_BASKET_FAILURE, payload: err.message });
+    });
+};
 
+
+
+export const deleteBasket = (basketId) => {
+    return async (dispatch) => {
+      dispatch({ type: DELETE_BASKET_REQUEST });
+  
+      try {
+        const response = await axios.delete(`http://localhost:3600/basket/${basketId}`);
+        const basket = response.data;
+  
+        dispatch({ type: DELETE_BASKET_SUCCESS, payload: basket });
+      } catch (error) {
+        dispatch({ type: DELETE_BASKET_FAILURE, payload: error.message });
+      }
+    };
+  };

@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { resolve } = require('path');
+//const env = require("dotenv").config({ path: "./.env" });
 
 const {
   addToBasket,
@@ -40,8 +42,20 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+router.delete('/:id', async (req, res) => {
+  try {
+    let { id } = req.params;
+    let deletedDocument = await Basket.findOneAndDelete({
+      _id: id,
+    });
+    res.status(200).json(deletedDocument);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 router.get('/test/test', (req, res) => {
   console.log('test done');
 });
+
 module.exports = router;
