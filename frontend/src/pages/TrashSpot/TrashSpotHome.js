@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import Navbar from "../../components/ReusableComponents/components/Navbars/UserNavbar";
 import MapTrashSpot from "../../components/MapTrashSpot";
 import "./TrashSpot.css";
+import { useState, useEffect } from "react";
 import NoAccess from "../NoAccess";
 import axios from "axios";
 import SpotCard from "./SpotCard";
@@ -10,7 +10,10 @@ import jwt_decode from "jwt-decode";
 import AddUpdateModal from "./AddUpdateModal";
 import RankingTrashPage from "./RankingTrashPage";
 function TrashSpotHome(props) {
-  
+  if (props.user.isConnected && props.user.role == "PARTICULAR") {
+  } else {
+    return <NoAccess />;
+  }
   const options = [
     { value: "", text: "--Choose a type--" },
     { value: "plastic", text: "Plastic" },
@@ -21,7 +24,7 @@ function TrashSpotHome(props) {
 
   const token = localStorage.getItem("jwt");
   const id = jwt_decode(token).id;
-  //const webcamRef = React.useRef(null);
+  const webcamRef = React.useRef(null);
   const [currentLat, setCurrLat] = useState(0);
   const [currentLong, setCurrLong] = useState(0);
   const [type, setType] = useState(options[0].value);
@@ -48,8 +51,6 @@ function TrashSpotHome(props) {
   const [rankingPersons, setRankingPersons] = useState([]) 
   const [triggerWhichPage,setTriggerWhichPage] = useState(0)
   const [deleteRoundedAndCreateAnother, setDeleteRoundedAndCreateAnother] = useState([])
-  const [openModalToggle, setOpenModalToggle] = useState(false);
-  
   useEffect(() => {
   if (rankingPersons.length==0){
       
@@ -120,7 +121,7 @@ function TrashSpotHome(props) {
     });
   }, []);
 
-
+  const [openModalToggle, setOpenModalToggle] = useState(false);
 
   const openCloseModal = () => {
     if (openModalToggle) {
@@ -404,15 +405,12 @@ function TrashSpotHome(props) {
         setJumpToMap([0,0])
       },1)
   }
-  if (props.user.isConnected && props.user.role == "PARTICULAR") {
-  } else {
-    return <NoAccess />;
-  }
+
 
 
   return (
     <>
-      <Navbar />
+      <Navbar user1={props.user1}  />
       <div className="d-flex ">
         <div className="leftSide bg-green-800" style={{ width: "710px","zIndex": 1 }}>
           <div className="container ">

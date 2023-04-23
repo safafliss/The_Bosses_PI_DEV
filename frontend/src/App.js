@@ -85,7 +85,10 @@ if (window.localStorage.jwt) {
   }
 }
 
+
 function App() {
+
+
   const auth = useSelector((state) => state.auth);
   const user = {
     isConnected: auth.isConnected,
@@ -129,6 +132,29 @@ function App() {
             path="/"
             element={<PrivateRouter user1={user1} user={user}></PrivateRouter>}
           />
+          {/* <Route
+            path="/profile"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+
+          <Route
+            path="/particpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/associpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/proffpage"
+            element={<PrivateRouter user={user}></PrivateRouter>}
+          /> */}
+          {/* <Route path="/"> */}
+          {/* <Route path="/proffpage" element={<Proffpage />} />
+            <Route path="/particpage" element={<Particularpage />} />
+            <Route path="/associpage" element={<Associationpage />} />
+            <Route path="/profile" element={<Profile />} /> */}
+          {/* </Route> */}
 
           <Route
             path="/admin/profile/:id"
@@ -259,7 +285,7 @@ function App() {
             path="/logged"
             element={
               // <ForceRedirect user={user}>
-              <LoggedFBG user1={user1} />
+              <LoggedFBG  user1={user1}/>
               // </ForceRedirect>
             }
           />
@@ -308,7 +334,6 @@ function App() {
               // </ForceRedirect>
             }
           />
-
           <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
           {/* <Route path="/profile" element={<Profile user={user} />} />*/}
           <Route path="/admin/profiles/" element={<Profile user={user} />} />
