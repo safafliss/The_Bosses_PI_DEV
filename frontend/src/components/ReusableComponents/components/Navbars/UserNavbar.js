@@ -86,7 +86,8 @@ export default function Navbar() {
     document.body.dir = currentLanguage.dir || 'ltr';
     document.title = t('0 Waste');
     dispatch(GetProfile(id));
-  }, [currentLanguage, t]);
+  }, []);
+  
 
   return (
     <Disclosure
@@ -154,7 +155,7 @@ export default function Navbar() {
                   {languages.map(({ code, name, country_code, icon }) => (
                     <li key={country_code}>
                       <a
-                        href="/#"
+                        href="/"
                         className="dropdown-item"
                         onClick={() => {
                           // event.preventDefault()

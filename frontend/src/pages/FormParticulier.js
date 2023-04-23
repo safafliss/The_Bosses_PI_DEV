@@ -27,7 +27,7 @@ function FormParticulier() {
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

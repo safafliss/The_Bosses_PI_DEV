@@ -1,26 +1,26 @@
 import { addToBasket, getBasket } from '../../redux/actions/basketActions';
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./cardStyle.css";
-import "./Popup.css";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './cardStyle.css';
+import './Popup.css';
 import {
   deleteProduct1,
   fetchSingleProduct,
-} from "../../redux/actions/productActions";
-import { AddFavoris, fetchFavoris } from "../../redux/actions/favorisActions";
-import Dialog from "./Dialog";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faHeartbeat } from "@fortawesome/free-solid-svg-icons";
+} from '../../redux/actions/productActions';
+import { AddFavoris, fetchFavoris } from '../../redux/actions/favorisActions';
+import Dialog from './Dialog';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
 function AllProductDetails({ product, idUser }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [dialog, setDialog] = useState({
-    message: "",
+    message: '',
     isLoading: false,
   });
   const handleDialog = (message, isLoading) => {
@@ -39,7 +39,7 @@ function AllProductDetails({ product, idUser }) {
   };
 
   const handleClick = async () => {
-    handleDialog("Are you sure you want to delete this product?", true);
+    handleDialog('Are you sure you want to delete this product?', true);
     //dispatch(deleteProduct1(product._id, navigate));
   };
 
@@ -52,9 +52,9 @@ function AllProductDetails({ product, idUser }) {
   const areUSureDelete = (choose) => {
     if (choose) {
       dispatch(deleteProduct1(product._id, navigate));
-      handleDialog("", false);
+      handleDialog('', false);
     } else {
-      handleDialog("", false);
+      handleDialog('', false);
     }
   };
 
@@ -72,7 +72,7 @@ function AllProductDetails({ product, idUser }) {
   useEffect(() => {
     showGallery();
     dispatch(fetchFavoris(idUser));
-    console.log("hhhhhhhhhhh");
+    console.log('hhhhhhhhhhh');
     //console.log(favorisList[0]._id);
   }, []);
 
@@ -99,29 +99,29 @@ function AllProductDetails({ product, idUser }) {
     await dispatch(addToBasket(product._id, product.price, 1, userId));
     await dispatch(getBasket(userId));
   }
-  
+
   return (
     <div
       className="container mx-auto"
-      style={{ marginTop: "300px", width: "350px" }}
+      style={{ marginTop: '300px', width: '350px' }}
     >
       <div className="flex flex-wrap ">
         <div className=" px-12 md:px-4 mr-auto ml-auto -mt-32">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg">
             <div
-              className={`product-box ${isHover ? "is-hover" : ""} ${
-                product.isValid === true ? "bestProduct" : false
+              className={`product-box ${isHover ? 'is-hover' : ''} ${
+                product.isValid === true ? 'bestProduct' : false
               }`}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <div style={{ height: "300px", width: "300px" }}>
+              <div style={{ height: '300px', width: '300px' }}>
                 <div className="product-inner-box position-relative">
                   <div className="icons">
                     <a
                       href="#"
                       className="text-decoration-none text-dark"
-                      style={{ backgroundColor: "#69b550" }}
+                      style={{ backgroundColor: '#69b550' }}
                       onClick={addToFavoris}
                     >
                       <FontAwesomeIcon
@@ -130,15 +130,15 @@ function AllProductDetails({ product, idUser }) {
                           color:
                             isFavorite ||
                             favorisList.some((item) => item._id === product._id)
-                              ? "#FF1493"
-                              : "#000000",
+                              ? '#FF1493'
+                              : '#000000',
                         }}
                       />
                     </a>
                     <a
                       href="#"
                       className="text-decoration-none text-dark"
-                      style={{ backgroundColor: "#69b550" }}
+                      style={{ backgroundColor: '#69b550' }}
                       onClick={togglePopup}
                     >
                       <i class="fa-solid fa-eye"></i>
@@ -149,7 +149,7 @@ function AllProductDetails({ product, idUser }) {
                         href="#"
                         onClick={handleClick}
                         className="text-decoration-none text-dark"
-                        style={{ backgroundColor: "#69b550" }}
+                        style={{ backgroundColor: '#69b550' }}
                       >
                         <i class="fa-solid fa-trash"></i>
                       </a>
@@ -159,7 +159,7 @@ function AllProductDetails({ product, idUser }) {
                         href="#"
                         onClick={handleClick1}
                         className="text-decoration-none text-dark"
-                        style={{ backgroundColor: "#69b550" }}
+                        style={{ backgroundColor: '#69b550' }}
                       >
                         <i class="fa-solid fa-pen"></i>
                       </a>
@@ -168,13 +168,16 @@ function AllProductDetails({ product, idUser }) {
                   {product.isValid === true && (
                     <div className="onsale position-absolute top-0 start-0">
                       <span className="badge rounded-0">
-                        <i class="fa-solid fa-arrow-down"></i>PROMO{" "}
+                        <i class="fa-solid fa-arrow-down"></i>PROMO{' '}
                         {product.promo}%
                       </span>
                     </div>
                   )}
                   <div className="cart-btn">
-                    <button className="btn btn-dark shadow-sm rounded-pill" onClick={() => handleAddToBasket(product)}>
+                    <button
+                      className="btn btn-dark shadow-sm rounded-pill"
+                      onClick={() => handleAddToBasket(product)}
+                    >
                       <i class="fa-sharp fa-solid fa-cart-shopping"></i>Add to
                       Cart
                     </button>
@@ -182,7 +185,7 @@ function AllProductDetails({ product, idUser }) {
                 </div>
                 <img
                   alt="tsawer"
-                  src={product.image.url}
+                  src={product.image?.url}
                   className="w-full h-full object-cover align-middle rounded-t-lg"
                 />
               </div>
@@ -196,7 +199,7 @@ function AllProductDetails({ product, idUser }) {
                   <polygon
                     points="-30,95 583,95 583,65"
                     className=" fill-current"
-                    style={{ color: "#adc7ea" }}
+                    style={{ color: '#adc7ea' }}
                   ></polygon>
                 </svg>
                 <p className="text-xl text-black">{product.price} DT</p>

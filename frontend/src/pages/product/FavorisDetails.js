@@ -53,7 +53,7 @@ function FavorisDetails({ product }) {
             <div style={{ height: "300px", width: "300px" }}>
               <img
                 alt="tsawer"
-                src={product.image.url}
+                src={product.image?.url}
                 className="w-full h-full object-cover align-middle rounded-t-lg"
               />
             </div>
