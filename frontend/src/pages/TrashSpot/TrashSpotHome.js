@@ -1,8 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../components/ReusableComponents/components/Navbars/UserNavbar";
 import MapTrashSpot from "../../components/MapTrashSpot";
 import "./TrashSpot.css";
-import { useState, useEffect } from "react";
 import NoAccess from "../NoAccess";
 import axios from "axios";
 import SpotCard from "./SpotCard";
@@ -10,10 +10,7 @@ import jwt_decode from "jwt-decode";
 import AddUpdateModal from "./AddUpdateModal";
 import RankingTrashPage from "./RankingTrashPage";
 function TrashSpotHome(props) {
-  if (props.user.isConnected && props.user.role == "PARTICULAR") {
-  } else {
-    return <NoAccess />;
-  }
+  
   const options = [
     { value: "", text: "--Choose a type--" },
     { value: "plastic", text: "Plastic" },
@@ -24,7 +21,7 @@ function TrashSpotHome(props) {
 
   const token = localStorage.getItem("jwt");
   const id = jwt_decode(token).id;
-  const webcamRef = React.useRef(null);
+  //const webcamRef = React.useRef(null);
   const [currentLat, setCurrLat] = useState(0);
   const [currentLong, setCurrLong] = useState(0);
   const [type, setType] = useState(options[0].value);
@@ -51,6 +48,8 @@ function TrashSpotHome(props) {
   const [rankingPersons, setRankingPersons] = useState([]) 
   const [triggerWhichPage,setTriggerWhichPage] = useState(0)
   const [deleteRoundedAndCreateAnother, setDeleteRoundedAndCreateAnother] = useState([])
+  const [openModalToggle, setOpenModalToggle] = useState(false);
+  
   useEffect(() => {
   if (rankingPersons.length==0){
       
@@ -67,20 +66,20 @@ function TrashSpotHome(props) {
     axios.get("http://localhost:3600/api/getAllTrashSpots").then((res) => {
       setAllTrashSpots(res.data);
       setUntouchableDataBackend(JSON.parse(JSON.stringify(res.data)));
-      setTrashMarks(
-        res.data.filter((tr)=>{
-         if (tr.importanceLevel =="primary"){
-          return tr
-         }
-        }).map((trash) => (
-          {
-          id: trash._id,
-          longitude: trash.location.coordinates[1],
-          latitude: trash.location.coordinates[0],
-          ownerId: trash.ownerId._id,
-          type: trash.type,
-        }))
-      );
+      // setTrashMarks(
+      //   res.data.filter((tr)=>{
+      //    if (tr.importanceLevel =="primary"){
+      //     return tr
+      //    }
+      //   }).map((trash) => (
+      //     {
+      //     id: trash._id,
+      //     longitude: trash.location.coordinates[1],
+      //     latitude: trash.location.coordinates[0],
+      //     ownerId: trash.ownerId._id,
+      //     type: trash.type,
+      //   }))
+      // );
       setTrashSpots(
         res.data.filter((trash) => {
           if (trash.ownerId._id != id) return trash;
@@ -88,6 +87,23 @@ function TrashSpotHome(props) {
       );
     });
   }, []);
+
+  useEffect(()=>{
+    setTrashMarks(
+      untouchableDataBackend.filter((tr)=>{
+       if (tr.importanceLevel =="primary"){
+        return tr
+       }
+      }).map((trash) => (
+        {
+        id: trash._id,
+        longitude: trash.location.coordinates[1],
+        latitude: trash.location.coordinates[0],
+        ownerId: trash.ownerId._id,
+        type: trash.type,
+      }))
+    );
+  },[untouchableDataBackend])
 
   const uploadTrashPicture = (event) => {
     if (event.target.files.length > 0) {
@@ -121,7 +137,7 @@ function TrashSpotHome(props) {
     });
   }, []);
 
-  const [openModalToggle, setOpenModalToggle] = useState(false);
+
 
   const openCloseModal = () => {
     if (openModalToggle) {
@@ -293,7 +309,7 @@ function TrashSpotHome(props) {
 
   const showTheRightTrash = (id,theTrash) =>{
     setRankingModel(0)
-    const filteredCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
+    const filteredCopy = JSON.parse(JSON.stringify(untouchableDataBackend));  
     if (theTrash!=""){
       setTrashSpots([theTrash])
     }else{
@@ -367,6 +383,7 @@ function TrashSpotHome(props) {
   },[untouchableDataBackend])
 
   const removeTrashFromAllTrashSpots = (trash,old_id) => {
+    console.log(trash,old_id)
     setMapMarkerRemover(old_id)
     const filteredCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
     let index = filteredCopy.findIndex((a) => a._id === trash._id);
@@ -376,16 +393,21 @@ function TrashSpotHome(props) {
         untouchableDataBackendCopy[index] = trash;
         setUntouchableDataBackend(JSON.parse(JSON.stringify(untouchableDataBackendCopy)));
         setDeleteRoundedAndCreateAnother([trash,old_id])
+      }else{
+        let untouchableDataBackendCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
+        untouchableDataBackendCopy[untouchableDataBackendCopy.findIndex((a) => a._id === old_id)] = trash;
+        setUntouchableDataBackend(JSON.parse(JSON.stringify(untouchableDataBackendCopy)));
+        setDeleteRoundedAndCreateAnother([trash,old_id])
       }
     }else{
       let untouchableDataBackendCopy = JSON.parse(JSON.stringify(untouchableDataBackend));
       untouchableDataBackendCopy.splice(index, 1);
       setUntouchableDataBackend(JSON.parse(JSON.stringify(untouchableDataBackendCopy)))
-      setDeleteRoundedAndCreateAnother([trash,old_id])
     }
-    removeTrashFromMap(old_id)
     setAllTrashSpots(JSON.parse(JSON.stringify(untouchableDataBackend)))
     setTriggerWhichPage(1)
+    removeTrashFromMap(old_id)
+    setDeleteRoundedAndCreateAnother([trash,old_id])
   };
 
   const removeTrashFromMap=(id)=>{
@@ -405,12 +427,15 @@ function TrashSpotHome(props) {
         setJumpToMap([0,0])
       },1)
   }
-
+  if (props.user.isConnected && props.user.role == "PARTICULAR" ||  props.user.role == "ADMIN") {
+  } else {
+    return <NoAccess />;
+  }
 
 
   return (
     <>
-      <Navbar user1={props.user1}  />
+      <Navbar />
       <div className="d-flex ">
         <div className="leftSide bg-green-800" style={{ width: "710px","zIndex": 1 }}>
           <div className="container ">

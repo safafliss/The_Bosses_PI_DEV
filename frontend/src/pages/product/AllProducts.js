@@ -1,7 +1,11 @@
+import doc from "../../assets/img/doc.png";
+import doc1 from "../../assets/img/doc1.jpg";
+import docc from "../../assets/img/ii.jpg";
+import taktak from "../../assets/img/ahhhhhhhhhh.png";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { Box, Button } from '@material-ui/core';
+import { Box, Button } from "@material-ui/core";
 import {
   fetchAllProducts,
   fetchAllProducts1,
@@ -14,9 +18,9 @@ import {
 import AllProductDetails from "./AllProductDetails";
 import Navbar from "../../components/ReusableComponents/components/Navbars/UserNavbar";
 import "./AllProducts.css";
+import ta from "date-fns/esm/locale/ta/index.js";
 
 function AllProducts() {
-  
   console.log(localStorage.getItem("jwt"));
   const token = localStorage.getItem("jwt");
   console.log(jwt_decode(token));
@@ -69,39 +73,64 @@ function AllProducts() {
 
   const handleSelectChange = (e) => {
     const { value } = e.target;
-    if(value == "price"){
+    if (value == "price") {
       dispatch(fetchAllProducts4());
-    }else if (value == "Expiry Date"){
+    } else if (value == "Expiry Date") {
       dispatch(fetchAllProducts5());
-    }else if (value == "Promo"){
+    } else if (value == "Promo") {
       dispatch(fetchAllProducts6());
-    }
-    else{
+    } else {
       dispatch(fetchAllProducts());
     }
   };
 
   //paginate
-  const items = 8
+  const items = 6;
   const [current, setCurrent] = useState(1);
   const NbPage = Math.ceil(products.length / items);
-  const startIndex = (current - 1) * items
-  const endIndex = startIndex + items
+  const startIndex = (current - 1) * items;
+  const endIndex = startIndex + items;
   const DataPerPage = products.slice(startIndex, endIndex);
 
-//style={{ backgroundColor: "#adc7ea" }}
+  //style={{ backgroundColor: "#adc7ea" }}
   return (
-    <div style={{ backgroundColor: "#adc7ea" }}>
+    <div>
       <Navbar />
-      <br />
+      {/* <div
+        className="header relative pt-16 items-center flex h-screen max-h-860-px"
+        style={{
+          backgroundImage: `url(${taktak})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "1300px",
+          marginLeft:"500px",
+          marginBottom:"0px"
+        }}
+      ></div> */}
 
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <section id="hero" className="clearfix">
+        <div className="container">
+          <div
+            className="hero-img"
+          ></div>
+          <div className="hero-info">
+            <h2 style={{fontSize: "60px"}}>
+              We provide
+              <br />
+              <span style={{ color: "rgb(173, 199, 234)" }}>solutions</span>
+              <br />
+              for food waste!
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <div style={{ display: "flex", flexWrap: "wrap", marginTop:"-200px" }}>
         <div
           style={{
             flex: "0 1 auto",
             minWidth: "320px",
             maxWidth: "30%",
-            marginTop: "8px",
+            marginTop: "180px",
             padding: "0 20px",
           }}
         >
@@ -252,7 +281,9 @@ function AllProducts() {
                     aria-label="Default select example"
                     onChange={handleSelectChange}
                   >
-                    <option selected value="all">Open this select menu</option>
+                    <option selected value="all">
+                      Open this select menu
+                    </option>
                     <option value="price">price</option>
                     <option value="Expiry Date">Expiry Date</option>
                     <option value="Promo">Promo</option>
@@ -265,9 +296,9 @@ function AllProducts() {
         <div
           style={{
             flex: "1 1 auto",
-            minWidth: "320px",
+            minWidth: "300px",
             maxWidth: "70%",
-            padding: "0 20px",
+            padding: "0 80px",
           }}
         >
           <div>
@@ -288,13 +319,82 @@ function AllProducts() {
           </div>
         </div>
       </div>
-      <Box sx = {{display: "flex", justifyContent: "center", mt:1, border : "solid 0.5px", width: "500px", marginLeft: "650px"}}>
-        {
-          Array.from({length: NbPage}, (_,i)=> i+1).map( page => {
-            return <Button onClick={()=> setCurrent(page)} style={{backgroundColor: "#efefef", marginLeft: "5px"}}>{page}</Button> 
-          })
-        }
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 1,
+          border: "solid 0.5px",
+          width: "500px",
+          marginLeft: "650px",
+        }}
+      >
+        {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
+          return (
+            <Button
+              onClick={() => setCurrent(page)}
+              style={{ backgroundColor: "#efefef", marginLeft: "5px" }}
+            >
+              {page}
+            </Button>
+          );
+        })}
       </Box>
+      <section
+        style={{
+          backgroundImage: `url(${doc})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "2000px",
+          marginTop: "-19%",
+        }}
+      >
+        <div className="containerrr mx-auto px-4 pb-32 pt-48">
+          <div className="items-center flex flex-wrap">
+            <div className="w-full md:w-5/12 ml-auto px-12 md:px-4">
+              <div className="md:pr-12" style={{ marginTop: "40%" }}>
+                <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
+                  <i class="fas fa-exclamation-triangle text-xl text-yellow-500"></i>{" "}
+                </div>
+                <h3 className="text-3xl font-semibold text-white">
+                  Food waste in Tunisia
+                </h3>
+                <p className="mt-4 text-lg leading-relaxed text-white">
+                  According to official figures dating back to 2020, nearly 572
+                  million dinars worth of food products are wasted each year by
+                  Tunisian households.
+                </p>
+                <ul className="list-none mt-6">
+                  <li className="py-2">
+                    <div className="flex items-center">
+                      <div></div>
+                      <div>
+                        <h4 className="mt-4 text-lg leading-relaxed text-white">
+                          You , me and everyone who wants it, we are capable of
+                          reducing this number!
+                        </h4>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="w-full md:w-6/12 mr-auto px-4 pt-24 md:pt-0">
+              <img
+                alt="..."
+                className="max-w-full rounded-lg shadow-xl"
+                style={{
+                  marginTop: "210px",
+                  marginLeft: "40px",
+                  transform:
+                    "scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg)",
+                }}
+                src={docc}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

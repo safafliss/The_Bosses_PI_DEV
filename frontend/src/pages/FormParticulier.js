@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import "./Formulaire.css";
 import axios from "axios";
+import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
 import { useNavigate, useParams } from "react-router-dom";
 function FormParticulier() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ function FormParticulier() {
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -97,9 +98,19 @@ function FormParticulier() {
   };
 
   return (
-    <form className="jotform-form" onSubmit={handleSubmit}>
+    <>
+    <Navbar />
+ 
+
+    <div className="container mx-auto" style={{}}>
+          
+            <div
+              className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10"
+              style={{marginTop:"3rem",flex: 'fit-content',width:"min-content", marginLeft:"18%"}}
+            >
+    <form className="jotform-form rounded-lg" onSubmit={handleSubmit} >
       <div role="main" className="form-all">
-        <ul className="form-section page-section" style={{backgroundColor: "#adc7ea"}} >
+        <ul className="form-section page-section" style={{backgroundColor: "rgb(252 253 255)"}} >
           <li id="cid_1" className="form-input-wide" data-type="control_head">
             <div className="form-header-group header-large">
               <div className="header-text httal htvam">
@@ -107,6 +118,7 @@ function FormParticulier() {
                   id="header_1"
                   className="form-header"
                   data-component="header"
+                  style={{fontFamily:"arial"}}
                 >
                   Registration Form
                 </h1>
@@ -136,7 +148,7 @@ function FormParticulier() {
                     type="text"
                     id="last_4"
                     name="firstName"
-                    className="form-textbox"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     size="15"
                     value={data.firstName || ""}
                     onChange={(e) =>
@@ -168,7 +180,7 @@ function FormParticulier() {
                     type="text"
                     id="last_4"
                     name="lastName"
-                    className="form-textbox"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     size="15"
                     value={data.lastName || ""}
                     onChange={(e) =>
@@ -211,7 +223,7 @@ function FormParticulier() {
                 >
                   <input
                     type="date"
-                    className="form-textbox"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={date}
                     onChange={(e) => {
                       console.log(e.target.value);
@@ -240,7 +252,7 @@ function FormParticulier() {
             </label>
             <div id="cid_3" className="form-input-wide" data-layout="half">
               <select
-                className="form-dropdown"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 id="input_3"
                 name="q3_gender"
                 style={{ width: "310px" }}
@@ -284,7 +296,7 @@ function FormParticulier() {
                         type="text"
                         id="input_23_addr_line1"
                         name="address"
-                        className="form-textbox form-address-line"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         size="30"
                         value={data.street || ""}
                         onChange={(e) =>
@@ -316,7 +328,7 @@ function FormParticulier() {
                         type="text"
                         id="input_23_city"
                         name="city"
-                        className="form-textbox form-address-city"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         value={data.city || ""}
                         onChange={(e) =>
                           setData((prev) => ({ ...prev, city: e.target.value }))
@@ -342,7 +354,7 @@ function FormParticulier() {
                         type="text"
                         id="input_23_state"
                         name="state"
-                        className="form-textbox form-address-state"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         value={data.state || ""}
                         onChange={(e) =>
                           setData((prev) => ({
@@ -373,7 +385,7 @@ function FormParticulier() {
                         type="text"
                         id="input_23_postal"
                         name="postal"
-                        className="form-textbox form-address-postal"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         value={data.postalCode || ""}
                         onChange={(e) =>
                           setData((prev) => ({
@@ -421,7 +433,7 @@ function FormParticulier() {
                   type="email"
                   id="input_6"
                   name="email"
-                  className="form-textbox validate[Email]"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 validate[Email]"
                   style={{ width: "310px" }}
                   size="310"
                   placeholder="ex: myname@example.com"
@@ -464,7 +476,7 @@ function FormParticulier() {
                   type="tel"
                   id="input_27_full"
                   name="phone"
-                  className="mask-phone-number form-textbox validate[Fill Mask]"
+                  className="mask-phone-number block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 validate[Fill Mask]"
                   style={{ width: "310px" }}
                   placeholder="(000) 00-000-000"
                   value={data.phoneNumber || ""}
@@ -510,7 +522,7 @@ function FormParticulier() {
             <div id="cid_45" className="form-input-wide" data-layout="full">
               <textarea
                 id="input_45"
-                className="form-textarea"
+                className="block text-sm font-semibold leading-6 text-gray-900"
                 name="bio"
                 style={{ width: "648px", height: "163px" }}
                 value={data.bio || ""}
@@ -539,6 +551,10 @@ function FormParticulier() {
         </ul>
       </div>
     </form>
+ 
+    </div>
+    </div>
+    </>
   );
 }
 

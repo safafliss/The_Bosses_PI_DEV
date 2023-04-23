@@ -22,26 +22,56 @@ function ProductsCreated(props) {
   }, [dispatch]);
   const navigate = useNavigate();
   const handleClick = async () => {
-    navigate("/addProduct")
+    navigate("/addProduct");
   };
   return (
     <>
-      <Navbar user1={props.user1} />
-
+      <Navbar />
       <div className="pages">
         <div className="home">
-          <div className="products">
+
+          <div className="flex h-full flex-col bg-white shadow-xl">
+            <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+              <div className="mt-8">
+                <div className="flow-root">
+                  <ul role="list" className="-my-6 divide-y divide-gray-200">
+                    {products && products.map((product) => (
+                      <ProductDetails product={product} key={product._id} className="flex py-6"
+                      />
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+              <div className="mt-6">
+                <a
+                  href="#"
+                  className="flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  style={{ backgroundColor: "#adc7ea", border: "solid 1px black" }}
+                  onClick={handleClick}
+                >
+                  ADD PRODUCT
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* <div className="products">
             <h1>My Products</h1>
             {products &&
               products.map((product) => (
                 <ProductDetails product={product} key={product._id} />
               ))}
-          </div>
+          </div> */}
           <div style={{ marginTop: "100px" }}>
             <ProfileAddProduct />
-            <button className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-0 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150" onClick={handleClick}>
+            {/* <button
+              className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-0 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+              onClick={handleClick}
+            >
               ADD PRODUCT
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

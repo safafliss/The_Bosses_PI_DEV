@@ -1,41 +1,44 @@
-import React, { useEffect } from "react";
-import { Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { Logout } from "../../../../redux/actions/authActions";
-import { Link } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import backgroundImage from "../../../../assets/img/uu.png";
+import React, { useEffect } from 'react';
+import { Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Logout } from '../../../../redux/actions/authActions';
+import { Link, useLocation } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import backgroundImage from '../../../../assets/img/uu.png';
 
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import UserDropdown from "../Dropdowns/UserDropdown";
-import { useTranslation } from "react-i18next";
-import cookies from "js-cookie";
-import i18next from "i18next";
-import imgFr from "../../../../assets/img/icons8-france-32.png";
-import imgBr from "../../../../assets/img/icons8-great-britain-32.png";
-import imgTn from "../../../../assets/img/tunisia-flag-round-icon-32.png";
-import './nav.css'
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import UserDropdown from '../Dropdowns/UserDropdown';
+import { useTranslation } from 'react-i18next';
+import cookies from 'js-cookie';
+import i18next from 'i18next';
+import imgFr from '../../../../assets/img/icons8-france-32.png';
+import imgBr from '../../../../assets/img/icons8-great-britain-32.png';
+import imgTn from '../../../../assets/img/tunisia-flag-round-icon-32.png';
+import './nav.css';
+import BasketPage from '../../../../pages//Basket/BasketPage';
+import { GetProfile } from '../../../../redux/actions/profileActions';
 
-export default function Navbar({ user1 }) {
+export default function Navbar() {
+  let location = useLocation();
   const languages = [
     {
       icon: imgFr,
-      code: "fr",
-      name: "Français",
-      country_code: "fr",
+      code: 'fr',
+      name: 'Français',
+      country_code: 'fr',
     },
     {
       icon: imgBr,
-      code: "en",
-      name: "English",
-      country_code: "gb",
+      code: 'en',
+      name: 'English',
+      country_code: 'gb',
     },
     {
       icon: imgTn,
-      code: "ar",
-      name: "العربية",
-      dir: "rtl",
-      country_code: "sa",
+      code: 'ar',
+      name: 'العربية',
+      dir: 'rtl',
+      country_code: 'sa',
     },
   ];
 
@@ -51,41 +54,50 @@ export default function Navbar({ user1 }) {
       <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z" />
     </svg>
   );
-  console.log("navbaruser" + user1);
   const { t } = useTranslation();
-  const currentLanguageCode = cookies.get("i18next") || "en";
+  const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
 
-  console.log("hedha tranlsatoi" + JSON.stringify(Object.entries(t)));
+  console.log('hedha tranlsatoi' + JSON.stringify(Object.entries(t)));
 
   function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
+    return classes.filter(Boolean).join(' ');
   }
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
     dispatch(Logout());
   };
-  console.log(localStorage.getItem("jwt"));
-  const token = localStorage.getItem("jwt");
+  console.log(localStorage.getItem('jwt'));
+  const token = localStorage.getItem('jwt');
   console.log(jwt_decode(token));
   const id = jwt_decode(token).id;
   const navigation = [
-    { name: t("Home"), href: "/", current: true },
-    { name: t("Profile"), href: `/formPart/${id}`, current: false },
-    { name: t("Recepies"), href: "#", current: false },
-    { name: t("Products"), href: `/allProducts`, current: false },
-    { name: t("TrashSpot"), href: "/trashSpot", current: false },
-    { name: t("Support Center"), href: "/support", current: false },
+    { name: t('Home'), href: '/', current: true },
+    { name: t('Profile'), href: `/formPart/${id}`, current: false },
+    { name: t('Recepies'), href: '/recipes', current: false },
+    { name: t('Products'), href: `/allProducts`, current: false },
+    { name: t('TrashSpot'), href: '/trashSpot', current: false },
+    { name: t('Support Center'), href: '/support', current: false },
+    { name: t('Basket'), href: '/basket', current: false },
   ];
-
+  const userConnected = useSelector((state) => state.profiles.profile);
   useEffect(() => {
-    console.log("Setting page stuff");
-    document.body.dir = currentLanguage.dir || "ltr";
-    document.title = t("0 Waste");
-  }, [currentLanguage, t]);
+    console.log('Setting page stuff');
+    document.body.dir = currentLanguage.dir || 'ltr';
+    document.title = t('0 Waste');
+    dispatch(GetProfile(id));
+  }, []);
+  
 
   return (
-    <Disclosure as="nav" className="bg-blue navbarClass">
+    <Disclosure
+      as="nav"
+      className=" txt-white"
+      style={{ boxShadow: '0 2px 4px rgba(0,0,0,.2)' ,position: "sticky",
+    top: 0,
+    zIndex: 2,
+    background: "white"}}
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -112,11 +124,11 @@ export default function Navbar({ user1 }) {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? " no-underline bg-green-600 text-white my-4"
-                            : "no-underline text-green-600 hover:bg-green-600 hover:text-black my-4",
-                          "rounded-md px-3 py-2 text-md font-bold my-4 no-underline"
+                            ? ' no-underline bg-green-500 text-white my-4 font-semibold'
+                            : 'no-underline text-teal-800 font-normal hover:bg-green-500 hover:text-white my-4',
+                          'rounded-md px-3 py-2 text-md font-bold my-4 no-underline'
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
                       </a>
@@ -124,9 +136,12 @@ export default function Navbar({ user1 }) {
                   </div>
                 </div>
               </div>
-              <div className="dropdown mt-6" style={{ display: "block" }}>
+              <li className="flex items-center">
+                {location.pathname !== '/basket' && <BasketPage />}
+              </li>
+              <div className="dropdown mt-6" style={{ display: 'block' }}>
                 <button
-                  style={{ display: "block !important" }}
+                  style={{ display: 'block !important' }}
                   className="btn btn-link dropdown-toggle ml-6"
                   data-bs-toggle="dropdown"
                 >
@@ -135,15 +150,15 @@ export default function Navbar({ user1 }) {
                 <ul
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton"
-                  style={{ display: "block !important" }}
+                  style={{ display: 'block !important' }}
                 >
                   <li>
-                    <span className="dropdown-item-text">{t("language")}</span>
+                    <span className="dropdown-item-text">{t('language')}</span>
                   </li>
                   {languages.map(({ code, name, country_code, icon }) => (
                     <li key={country_code}>
                       <a
-                        href=""
+                        href="/"
                         className="dropdown-item"
                         onClick={() => {
                           // event.preventDefault()
@@ -160,13 +175,12 @@ export default function Navbar({ user1 }) {
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                  <h8 style={{ fontWeight: "bold" }}>{t("welcome")}</h8>
                   <br></br>
-                  <h8>
-                    {user1?.provider === "facebook"
+                  {/* <h6>
+                    {user1?.provider === 'facebook'
                       ? user1?.displayName
-                      : user1?.firstName + " " + user1?.lastName}
-                  </h8>
+                      : user1?.firstName + ' ' + user1?.lastName}
+                  </h6> */}
                 </div>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -175,9 +189,9 @@ export default function Navbar({ user1 }) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={user1?.image.url}
+                        src={userConnected.image?.url}
                         alt=""
-                        style={{ height: "50px", width: "50px" }}
+                        style={{ height: '50px', width: '50px' }}
                       />
                     </Menu.Button>
                   </div>
@@ -195,12 +209,12 @@ export default function Navbar({ user1 }) {
                         {({ active }) => (
                           <Link
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
                             )}
                             to={`/formPart/${id}`}
                           >
-                            {t("My Profile")}
+                            {t('My Profile')}
                           </Link>
                         )}
                       </Menu.Item>
@@ -208,8 +222,8 @@ export default function Navbar({ user1 }) {
                         {({ active }) => (
                           <Link
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
                             )}
                             to={`/productsCreated`}
                           >
@@ -221,8 +235,8 @@ export default function Navbar({ user1 }) {
                         {({ active }) => (
                           <Link
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
                             )}
                             to={`/favoris`}
                           >
@@ -235,11 +249,11 @@ export default function Navbar({ user1 }) {
                           <a
                             href="#"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
                             )}
                           >
-                            {t("settings")}
+                            {t('settings')}
                           </a>
                         )}
                       </Menu.Item>
@@ -247,14 +261,14 @@ export default function Navbar({ user1 }) {
                         {({ active }) => (
                           <Link
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
                             )}
                             to="/login"
                             onClick={LogoutHanlder}
                           >
-                            {" "}
-                            {t("Sign out")}
+                            {' '}
+                            {t('Sign out')}
                           </Link>
                         )}
                       </Menu.Item>
@@ -274,11 +288,11 @@ export default function Navbar({ user1 }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    'block rounded-md px-3 py-2 text-base font-medium'
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>

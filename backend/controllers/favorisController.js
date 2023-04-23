@@ -24,7 +24,7 @@ const addFavoris = async (req, res) => {
         //console.log("hhhhhhhhhhhhhhhhhhhhhhhh");
         favoris.productsFavoris.splice(index, 1);
         favoris.save();
-        await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: false});
+        //await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: false});
       } else {
         favoris.productsFavoris.push(req.body.productsFavoris);
         await FavorisModel.findOneAndUpdate(
@@ -35,7 +35,7 @@ const addFavoris = async (req, res) => {
           }
         );
         console.log(req.body.productsFavoris);
-        await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: true});
+        //await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: true});
       }
     } else {
       await FavorisModel.create({
@@ -44,7 +44,7 @@ const addFavoris = async (req, res) => {
       });
       console.log("hhhhh");
       console.log(req.body.productsFavoris._id);
-      await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: true});
+      //await productModel.findByIdAndUpdate(req.body.productsFavoris._id, {isFavorite: true});
     }
     res.status(200).json({ message: "success" });
   } catch (error) {

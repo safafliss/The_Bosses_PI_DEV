@@ -191,7 +191,7 @@ function FormProduct() {
               <label>Price (DT):</label>
               <Inputs
                 name="price"
-                type="number"
+                //type="number"
                 placeholder="price"
                 onChangeHandler={onChangeHandler}
                 //errors={errors.price}
