@@ -122,22 +122,9 @@ function AllProducts() {
             </h2>
           </div>
         </div>
-        <div className="w-full md:w-6/12 mr-auto px-4 pt-24 md:pt-0">
-          <img
-            alt="..."
-            className="max-w-full rounded-lg"
-            style={{
-              marginLeft: "800px",
-              marginTop: "0px",
-              height: "500px",
-              width:"100%"
-            }}
-            src={taktak}
-          />
-        </div>
       </section>
 
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", marginTop:"-200px" }}>
         <div
           style={{
             flex: "0 1 auto",

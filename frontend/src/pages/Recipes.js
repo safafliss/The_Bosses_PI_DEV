@@ -132,7 +132,7 @@ export default function Recipes(props) {
         style={{
           backgroundImage: `url(${patternReact})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "1520px",
+          backgroundSize: "100%",
         }}
       >
                 {/* <div className={[classes.container ,"mx-auto items-center flex flex-wrap"]}  > */}
@@ -169,7 +169,7 @@ export default function Recipes(props) {
           marginTop: "-10rem",
           backgroundImage: `url(${allrecipes})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "1520px",
+          backgroundSize: "100%",
         }}
       >
         <div
@@ -255,7 +255,7 @@ export default function Recipes(props) {
           style={{
             backgroundImage: `url(${doc})`,
             backgroundRepeat: "no-repeat",
-            backgroundSize: "1530px",
+            backgroundSize: "100%",
             marginTop: "-19%",
           }}
         >

@@ -11,6 +11,7 @@ import img1 from "../assets/img/img1.png";
 import img2 from "../assets/img/img2.png";
 import img3 from "../assets/img/img3.png";
 import img4 from "../assets/img/img4.png";
+import SideButton from "./sideButton";
 
 function Particularpage(props) {
   const dispatch = useDispatch();
@@ -195,7 +196,8 @@ function Particularpage(props) {
               <div className="w-full lg:w-6/12 px-4">
                 <h2 className="text-4xl font-semibold">TrashSpot</h2>
                 <p className="text-lg leading-relaxed m-4 text-blueGray-500">
-                allows everyone to become an actor in the protection of their environment
+                  allows everyone to become an actor in the protection of their
+                  environment
                 </p>
               </div>
             </div>
@@ -208,11 +210,12 @@ function Particularpage(props) {
                     className="shadow-lg rounded-full mx-auto max-w-230-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">have you found any waste?</h5>
+                    <h5 className="text-xl font-bold">
+                      have you found any waste?
+                    </h5>
                     <p className="mt-1 text-sm text-blueGray-400  font-semibold">
-                    report them with the function I spotted
+                      report them with the function I spotted
                     </p>
-                   
                   </div>
                 </div>
               </div>
@@ -224,9 +227,11 @@ function Particularpage(props) {
                     className="shadow-lg rounded-full mx-auto max-w-230-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Hhave you made a pickup?</h5>
+                    <h5 className="text-xl font-bold">
+                      Hhave you made a pickup?
+                    </h5>
                     <p className="mt-1 text-sm text-blueGray-400  font-semibold">
-                    Take pictures of the collected waste to get pointes
+                      Take pictures of the collected waste to get pointes
                     </p>
                     {/* <div className="mt-6">
                       <button
@@ -253,9 +258,11 @@ function Particularpage(props) {
                     className="shadow-lg rounded-full mx-auto max-w-210-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Your actions are worth money</h5>
+                    <h5 className="text-xl font-bold">
+                      Your actions are worth money
+                    </h5>
                     <p className="mt-1 text-sm text-blueGray-400  font-semibold">
-                     Each of your actions will bring back points
+                      Each of your actions will bring back points
                     </p>
                     {/* <div className="mt-6">
                       <button
@@ -288,9 +295,11 @@ function Particularpage(props) {
                     className="shadow-lg rounded-full mx-auto max-w-210-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Acting with an association?</h5>
+                    <h5 className="text-xl font-bold">
+                      Acting with an association?
+                    </h5>
                     <p className="mt-1 text-sm text-blueGray-400  font-semibold">
-                    participate with the associations to collect larger scale
+                      participate with the associations to collect larger scale
                     </p>
                     {/* <div className="mt-6">
                       <button
@@ -431,8 +440,9 @@ function Particularpage(props) {
           </div>
         </section>
 
-     
-
+        <div>
+          <SideButton />
+        </div>
         <section className="pb-20 relative block bg-blueGray-800">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"

@@ -287,7 +287,7 @@ function BasketPage() {
     <>
       <IconButton
         onClick={handleBasketDialog}
-        className="text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2"
+        className="text-blueGray-400 fas fa-shopping-basket text-lg leading-lg mr-2"
       >
         <Typography variant="body1" color="inherit">
           {basketItems.length}

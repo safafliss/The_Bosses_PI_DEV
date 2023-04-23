@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Fragment } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Logout } from '../../../../redux/actions/authActions';
 import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
@@ -16,6 +16,7 @@ import imgBr from '../../../../assets/img/icons8-great-britain-32.png';
 import imgTn from '../../../../assets/img/tunisia-flag-round-icon-32.png';
 import './nav.css';
 import BasketPage from '../../../../pages/BasketPage';
+import { GetProfile } from '../../../../redux/actions/profileActions';
 
 export default function Navbar({ user1 }) {
   const languages = [
@@ -79,15 +80,16 @@ export default function Navbar({ user1 }) {
     { name: t('Support Center'), href: '/support', current: false },
     { name: t('Basket'), href: '/basket', current: false },
   ];
-
+  const userConnected = useSelector((state) => state.profiles.profile);
   useEffect(() => {
     console.log('Setting page stuff');
     document.body.dir = currentLanguage.dir || 'ltr';
     document.title = t('0 Waste');
+    dispatch(GetProfile(id));
   }, [currentLanguage, t]);
 
   return (
-    <Disclosure as="nav" className="bg-blue navbarClass">
+    <Disclosure as="nav" className=" txt-white"style={{ boxShadow: "0 2px 4px rgba(0,0,0,.2)" }}>
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -112,10 +114,11 @@ export default function Navbar({ user1 }) {
                       <a
                         key={item.name}
                         href={item.href}
+                      
                         className={classNames(
                           item.current
-                            ? ' no-underline bg-green-600 text-white my-4'
-                            : 'no-underline text-green-600 hover:bg-green-600 hover:text-black my-4',
+                            ? ' no-underline bg-green-500 text-white my-4 font-semibold'
+                            : 'no-underline text-teal-800 font-normal hover:bg-green-500 hover:text-white my-4',
                           'rounded-md px-3 py-2 text-md font-bold my-4 no-underline'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -123,12 +126,14 @@ export default function Navbar({ user1 }) {
                         {item.name}
                       </a>
                     ))}
-                    <li className="flex items-center">
-                      <BasketPage />
-                    </li>
+                 
                   </div>
                 </div>
               </div>
+              <li className="flex items-center">
+                      
+                      <BasketPage />
+                    </li>
               <div className="dropdown mt-6" style={{ display: 'block' }}>
                 <button
                   style={{ display: 'block !important' }}
@@ -165,13 +170,12 @@ export default function Navbar({ user1 }) {
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                  <h6 style={{ fontWeight: 'bold' }}>{t('welcome')}</h6>
                   <br></br>
-                  <h6>
+                  {/* <h6>
                     {user1?.provider === 'facebook'
                       ? user1?.displayName
                       : user1?.firstName + ' ' + user1?.lastName}
-                  </h6>
+                  </h6> */}
                 </div>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -180,7 +184,7 @@ export default function Navbar({ user1 }) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={user1?.image.url}
+                        src={userConnected.image?.url}
                         alt=""
                         style={{ height: '50px', width: '50px' }}
                       />

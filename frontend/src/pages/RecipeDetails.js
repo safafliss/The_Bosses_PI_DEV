@@ -150,6 +150,7 @@ const RecipeDetails = (props) => {
                           id="rating"
                           value={rating}
                           onChange={handleRatingChange}
+                          className="form-select"
                         >
                           <option value="">-- Select rating --</option>
                           <option value="1">1</option>
