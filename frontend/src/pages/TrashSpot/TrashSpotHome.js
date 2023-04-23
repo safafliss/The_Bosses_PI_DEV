@@ -151,7 +151,7 @@ function TrashSpotHome(props) {
     setPositionLng(0);
     setDescription("")
     setAccessTrash(false)
-    setIdTrash(-1);
+    setIdTrash(-1); 
     setError("");
   };
 

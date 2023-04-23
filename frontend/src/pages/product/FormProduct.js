@@ -48,7 +48,6 @@ function FormProduct() {
     });
   };
 
-  
   const [categoryIsOther, setCategoryIsOther] = useState(false);
 
   const handleSelectChange = (e) => {
@@ -60,18 +59,16 @@ function FormProduct() {
     });
   };
 
- 
-    //promo
-    const [value1, setValue1] = useState(50);
+  //promo
+  const [value1, setValue1] = useState(50);
 
-    const handleChange = (newValue) => {
-      setValue1(newValue);
-      setForm({
-        ...form,
-        promo: newValue,
-      });
-    }
-
+  const handleChange = (newValue) => {
+    setValue1(newValue);
+    setForm({
+      ...form,
+      promo: newValue,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); //pour ne rien afficher dans l'url
@@ -80,20 +77,20 @@ function FormProduct() {
     if (form.price < 0) {
       newErrors.price = "The price entered is incorrect";
     }
-    if(form.price>100000){
+    if (form.price > 100000) {
       newErrors.price = "The price entered is incorrect";
     }
-    if(!form.price){
+    if (!form.price) {
       newErrors.price = "The price is required";
     }
     //validate quantity
     if (form.quantity < 0) {
       newErrors.quantity = "The quantity entered is incorrect";
     }
-    if(form.quantity > 1000){
+    if (form.quantity > 1000) {
       newErrors.quantity = "The quantity entered is incorrect";
     }
-    if(!form.quantity){
+    if (!form.quantity) {
       newErrors.quantity = "The quantity is required";
     }
     //validate expiry date
@@ -102,24 +99,31 @@ function FormProduct() {
     if (expiryDate < curr) {
       newErrors.expiry_date = "The product has reached its expiry date!";
     }
-    if(!form.expiry_date){
+    if (!form.expiry_date) {
       newErrors.expiry_date = "The expiry date is required";
     }
     //validate type
-    if(!form.type){
+    if (!form.type) {
       newErrors.type = "The type is required";
     }
     //validate brand
-    if(!form.brand){
+    if (!form.brand) {
       newErrors.brand = "The brand is required";
     }
+    // //validate picture required
+    // if (image != "") {
+    //   newErrors.image = "The image of the product is required";
+    // }
+    // //validate category required
+    // if (form.type != "") {
+    //   newErrors.category = "The category is required";
+    // }
     setMochkla(newErrors);
     if (Object.keys(newErrors).length === 0) {
       console.log(mochkla);
       dispatch(AddProduct(form, idUser, navigate), UploadImage(image));
     }
   };
-
 
   return (
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
@@ -132,7 +136,7 @@ function FormProduct() {
             </h2>
             <br />
             <form className="create" method="POST" onSubmit={handleSubmit}>
-              <label>Category:</label>
+              <label>Category: </label>
               <br />
               <select
                 name="category"
@@ -153,16 +157,20 @@ function FormProduct() {
               <br />
               <br />
               {categoryIsOther && (
-              <Inputs
-                name="category"
-                type="text"
-                placeholder="category"
-                onChangeHandler={onChangeHandler}
-                //errors={errors.category}
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              />)}
+                <Inputs
+                  name="category"
+                  type="text"
+                  placeholder="category"
+                  onChangeHandler={onChangeHandler}
+                  //errors={errors.category}
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                />
+              )}
+              {/* {mochkla.category && (
+                <span style={{ color: "red" }}>{mochkla.category}</span>
+              )} */}
               <br />
-              <label>Type:</label>
+              <label>Type: *</label>
               <Inputs
                 name="type"
                 type="text"
@@ -175,7 +183,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.type}</span>
               )}
               <br />
-              <label>Brand:</label>
+              <label>Brand: *</label>
               <Inputs
                 name="brand"
                 type="text"
@@ -188,7 +196,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.brand}</span>
               )}
               <br />
-              <label>Price (DT):</label>
+              <label>Price (DT) per piece: *</label>
               <Inputs
                 name="price"
                 //type="number"
@@ -201,7 +209,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.price}</span>
               )}
               <br />
-              <label>Quantity (per piece):</label>
+              <label>Quantity (per piece): *</label>
               <Inputs
                 name="quantity"
                 type="number"
@@ -214,7 +222,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.quantity}</span>
               )}
               <br />
-              <label>Expiry date:</label>
+              <label>Expiry date: *</label>
               <Inputs
                 name="expiry_date"
                 type="date"
@@ -254,7 +262,7 @@ function FormProduct() {
                     className="form-label text-white m-1"
                     htmlFor="customFile1"
                   >
-                    Choose file
+                    Choose file 
                   </label>
                   <input
                     type="file"
@@ -265,9 +273,15 @@ function FormProduct() {
                   />
                 </div>
               </div>
+              {/* {mochkla.image && (
+                <span style={{ color: "red" }}>{mochkla.image}</span>
+              )} */}
               <br />
               <div>
-                <p>How much of a percentage discount would you like to apply to the promotion before it expires in 5 days?</p>
+                <p>
+                  How much of a percentage discount would you like to apply to
+                  the promotion before it expires in 5 days?
+                </p>
                 <p>{value1}%</p>
                 <ProgressBarInput
                   min={0}
