@@ -21,7 +21,7 @@ function FormUpdateProduct() {
   var curr = new Date();
   const [date, setDate] = useState(curr.toISOString().substring(0, 10));
   const [mochkla, setMochkla] = useState({});
-  
+
   const getProduct = useCallback(async () => {
     const { data } = await axios.get(
       `http://localhost:3600/product/getSingleProduct/${id}`
@@ -32,7 +32,6 @@ function FormUpdateProduct() {
     curr = new Date(data.expiry_date);
     curr.setDate(curr.getDate());
     setDate(curr.toISOString().substring(0, 10));
-
   }, [id]);
 
   useEffect(() => {
@@ -88,9 +87,21 @@ function FormUpdateProduct() {
     if (data.price < 0) {
       newErrors.price = "The price entered is incorrect";
     }
+    if (data.price > 100000) {
+      newErrors.price = "The price entered is incorrect";
+    }
+    if (!data.price) {
+      newErrors.price = "The price is required";
+    }
     //validate quantity
     if (data.quantity < 0) {
       newErrors.quantity = "The quantity entered is incorrect";
+    }
+    if (data.quantity > 1000) {
+      newErrors.quantity = "The quantity entered is incorrect";
+    }
+    if (!data.quantity) {
+      newErrors.quantity = "The quantity is required";
     }
     //validate expiry date
     // const curr = new Date().getTime();
@@ -98,6 +109,14 @@ function FormUpdateProduct() {
     // if (expiryDate < curr) {
     //   newErrors.expiry_date = "The product has reached its expiry date!";
     // }
+    //validate type
+    if (!data.type) {
+      newErrors.type = "The type is required";
+    }
+    //validate brand
+    if (!data.brand) {
+      newErrors.brand = "The brand is required";
+    }
     setMochkla(newErrors);
     if (Object.keys(newErrors).length === 0) {
       console.log(mochkla);
@@ -192,6 +211,9 @@ function FormUpdateProduct() {
                 value={data.type || ""}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.type && (
+                <span style={{ color: "red" }}>{mochkla.type}</span>
+              )}
               <br />
               <label>Brand:</label>
               <Inputs
@@ -203,6 +225,9 @@ function FormUpdateProduct() {
                 value={data.brand || ""}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              {mochkla.brand && (
+                <span style={{ color: "red" }}>{mochkla.brand}</span>
+              )}
               <br />
               <label>Price:</label>
               <Inputs
@@ -238,13 +263,13 @@ function FormUpdateProduct() {
                 type="date"
                 placeholder="expiry_date"
                 //onChangeHandler={onChangeHandler}
-                onChangeHandler={(e)=>{
+                onChangeHandler={(e) => {
                   console.log(e.target.value);
-                      setDate(e.target.value);
-                      setData((prev) => ({
-                        ...prev,
-                        expiry_date: e.target.value,
-                      }));
+                  setDate(e.target.value);
+                  setData((prev) => ({
+                    ...prev,
+                    expiry_date: e.target.value,
+                  }));
                 }}
                 errors={errors.expiry_date}
                 value={date}
@@ -288,6 +313,7 @@ function FormUpdateProduct() {
                     type="file"
                     className="form-control d-none"
                     id="customFile1"
+                    accept="image/*"
                     onChange={handleImage}
                   />
                 </div>

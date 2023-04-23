@@ -2,9 +2,9 @@
 /* ==========================================================================
    #BACKGROUND
    ========================================================================== */
-.bg-blue {
+/* .bg-blue {
   background: #2c6ed5;
-}
+} */
 
 .bg-red {
   background: #adc7ea;
@@ -60,7 +60,7 @@
   -moz-transition: all 0.4s ease;
   transition: all 0.4s ease;
   font-size: 14px;
-  font-weight: 700;
+  /* font-weight: 700;  rajaaha ya safa */ 
 }
 
 .btn--radius {

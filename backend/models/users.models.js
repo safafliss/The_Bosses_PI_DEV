@@ -44,8 +44,7 @@ const UserModel = new Schema(
     isValid: {
       type: Boolean,
       default: false,
-    },
-    
+    },    
   },
   {
     timestamps: true,

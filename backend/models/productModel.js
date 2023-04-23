@@ -10,7 +10,8 @@ const ProductSchema = new Schema(
     },
     category: {
       type: String,
-      required: true,
+      //required: true,
+      default: "OTHER"
     },
     type: {
       type: String,
@@ -52,9 +53,14 @@ const ProductSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isFavorite: {
-      type: Boolean,
-      default: false,
+    // isFavorite: { 
+    //   type: Boolean,
+    //   default: false,
+    // },
+    promo: {
+      type: Number,
+      default: 50
+      //required: true,
     },
   },
   { timestamps: true }

@@ -3,6 +3,7 @@ import React from "react";
 // components
 
 import CardStats from "../Cards/CardStats";
+import Stat from "../Cards/Stat";
 
 export default function HeaderStats() {
   return (

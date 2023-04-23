@@ -12,13 +12,15 @@ async function automaticUpdateProduct() {
     });
     if (expiredProducts.length !== 0) {
       expiredProducts.forEach(async (product) => {
-        await ProductModal.findByIdAndUpdate(product._id, { isValid: true });
-      });
+        if(product.isValid !== true){
+          await ProductModal.findByIdAndUpdate(product._id, { isValid: true, price: (product.promo * product.price)/100 });
+        }
+        });
     }
     // Find all non-expired products and update their isValid property to false
     await ProductModal.updateMany(
       { _id: { $nin: expiredProducts.map((p) => p._id) } },
-      { isValid: false }
+      { isValid: false , price: product.price}
     );
   } catch (error) {
     return false;
