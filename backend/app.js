@@ -16,6 +16,8 @@ const galleryRoutes = require('./routes/galleryRoutes');
 const favorisRoutes = require('./routes/favorisRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const basketRoutes = require('./routes/basketRoutes');
+const stripe = require('./routes/stripe');
+const deliveryRoutes = require('./routes/deliveryRoutes');
 
 const cron = require('node-cron');
 const sendEmailProduct = require('./utils/sendEmailProduct');
@@ -70,6 +72,9 @@ app.use('/gallery', galleryRoutes);
 app.use('/favoris', favorisRoutes);
 app.use('/comment', commentRoutes);
 app.use('/basket', basketRoutes);
+app.use('/delivery', deliveryRoutes);
+app.use('/stripe', stripe);
+
 // cron.schedule('*/2 * * * *', () => {
 //   console.log('running a task every two minutes');
 // });
@@ -92,13 +97,13 @@ app.use('/basket', basketRoutes);
 // });
 app.use('/recipe', recipeRoute);
 
-app.use("/support", Report);
-app.use("/rate", Rate);
-app.use("/api", indexRouter);
-app.use("/product", productRoutes);
-app.use("/gallery",galleryRoutes);
-app.use("/favoris", favorisRoutes);
-app.use("/comment", commentRoutes);
+app.use('/support', Report);
+app.use('/rate', Rate);
+app.use('/api', indexRouter);
+app.use('/product', productRoutes);
+app.use('/gallery', galleryRoutes);
+app.use('/favoris', favorisRoutes);
+app.use('/comment', commentRoutes);
 // cron.schedule('*/2 * * * *', () => {
 //   console.log('running a task every two minutes');
 // });

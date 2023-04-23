@@ -126,7 +126,7 @@ export default function Recipes(props) {
   
   return (
     <>
-      <Navbar user1={props.user1} />
+      <Navbar />
       <section
         className="header relative pt-16 items-center flex h-screen max-h-860-px"
         style={{

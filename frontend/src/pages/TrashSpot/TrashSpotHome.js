@@ -412,7 +412,7 @@ function TrashSpotHome(props) {
 
   return (
     <>
-      <Navbar user1={props.user1}  />
+      <Navbar />
       <div className="d-flex ">
         <div className="leftSide bg-green-800" style={{ width: "710px","zIndex": 1 }}>
           <div className="container ">
