@@ -1,3 +1,4 @@
+import { addToBasket, getBasket } from '../../redux/actions/basketActions';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -92,6 +93,13 @@ function AllProductDetails({ product, idUser }) {
     setIsFavorite(!isFavorite);
   };
 
+  let userId = useSelector((state) => state.auth.user.id);
+
+  async function handleAddToBasket(product) {
+    await dispatch(addToBasket(product._id, product.price, 1, userId));
+    await dispatch(getBasket(userId));
+  }
+  
   return (
     <div
       className="container mx-auto"
@@ -166,7 +174,7 @@ function AllProductDetails({ product, idUser }) {
                     </div>
                   )}
                   <div className="cart-btn">
-                    <button className="btn btn-dark shadow-sm rounded-pill">
+                    <button className="btn btn-dark shadow-sm rounded-pill" onClick={() => handleAddToBasket(product)}>
                       <i class="fa-sharp fa-solid fa-cart-shopping"></i>Add to
                       Cart
                     </button>
@@ -209,5 +217,4 @@ function AllProductDetails({ product, idUser }) {
     </div>
   );
 }
-
 export default AllProductDetails;
