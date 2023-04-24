@@ -14,6 +14,7 @@ import img2 from "../assets/img/img2.png";
 import img3 from "../assets/img/img3.png";
 import img4 from "../assets/img/img4.png";
 function Particularpage(props) {
+  const {t} = useTranslation();
  //console.log("***"+Object.entries(props.user1?.email))
   const dispatch = useDispatch();
   const LogoutHanlder = () => {

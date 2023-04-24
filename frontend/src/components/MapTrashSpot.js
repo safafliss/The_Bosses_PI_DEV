@@ -1,6 +1,3 @@
-import mapboxgl, {Marker} from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import React, { useRef, useEffect, useState } from 'react';
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFoZGktZ2hhbGkiLCJhIjoiY2tzbWRsejdpMTVuOTJ6cW9zODZ5cXV6NyJ9.__WVxi-9jg_W9Tqp4OnfwA';
 import './map.css'
 import satellite from '../assets/img/satellite.png' 
 import street from '../assets/img/street.png' 
@@ -8,6 +5,11 @@ import plastic from '../assets/img/trashSpotIcons/plastic.png'
 import steel from '../assets/img/trashSpotIcons/steel.png' 
 import paper from '../assets/img/trashSpotIcons/paper.png' 
 import other from '../assets/img/trashSpotIcons/other.png' 
+import mapboxgl, {Marker} from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import React, { useRef, useEffect, useState } from 'react';
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFoZGktZ2hhbGkiLCJhIjoiY2tzbWRsejdpMTVuOTJ6cW9zODZ5cXV6NyJ9.__WVxi-9jg_W9Tqp4OnfwA';
+
+
 
 function MapTrashSpot(props) {
 const mapContainer = useRef(null);
