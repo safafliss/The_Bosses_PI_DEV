@@ -162,7 +162,7 @@ function FormProduct() {
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />)}
               <br />
-              <label>Type:</label>
+              <label>Type:*</label>
               <Inputs
                 name="type"
                 type="text"
@@ -175,7 +175,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.type}</span>
               )}
               <br />
-              <label>Brand:</label>
+              <label>Brand:*</label>
               <Inputs
                 name="brand"
                 type="text"
@@ -188,7 +188,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.brand}</span>
               )}
               <br />
-              <label>Price (DT):</label>
+              <label>Price (DT) per piece :*</label>
               <Inputs
                 name="price"
                 //type="number"
@@ -201,7 +201,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.price}</span>
               )}
               <br />
-              <label>Quantity (per piece):</label>
+              <label>Quantity (per piece): *</label>
               <Inputs
                 name="quantity"
                 type="number"
@@ -214,7 +214,7 @@ function FormProduct() {
                 <span style={{ color: "red" }}>{mochkla.quantity}</span>
               )}
               <br />
-              <label>Expiry date:</label>
+              <label>Expiry date: *</label>
               <Inputs
                 name="expiry_date"
                 type="date"

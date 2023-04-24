@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Logout } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/landpage.png";
-import jwt_decode from "jwt-decode"
-import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
-import SideButton from "./sideButton";
-import { useTranslation } from "react-i18next";
+import jwt_decode from "jwt-decode";
+import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
 import zero from "../assets/img/zero.png";
 import rec from "../assets/img/rec.png";
 import img1 from "../assets/img/img1.png";
 import img2 from "../assets/img/img2.png";
 import img3 from "../assets/img/img3.png";
 import img4 from "../assets/img/img4.png";
+import SideButton from "./sideButton";
+import doc from "../assets/img/doc.png";
+import docc from "../assets/img/ii.jpg";
+
 function Particularpage(props) {
-  const {t} = useTranslation();
- //console.log("***"+Object.entries(props.user1?.email))
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
     dispatch(Logout());
@@ -64,7 +64,7 @@ function Particularpage(props) {
                       color: "#2aafbe",
                     }}
                   >
-                    {t('Welcome to Zero Waste')}
+                    Welcome to Zero Waste.
                   </h1>
                   <p className="mt-4 text-lg ">
                     This is a simple example of a Landing Page you can build
@@ -151,22 +151,13 @@ function Particularpage(props) {
                   <i className="fas fa-user-friends text-xl"></i>
                 </div>
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
-                  Working with us is a pleasure
+                  ZeroWaste Products
                 </h3>
                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
-                  Don't let your uses guess by attaching tooltips and popoves to
-                  any element. Just make sure you enable them first via
-                  JavaScript.
+                At our organization, we are committed to tackling the pressing issue of food waste. Our aim is to minimize food waste at every step of the process, from production to consumption. We believe that food is a precious resource that should not be squandered, and we are dedicated to implementing sustainable practices that prevent unnecessary waste. Through careful planning, efficient operations, and collaboration with our partners and customers, we strive to reduce our environmental impact and create a more sustainable food system.
                 </p>
-                <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
-                  The kit comes with three pre-built pages to help you get
-                  started faster. You can change the text and images and you're
-                  good to go. Just make sure you enable them first via
-                  JavaScript.
-                </p>
-                <Link to="/" className="font-bold text-blueGray-700 mt-8">
-                  Check Notus React!
-                </Link>
+                
+                
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
@@ -335,10 +326,14 @@ function Particularpage(props) {
             </div>
           </div>
         </section>
-        <section className="relative py-20">
-          <div
+       
+
+        <div>
+          <SideButton />
+        </div>
+        <section className="pb-20 relative block bg-blueGray-800" style={{marginTop:"-5%"}}>
+        <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
-            style={{ transform: "translateZ(0)" }}
           >
             <svg
               className="absolute bottom-0 overflow-hidden"
@@ -349,10 +344,7 @@ function Particularpage(props) {
               x="0"
               y="0"
             >
-              <polygon
-                className="text-white fill-current"
-                points="2560 0 2560 100 0 100"
-              ></polygon>
+             
             </svg>
           </div>
 
@@ -367,317 +359,96 @@ function Particularpage(props) {
                 x="0"
                 y="0"
               >
-                <polygon
-                  className="text-white fill-current"
-                  points="2560 0 2560 100 0 100"
-                ></polygon>
+             
               </svg>
-              <div className="w-full md:w-4/12 ml-auto mr-auto px-4">
+              <div className="w-full md:w-4/12 ml-auto mr-auto px-4" style={{marginTop:"5%", width:"40%" , marginLeft:"-10%"}}>
                 <img
                   alt="..."
-                  className="max-w-full rounded-lg shadow-lg"
-                  // src="https://img.freepik.com/premium-vector/people-recycling-with-trash-bin_23-2148524155.jpg"
+                  className="max-w-full rounded-lg shadow-xl"
+                  style={{
+                    transform:
+                      "scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg)",
+                  }}                  // src="https://img.freepik.com/premium-vector/people-recycling-with-trash-bin_23-2148524155.jpg"
                   src={rec}
                 />
               </div>
 
-              <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
+              <div className="w-full md:w-5/12 ml-auto mr-auto px-4" style={{}}>
                 <div className="md:pr-12">
                   <div className="text-lightBlue-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-lightBlue-300">
                     <i className="fas fa-rocket text-xl"></i>
                   </div>
-                  <h3 className="text-3xl font-semibold">ZeroWaste Recipes</h3>
+                  <h3 className="text-3xl font-semibold text-white">ZeroWaste Recipes</h3>
                   <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
-                    The extension comes with three pre-built pages to help you
-                    get started faster. You can change the text and images and
-                    you're good to go.
+                  Our web application is focused on reducing food waste by providing users with antiwaste and zero waste recipes. We prioritize using every part of an ingredient to reduce waste and promote sustainable practices such as using reusable containers and buying ingredients in bulk                  
+
                   </p>
                   <ul className="list-none mt-6">
-                    <li className="py-2">
-                      <div className="flex items-center">
-                        <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-lightBlue-600 bg-lightBlue-200 mr-3">
-                            <i className="fas fa-fingerprint"></i>
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className="text-blueGray-500">
-                            Carefully crafted components
-                          </h4>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="py-2">
-                      <div className="flex items-center">
-                        <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-lightBlue-600 bg-lightBlue-200 mr-3">
-                            <i className="fab fa-html5"></i>
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className="text-blueGray-500">
-                            Amazing page examples
-                          </h4>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="py-2">
-                      <div className="flex items-center">
-                        <div>
-                          <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-lightBlue-600 bg-lightBlue-200 mr-3">
-                            <i className="far fa-paper-plane"></i>
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className="text-blueGray-500">
-                            Dynamic components
-                          </h4>
-                        </div>
-                      </div>
-                    </li>
+                 
+                  
+                  
                   </ul>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        <section className="pt-20 pb-48">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center text-center mb-24">
-              <div className="w-full lg:w-6/12 px-4">
-                <h2 className="text-4xl font-semibold">Here are our heroes</h2>
-                <p className="text-lg leading-relaxed m-4 text-blueGray-500">
-                  According to the National Oceanic and Atmospheric
-                  Administration, Ted, Scambos, NSIDClead scentist, puts the
-                  potentially record maximum.
+        <section
+        style={{
+          backgroundImage: `url(${doc})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "2000px",
+          marginTop: "-19%",
+        }}
+      >
+        <div className="containerrr mx-auto px-4 pb-32 pt-48">
+          <div className="items-center flex flex-wrap">
+            <div className="w-full md:w-5/12 ml-auto px-12 md:px-4">
+              <div className="md:pr-12" style={{ marginTop: "40%" }}>
+                <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
+                  <i class="fas fa-exclamation-triangle text-xl text-yellow-500"></i>{" "}
+                </div>
+                <h3 className="text-3xl font-semibold text-white">
+                  Food waste in Tunisia
+                </h3>
+                <p className="mt-4 text-lg leading-relaxed text-white">
+                  According to official figures dating back to 2020, nearly 572
+                  million dinars worth of food products are wasted each year by
+                  Tunisian households.
                 </p>
+                <ul className="list-none mt-6">
+                  <li className="py-2">
+                    <div className="flex items-center">
+                      <div></div>
+                      <div>
+                        <h4 className="mt-4 text-lg leading-relaxed text-white">
+                          You , me and everyone who wants it, we are capable of
+                          reducing this number!
+                        </h4>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className="flex flex-wrap">
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-1-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Ryan Tompson</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Web Developer
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </button>
-                      <button
-                        className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-dribbble"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-2-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Romina Hadid</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Marketing Specialist
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-       
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-3-800x800.jpg").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Alexa Smith</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      UI/UX Designer
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-instagram"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-6">
-                  <img
-                    alt="..."
-                    src={require("../assets/img/team-4-470x470.png").default}
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Jenna Kardi</h5>
-                    <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
-                      Founder and CEO
-                    </p>
-                    <div className="mt-6">
-                      <button
-                        className="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-dribbble"></i>
-                      </button>
-                      <button
-                        className="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-google"></i>
-                      </button>
-                      <button
-                        className="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </button>
-                      <button
-                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                      >
-                        <i className="fab fa-instagram"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+            <div className="w-full md:w-6/12 mr-auto px-4 pt-24 md:pt-0">
+              <img
+                alt="..."
+                className="max-w-full rounded-lg shadow-xl"
+                style={{
+                  marginTop: "210px",
+                  marginLeft: "40px",
+                  transform:
+                    "scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg)",
+                }}
+                src={docc}
+              />
             </div>
           </div>
-        </section>
-<div> 
-      <SideButton/>
-
-</div>
-        <section className="pb-20 relative block bg-blueGray-800">
-          <div
-            className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
-            style={{ transform: "translateZ(0)" }}
-          >
-            <svg
-              className="absolute bottom-0 overflow-hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon
-                className="text-blueGray-800 fill-current"
-                points="2560 0 2560 100 0 100"
-              ></polygon>
-            </svg>
-          </div>
-
-          <div className="container mx-auto px-4 lg:pt-24 lg:pb-64">
-            <div className="flex flex-wrap text-center justify-center">
-              <div className="w-full lg:w-6/12 px-4">
-                <h2 className="text-4xl font-semibold text-white">
-                  Build something
-                </h2>
-                <p className="text-lg leading-relaxed mt-4 mb-4 text-blueGray-400">
-                  Put the potentially record low maximum sea ice extent tihs
-                  year down to low ice. According to the National Oceanic and
-                  Atmospheric Administration, Ted, Scambos.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap mt-12 justify-center">
-              <div className="w-full lg:w-3/12 px-4 text-center">
-                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                  <i className="fas fa-medal text-xl"></i>
-                </div>
-                <h6 className="text-xl mt-5 font-semibold text-white">
-                  Excelent Services
-                </h6>
-                <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-              <div className="w-full lg:w-3/12 px-4 text-center">
-                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                  <i className="fas fa-poll text-xl"></i>
-                </div>
-                <h5 className="text-xl mt-5 font-semibold text-white">
-                  Grow your market
-                </h5>
-                <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-              <div className="w-full lg:w-3/12 px-4 text-center">
-                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                  <i className="fas fa-lightbulb text-xl"></i>
-                </div>
-                <h5 className="text-xl mt-5 font-semibold text-white">
-                  Launch time
-                </h5>
-                <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="relative block py-24 lg:pt-0 bg-blueGray-800">
+        </div>
+      </section>
+        {/* <section className="relative block py-24 lg:pt-0 bg-blueGray-800">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center lg:-mt-64 -mt-48">
               <div className="w-full lg:w-6/12 px-4">
@@ -745,7 +516,7 @@ function Particularpage(props) {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
       {/* <Footer /> */}
     </>

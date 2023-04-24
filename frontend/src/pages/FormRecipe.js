@@ -12,6 +12,9 @@ import HeaderStats from '../components/ReusableComponents/components/Headers/Hea
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from "../components/ReusableComponents/components/Sidebar/Sidebar";
+import { TagsInput } from "react-tag-input-component";
+
 import NoAccess from "./NoAccess";
 
 const FormRecipe = (props) => {
@@ -39,8 +42,7 @@ const FormRecipe = (props) => {
       const currentRecipe = recipes.find(recipe => recipe._id === id);
       if (currentRecipe) {
         setRecipe(currentRecipe);
-        console.log("url",currentRecipe.image.url);
-        setImage(currentRecipe.image.url);
+        setImage(currentRecipe?.image?.url);
       }
     }
   }, [id, recipes]);
@@ -87,6 +89,8 @@ const FormRecipe = (props) => {
   return (
     
     <div>
+      
+      <Sidebar />
         <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
           </div>
 
@@ -99,9 +103,9 @@ const FormRecipe = (props) => {
            
         </div>
 
-        <div className="container mx-auto">
+        <div className="container mx-auto" >
           <div className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10 mx-auto max-w-2xl text-center" style={{flexDirection:"column"}}>
-          <div className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10" style={{}}>
+          <div className="flex flex-wrap  bg-white shadow-xl rounded-lg -mt-64 py-16 px-12 relative z-10" style={{ marginTop :"0%" }}>
 
           <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>Update Recipe</h2>
       
@@ -117,39 +121,49 @@ const FormRecipe = (props) => {
           </div>
         </div>
         <br />
-        <div className="sm:col-span-2">
-        <label className="block text-sm font-semibold leading-6 text-gray-900">
-          Picture: </label>
-          <div className="mb-4 d-flex flex center">
-                <img
-                  src={image}
-                  alt="example placeholder"
-                  style={{
-                    width: "300px",
-                    height: "300px",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>          
-              <div className="d-flex">
-                <div className="btn btn-primary  btn-rounded">
-                  <label
-                    className="form-label text-white m-1"
-                    htmlFor="customFile1"
-                  >
-                    Choose file
-                  </label>
-                  <input
-                    type="file"
-                   
-                    id="customFile1"
-                    className="block text-sm font-semibold leading-6 text-gray-900"
-                    onChange={handleImage}
-                  />
-                </div>
-              </div>
-       
-        </div>
+        <div className="mb-4">
+                    <label
+                      style={{ marginLeft: "-15rem" }}
+                      className="block text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Picture:
+                    </label>
+                  </div>
+
+                  <div className="sm:col-span-2 mx-auto flex items-center">
+                    <div className="w-full flex items-center justify-center ">
+                      <div className="d-flex " >
+                        <div className="btn btn-primary btn-rounded ">
+                          <label
+                            className="form-label text-white m-1"
+                            htmlFor="customFile1"
+                          >
+                            Choose file
+                          </label>
+                          <input
+                          
+                            type="file"
+                            className="block text-sm font-semibold bg-grey-600 leading-6 text-white "
+                            id="customFile1"
+                            onChange={handleImage}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="ml-4 mb-4">
+                        <img
+                          src={image}
+                          alt="example placeholder"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)"
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
         <br />
         
         <div className="sm:col-span-2">
@@ -183,19 +197,19 @@ const FormRecipe = (props) => {
         <br />
         <div className="sm:col-span-2">
         <label className="block text-sm font-semibold leading-6 text-gray-900">
-          Material:
+        Preparation:
           <textarea  style={{width:"30rem"}}  
           className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={recipe.material} onChange={(e) => setRecipe({ ...recipe, material: e.target.value })} required />
         </label>
         </div>
         <br />
-        <div className="sm:col-span-2">
+        {/* <div className="sm:col-span-2">
         <label className="block text-sm font-semibold leading-6 text-gray-900">
           Rating:
           <input  style={{width:"30rem"}}  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="number" min="0" max="5" value={recipe.rating}
             onChange={(e) => setRecipe({ ...recipe, rating: e.target.value })}  />
         </label>
-        </div>
+        </div> */}
         <br />
        
         </div>
