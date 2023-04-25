@@ -1,18 +1,19 @@
+import './map.css'
 import satellite from '../assets/img/satellite.png' 
 import street from '../assets/img/street.png' 
 import plastic from '../assets/img/trashSpotIcons/plastic.png' 
 import steel from '../assets/img/trashSpotIcons/steel.png' 
 import paper from '../assets/img/trashSpotIcons/paper.png' 
 import other from '../assets/img/trashSpotIcons/other.png' 
-import './map.css'
-import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl, {Marker} from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import React, { useRef, useEffect, useState } from 'react';
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFoZGktZ2hhbGkiLCJhIjoiY2tzbWRsejdpMTVuOTJ6cW9zODZ5cXV6NyJ9.__WVxi-9jg_W9Tqp4OnfwA';
 
 
 
 function MapTrashSpot(props) {
-
+const mapContainer = useRef(null);
+var map = useRef(null);
 var markerHtml,markerOnMap,markerOnMapNewMark,markerHtmlNewMark;
 const [currentLat, setCurrLat] = useState(0);
 const [currentLong, setCurrLong] = useState(0);
@@ -26,8 +27,6 @@ const [east, setEast] = useState(37.49987062838234);
 const [mapStyle, setMapStyle] = useState('mapbox://styles/mapbox/streets-v11')
 const [selectedLat,setSelectedLat] = useState(0)
 const [selectedLong,setSelectedLong] = useState(0)
-const mapContainer = useRef(null);
-var map = useRef(null);
 var selectedLat1 = 0
 var selectedLong1 = 0
 

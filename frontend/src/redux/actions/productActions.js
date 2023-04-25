@@ -32,7 +32,7 @@ export const fetch_Products = () => async dispatch => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get('http://localhost:3600/product/products');
+    const { data } = await axios.get('http://localhost:3600/product/getAllProducts');
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

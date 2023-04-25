@@ -204,7 +204,7 @@ function ProductDetails({ product }) {
       <div className="flex">
         <div className="h-25 w-25 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
           <img
-            src={product.image.url}
+            src={product.image?.url}
             alt="t"
             className="h-full w-full object-cover object-center"
           />

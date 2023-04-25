@@ -49,8 +49,9 @@ const uploadImageRecipe = async (req, res) => {
 };
 const getRecipesByIngredient = async (req, res) => {
   try {
-    const ingredients = req.params.ingredient;
-    const recipes = await RecipeModel.find({ ingredients: { $in: ingredients } });
+    const searchTerm = req.params.ingredient;
+    const regex = new RegExp(searchTerm, 'i');
+    const recipes = await RecipeModel.find({ ingredients: { $regex: regex } });
     console.log("heha ",recipes);
     res.status(200).json({ success: true, data: recipes });
   } catch (err) {

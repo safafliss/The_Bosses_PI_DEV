@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from "react";
-import { useState } from "react";
-import "./Formulaire.css";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useCallback, useEffect } from 'react';
+import { useState } from 'react';
+import './Formulaire.css';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 function FormAssociation() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,29 +23,29 @@ function FormAssociation() {
     // validate firstName
     const newErrors = {};
     if (!data.firstName) {
-      newErrors.firstName = "First Name is required";
+      newErrors.firstName = 'First Name is required';
     } else if (data.firstName.length < 3) {
-      newErrors.firstName = "First Name must be at least 3 characters long";
+      newErrors.firstName = 'First Name must be at least 3 characters long';
     }
 
     if (!data.lastName) {
-      newErrors.lastName = "Last Name is required";
+      newErrors.lastName = 'Last Name is required';
     } else if (data.lastName.length < 3) {
-      newErrors.lastName = "Last Name must be at least 3 characters long";
+      newErrors.lastName = 'Last Name must be at least 3 characters long';
     }
 
     if (!/^\d{5}(?:[-\s]\d{4})?$/.test(data.postalCode)) {
-      newErrors.postalCode = "Invalid postal code";
+      newErrors.postalCode = 'Invalid postal code';
     }
 
     if (!data.organisationName) {
-      newErrors.organisationName = "Name of the association is required";
+      newErrors.organisationName = 'Name of the association is required';
     }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
       console.log(errors);
       UpdateUser();
-      navigate("/");
+      navigate('/');
     }
   };
   const UpdateUser = async () => {
@@ -89,7 +89,7 @@ function FormAssociation() {
               <div data-wrapper-react="true" className="extended">
                 <span
                   className="form-sub-label-container"
-                  style={{ verticalAlign: "top" }}
+                  style={{ verticalAlign: 'top' }}
                   data-input-type="first"
                 >
                   <input
@@ -98,7 +98,7 @@ function FormAssociation() {
                     name="firstName"
                     className="form-textbox"
                     size="15"
-                    value={data.firstName || ""}
+                    value={data.firstName || ''}
                     onChange={(e) =>
                       setData((prev) => ({
                         ...prev,
@@ -107,21 +107,21 @@ function FormAssociation() {
                     }
                   />
                   {errors.firstName && (
-                    <span style={{ color: "red" }}>{errors.firstName}</span>
+                    <span style={{ color: 'red' }}>{errors.firstName}</span>
                   )}
                   <label
                     className="form-sub-label"
                     for="first_4"
                     id="sublabel_4_first"
-                    style={{ minHeight: "13px" }}
+                    style={{ minHeight: '13px' }}
                     aria-hidden="false"
                   >
                     First Name
-                  </label>{" "}
+                  </label>{' '}
                 </span>
                 <span
                   className="form-sub-label-container"
-                  style={{ verticalAlign: "top" }}
+                  style={{ verticalAlign: 'top' }}
                   data-input-type="last"
                 >
                   <input
@@ -130,19 +130,19 @@ function FormAssociation() {
                     name="lastName"
                     className="form-textbox"
                     size="15"
-                    value={data.lastName || ""}
+                    value={data.lastName || ''}
                     onChange={(e) =>
                       setData((prev) => ({ ...prev, lastName: e.target.value }))
                     }
                   />
                   {errors.lastName && (
-                    <span style={{ color: "red" }}>{errors.lastName}</span>
+                    <span style={{ color: 'red' }}>{errors.lastName}</span>
                   )}
                   <label
                     className="form-sub-label"
                     for="last_4"
                     id="sublabel_4_last"
-                    style={{ minHeight: "13px" }}
+                    style={{ minHeight: '13px' }}
                     aria-hidden="false"
                   >
                     Last Name
@@ -151,10 +151,7 @@ function FormAssociation() {
               </div>
             </div>
           </li>
-          <li
-            className="form-line form-line-column form-col-1"
-            id="id_6"
-          >
+          <li className="form-line form-line-column form-col-1" id="id_6">
             <label
               className="form-label form-label-top"
               id="label_6"
@@ -165,22 +162,27 @@ function FormAssociation() {
             <div id="cid_6" className="form-input-wide" data-layout="half">
               <span
                 className="form-sub-label-container"
-                style={{ verticalAlign: "top" }}
+                style={{ verticalAlign: 'top' }}
               >
                 <input
                   type="text"
                   id="last_4"
                   name="organisationName"
                   className="form-textbox"
-                  style={{ width: "310px" }}
-                  value={data.organisationName || ""}
+                  style={{ width: '310px' }}
+                  value={data.organisationName || ''}
                   onChange={(e) =>
-                    setData((prev) => ({ ...prev, organisationName: e.target.value }))
+                    setData((prev) => ({
+                      ...prev,
+                      organisationName: e.target.value,
+                    }))
                   }
                 />
                 {errors.organisationName && (
-                    <span style={{ color: "red" }}>{errors.organisationName}</span>
-                  )}
+                  <span style={{ color: 'red' }}>
+                    {errors.organisationName}
+                  </span>
+                )}
               </span>
             </div>
           </li>
@@ -201,7 +203,7 @@ function FormAssociation() {
                   <span className="form-address-line form-address-street-line jsTest-address-lineField">
                     <span
                       className="form-sub-label-container"
-                      style={{ verticalAlign: "top" }}
+                      style={{ verticalAlign: 'top' }}
                     >
                       <input
                         type="text"
@@ -209,7 +211,7 @@ function FormAssociation() {
                         name="address"
                         className="form-textbox form-address-line"
                         size="30"
-                        value={data.street || ""}
+                        value={data.street || ''}
                         onChange={(e) =>
                           setData((prev) => ({
                             ...prev,
@@ -221,7 +223,7 @@ function FormAssociation() {
                         className="form-sub-label"
                         for="input_23_addr_line1"
                         id="sublabel_23_addr_line1"
-                        style={{ minHeight: "13px" }}
+                        style={{ minHeight: '13px' }}
                         aria-hidden="false"
                       >
                         Street Address
@@ -233,14 +235,14 @@ function FormAssociation() {
                   <span className="form-address-line form-address-city-line jsTest-address-lineField">
                     <span
                       className="form-sub-label-container"
-                      style={{ verticalAlign: "top" }}
+                      style={{ verticalAlign: 'top' }}
                     >
                       <input
                         type="text"
                         id="input_23_city"
                         name="city"
                         className="form-textbox form-address-city"
-                        value={data.city || ""}
+                        value={data.city || ''}
                         onChange={(e) =>
                           setData((prev) => ({ ...prev, city: e.target.value }))
                         }
@@ -249,7 +251,7 @@ function FormAssociation() {
                         className="form-sub-label"
                         for="input_23_city"
                         id="sublabel_23_city"
-                        style={{ minHeight: "13px" }}
+                        style={{ minHeight: '13px' }}
                         aria-hidden="false"
                       >
                         City
@@ -259,14 +261,14 @@ function FormAssociation() {
                   <span className="form-address-line form-address-state-line jsTest-address-lineField">
                     <span
                       className="form-sub-label-container"
-                      style={{ verticalAlign: "top" }}
+                      style={{ verticalAlign: 'top' }}
                     >
                       <input
                         type="text"
                         id="input_23_state"
                         name="state"
                         className="form-textbox form-address-state"
-                        value={data.state || ""}
+                        value={data.state || ''}
                         onChange={(e) =>
                           setData((prev) => ({
                             ...prev,
@@ -278,7 +280,7 @@ function FormAssociation() {
                         className="form-sub-label"
                         for="input_23_state"
                         id="sublabel_23_state"
-                        style={{ minHeight: "13px" }}
+                        style={{ minHeight: '13px' }}
                         aria-hidden="false"
                       >
                         State / Province
@@ -290,14 +292,14 @@ function FormAssociation() {
                   <span className="form-address-line form-address-zip-line jsTest-address-lineField">
                     <span
                       className="form-sub-label-container"
-                      style={{ verticalAlign: "top" }}
+                      style={{ verticalAlign: 'top' }}
                     >
                       <input
                         type="text"
                         id="input_23_postal"
                         name="postal"
                         className="form-textbox form-address-postal"
-                        value={data.postalCode || ""}
+                        value={data.postalCode || ''}
                         onChange={(e) =>
                           setData((prev) => ({
                             ...prev,
@@ -306,13 +308,15 @@ function FormAssociation() {
                         }
                       />
                       {errors.postalCode && (
-                        <span style={{ color: "red" }}>{errors.postalCode}</span>
+                        <span style={{ color: 'red' }}>
+                          {errors.postalCode}
+                        </span>
                       )}
                       <label
                         className="form-sub-label"
                         for="input_23_postal"
                         id="sublabel_23_postal"
-                        style={{ minHeight: "13px" }}
+                        style={{ minHeight: '13px' }}
                         aria-hidden="false"
                       >
                         Postal / Zip Code
@@ -338,17 +342,17 @@ function FormAssociation() {
             <div id="cid_6" className="form-input-wide" data-layout="half">
               <span
                 className="form-sub-label-container"
-                style={{ verticalAlign: "top" }}
+                style={{ verticalAlign: 'top' }}
               >
                 <input
                   type="email"
                   id="input_6"
                   name="email"
                   className="form-textbox validate[Email]"
-                  style={{ width: "310px" }}
+                  style={{ width: '310px' }}
                   size="310"
                   placeholder="ex: myname@example.com"
-                  value={data.email || ""}
+                  value={data.email || ''}
                   onChange={(e) =>
                     setData((prev) => ({ ...prev, email: e.target.value }))
                   }
@@ -357,7 +361,7 @@ function FormAssociation() {
                   className="form-sub-label"
                   for="input_6"
                   id="sublabel_input_6"
-                  style={{ minHeight: "13px" }}
+                  style={{ minHeight: '13px' }}
                   aria-hidden="false"
                 >
                   example@example.com
@@ -380,16 +384,16 @@ function FormAssociation() {
             <div id="cid_27" className="form-input-wide" data-layout="half">
               <span
                 className="form-sub-label-container"
-                style={{ verticalAlign: "top" }}
+                style={{ verticalAlign: 'top' }}
               >
                 <input
                   type="tel"
                   id="input_27_full"
                   name="phone"
                   className="mask-phone-number form-textbox validate[Fill Mask]"
-                  style={{ width: "310px" }}
+                  style={{ width: '310px' }}
                   placeholder="(000) 00-000-000"
-                  value={data.phoneNumber || ""}
+                  value={data.phoneNumber || ''}
                   onChange={(e) =>
                     setData((prev) => ({
                       ...prev,
@@ -413,8 +417,8 @@ function FormAssociation() {
                 id="input_45"
                 className="form-textarea"
                 name="bio"
-                style={{ width: "648px", height: "163px" }}
-                value={data.bio || ""}
+                style={{ width: '648px', height: '163px' }}
+                value={data.bio || ''}
                 onChange={(e) =>
                   setData((prev) => ({ ...prev, bio: e.target.value }))
                 }
@@ -440,7 +444,7 @@ function FormAssociation() {
         </ul>
       </div>
     </form>
-  )
+  );
 }
 
-export default FormAssociation
+export default FormAssociation;

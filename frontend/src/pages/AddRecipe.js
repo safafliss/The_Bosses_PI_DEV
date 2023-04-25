@@ -8,14 +8,19 @@ import {
 import Sidebar from "../components/ReusableComponents/components/Sidebar/Sidebar";
 
 import { getAllRecipes, deleteRecipe } from "../redux/actions/recipeActions";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import { TagsInput } from "react-tag-input-component";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import NoAccess from "./NoAccess";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const AddRecipe = (props) => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [image, setImage] = useState([
     "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
   ]);
@@ -49,23 +54,35 @@ const AddRecipe = (props) => {
       setImage(reader.result);
     };
   };
+  const showToastMessage = () => {
+    toast.success('added successfuly !'
+    );
+    console.log("toastr",showToastMessage);
+};
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newErrors = {};
     if (Object.keys(newErrors).length === 0) {
+
       const newRecipe = await dispatch(createRecipe(recipe));
       console.log("hedhy l new recipeeeeeeeeeeeeeeeee", newRecipe);
 
       const newRecipeId = newRecipe.data._id;
-      // window.alert(`Recipe ${newRecipeId} created successfully.`);
+      
+      await dispatch(UploadImage(image, newRecipeId,navigate))
+     // await dispatch(redirect(navigate))
 
       // window.history.back();
-      console.log("hedhy l new recipe", newRecipeId);
-      await dispatch(UploadImage(image, newRecipeId));
-
+   
+     
+     
+     
       //dispatch(UploadImage(image, newRecipeId));
     }
+    
+   
   };
   if (props.user.isConnected && props.user.role == "ADMIN") {
   } else {
@@ -272,6 +289,7 @@ const AddRecipe = (props) => {
                   >
                     create
                   </button>
+                  
                 </div>
               </form>
             </div>

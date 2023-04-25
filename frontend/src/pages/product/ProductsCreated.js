@@ -26,7 +26,7 @@ function ProductsCreated(props) {
   };
   return (
     <>
-      <Navbar user1={props.user1} />
+      <Navbar />
       <div className="pages">
         <div className="home">
 

@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import Navbar from '../components/ReusableComponents/components/Navbars/UserNavbar';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 function SupportCenter({ user1 }) {
+  console.log('hedha user **********', user1);
   const { t } = useTranslation();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [finished, setFinished] = useState(false);
   //console.log("-->"+user1?.email)
   const [formData, setFormData] = useState({
     email: user1?.email,
-    subject: "",
-    description: "",
+    subject: '',
+    description: '',
   });
 
   useEffect(() => {
@@ -23,10 +24,10 @@ function SupportCenter({ user1 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/support/addReport", {
-        method: "POST",
+      const response = await fetch('/support/addReport', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -39,7 +40,7 @@ function SupportCenter({ user1 }) {
   };
   return (
     <>
-      <Navbar user1={user1} />
+      <Navbar />
 
       <section className="relative block py-24  bg-green-800	">
         <div className="container my-6 px-4 ">
@@ -49,12 +50,12 @@ function SupportCenter({ user1 }) {
                 {!finished ? (
                   <>
                     <h4 className="text-2xl font-semibold ">
-                      {t("feel free to report  us any bugs or  Reports!")}
+                      {t('feel free to report  us any bugs or  Reports!')}
                     </h4>
                     <br></br>
                     <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
                       {t(
-                        "Complete this form and we will get back to you in 24hours"
+                        'Complete this form and we will get back to you in 24hours'
                       )}
                     </p>
                     <form onSubmit={handleSubmit}>
@@ -63,7 +64,7 @@ function SupportCenter({ user1 }) {
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                           htmlFor="email"
                         >
-                          {t("email")}
+                          {t('email')}
                         </label>
                         <input
                           type="text"
@@ -85,7 +86,7 @@ function SupportCenter({ user1 }) {
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                           htmlFor="subject"
                         >
-                          {t("Subject")}
+                          {t('Subject')}
                         </label>
                         <input
                           type="text"
@@ -107,7 +108,7 @@ function SupportCenter({ user1 }) {
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                           htmlFor="description"
                         >
-                          {t("Message")}
+                          {t('Message')}
                         </label>
                         <textarea
                           name="description"
@@ -129,39 +130,41 @@ function SupportCenter({ user1 }) {
                           type="button"
                           onClick={handleSubmit}
                         >
-                          {t("Send Message")}
+                          {t('Send Message')}
                         </button>
                       </div>
-                    </form>{" "}
+                    </form>{' '}
                   </>
                 ) : (
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <i
                       className="fas fa-check-circle"
                       style={{
-                        color: "#24b765",
-                        fontSize: "3em",
-                        marginBottom: "20px",
+                        color: '#24b765',
+                        fontSize: '3em',
+                        marginBottom: '20px',
                       }}
                     ></i>
                     <h2
                       className="text-xxl"
-                      style={{ marginTop: "0", marginBottom: "20px" }}
+                      style={{ marginTop: '0', marginBottom: '20px' }}
                     >
-                      {t("Thank you for submitting!")}
+                      {t('Thank you for submitting!')}
                     </h2>
-                    <p style={{ fontSize: "1.2em" }}>
-                      {t("Your feedback has been received")}.
+                    <p style={{ fontSize: '1.2em' }}>
+                      {t('Your feedback has been received')}.
                     </p>
                     <div className="text-center mt-6">
-                        <button
-                          className="bg-green-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={()=>{navigate("/")}}
-                        >
-                          {t("Go back")}
-                        </button>
-                      </div>
+                      <button
+                        className="bg-green-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => {
+                          navigate('/');
+                        }}
+                      >
+                        {t('Go back')}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

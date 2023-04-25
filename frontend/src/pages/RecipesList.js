@@ -2,7 +2,7 @@ import Navbar from "../components/ReusableComponents/components/Navbars/UserNavb
 import {
   getAllRecipes,
   deleteRecipe,
-  getRecipesByIngredients,
+ 
 } from "../redux/actions/recipeActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -13,16 +13,35 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { StarIcon } from "@heroicons/react/20/solid";
 import NoAccess from "./NoAccess";
-
+import axios from 'axios';
+import rec from "../assets/img/rec.png";
+import { generateTestData, usePagination, Pagination } from "pagination-react-js"
+import "./recipiesList.css";
 import classNames from "classnames";
 
 export default function RecipeList(props) {
-  const recipes = useSelector((state) => state.recipes.recipes);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    dispatch(getAllRecipes());
+  const [filteredRecipes, setfilteredRecipes] = useState([]);
+
+  const recipes = useSelector((state) => state.recipes.recipes);
+
+
+  const { currentPage, entriesPerPage, entries } = usePagination(1, 8)
+
+
+useEffect(()=>{
+if (recipes){
+  setfilteredRecipes(recipes)
+}
+},[recipes])
+ useEffect(() => {
+    dispatch(getAllRecipes())
+      .then(() => {setLoading(false)})
+      .catch((error) => console.log(error));
   }, [dispatch]);
   const recipe = useSelector((state) => state.recipes.selectedRecipe);
 
@@ -41,16 +60,43 @@ export default function RecipeList(props) {
       });
     }
   };
-  const handleSearch = (e) => {
-    e.preventDefault();
-    dispatch(getRecipesByIngredients(searchQuery));
+  const getRecipesByIngredient = async (ingredient) => {
+    try {
+      
+      const res = await axios.get(`/recipe/${ingredient}`)
+      
+      .then((data) => {return data.data.data })
+     return res
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const filteredRecipes =
-    searchQuery !== ""
-      ? recipes.filter((recipe) => recipe.ingredients.includes(searchQuery))
-      : recipes;
+  //  setfilteredRecipes (
+  //   searchQuery !== ""
+      
+    useEffect(()=>{
+     if(searchQuery.length === 0)
+        setfilteredRecipes(recipes)
+ 
+    },[searchQuery])
 
+
+      
+      const handleSearch = async (e) => {
+        e.preventDefault();
+        if(searchQuery.length !==0){
+          setfilteredRecipes(     await getRecipesByIngredient(searchQuery)        )
+
+        }else{
+          //setfilteredRecipes(recipes)
+        }
+      }; 
+
+
+
+
+      
   if (!recipes) {
     return <div>Loading...</div>;
   }
@@ -60,7 +106,7 @@ export default function RecipeList(props) {
   }
   return (
     <div className="bg-white">
-      <Navbar />
+   <Navbar/>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2
           className="text-2xl font-bold tracking-tight text-gray-900 text-center"
@@ -106,10 +152,10 @@ export default function RecipeList(props) {
           </div>
         </form>
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {filteredRecipes.length === 0 ? (
+          {filteredRecipes?.length === 0 ? (
             <p>No recipes found with "{searchQuery}"</p>
           ) : (
-            filteredRecipes.map((recipe) => (
+            filteredRecipes?.slice(entries.indexOfFirst, entries.indexOfLast).map((recipe) => 
                                     <div className=" px-12 md:px-4 mr-auto ml-auto -mt-32"   style={{ marginTop: "10px", width: "300px" }}>
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg " key={recipe._id}  >
 
@@ -180,13 +226,114 @@ export default function RecipeList(props) {
   </div>
 </section>
 
+
                 </blockquote>
+                
               </div>
                </div>
-            ))
+            )
           )}
         </div>
+        <Pagination
+  entriesPerPage={entriesPerPage.get}
+  totalEntries={filteredRecipes?.length}
+  currentPage={{ get: currentPage.get, set: currentPage.set }}
+  offset={3}
+  className="pagi"
+  classNames={{
+
+    wrapper: "pagination m-auto",
+    item: "pagination-item",
+    itemActive: "pagination-item-active",
+    navPrev: "pagination-item nav-item",
+    navNext: "pagination-item nav-item",
+    navStart: "pagination-item nav-item",
+    navEnd: "pagination-item nav-item",
+    navPrevCustom: "pagination-item",
+    navNextCustom: "pagination-item"
+  }}
+  showFirstNumberAlways={true}
+  showLastNumberAlways={true}
+  navStart="&#171;"
+  navEnd="&#187;"
+  navPrev="&#x2039;"
+  navNext="&#x203a;"
+  navPrevCustom={{ steps: 5, content: "\u00B7\u00B7\u00B7" }}
+  navNextCustom={{ steps: 5, content: "\u00B7\u00B7\u00B7" }}
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  }}
+/>
       </div>
+      <section className="pb-20 relative block bg-blueGray-800">
+          <div
+            className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
+            style={{ transform: "translateZ(0)" }}
+          >
+            <svg
+              className="absolute bottom-0 overflow-hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              version="1.1"
+              viewBox="0 0 2560 100"
+              x="0"
+              y="0"
+            >
+              <polygon
+                className="text-blueGray-800 fill-current"
+                points="2560 0 2560 100 0 100"
+              ></polygon>
+            </svg>
+          </div>
+
+          <div className="container mx-auto px-4">
+            <div className="items-center flex flex-wrap">
+              <svg
+                className="absolute bottom-0 overflow-hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+                version="1.1"
+                viewBox="0 0 2560 100"
+                x="0"
+                y="0"
+              >
+             
+              </svg>
+              <div className="w-full md:w-4/12 ml-auto mr-auto px-4" style={{marginTop:"5%", width:"40%" , marginLeft:"-10%"}}>
+                <img
+                  alt="..."
+                  className="max-w-full rounded-lg shadow-xl"
+                  style={{
+                    transform:
+                      "scale(1) perspective(1040px) rotateY(-11deg) rotateX(2deg) rotate(2deg)",
+                  }}                  // src="https://img.freepik.com/premium-vector/people-recycling-with-trash-bin_23-2148524155.jpg"
+                  src={rec}
+                />
+              </div>
+
+              <div className="w-full md:w-5/12 ml-auto mr-auto px-4" style={{}}>
+                <div className="md:pr-12">
+                  <div className="text-lightBlue-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-lightBlue-300">
+                    <i className="fas fa-rocket text-xl"></i>
+                  </div>
+                  <h3 className="text-3xl font-semibold text-white">ZeroWaste Recipes</h3>
+                  <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
+                  Our web application is focused on reducing food waste by providing users with antiwaste and zero waste recipes. We prioritize using every part of an ingredient to reduce waste and promote sustainable practices such as using reusable containers and buying ingredients in bulk                  
+
+                  </p>
+                  <ul className="list-none mt-6">
+                 
+                  
+                  
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
   );
 }

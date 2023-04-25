@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3600/recipe';
@@ -25,31 +26,45 @@ export const createRecipe = (recipe) => {
     
 
       return res.data;
+     
+  
     } catch (error) {
       console.error(error);
     }
   };
 };
-export const UploadImage = async (image, newRecipeId) => {
+export const UploadImage = async (image, newRecipeId,navigate) => {
   try {
     const response = await axios.put(
       `${BASE_URL}/uploadImageRecipe/${newRecipeId}`,
       { image }
     );
+    if (response.status === 200){
+      navigate("/admin")
+    }
     console.log("Image uploaded successfully");
   } catch (error) {
     console.log("Error uploading image", error);
   }
 };
+
+
+// export const redirect = async (navigate) => {
+//   navigate("/admin")
+// };
+
+
 export const getRecipesByIngredients = (ingredient) => async (dispatch) => {
   try {
-    const res = await axios.get(`/recipe/${ingredient}`, {
-    
+    const res = await axios.get(`/recipe/${ingredient}`,
+     {
+   
     });
     dispatch({
       type: 'GET_RECIPES_BY_INGREDIENT',
       payload: res.data,
     });
+     console.log("res",res.data)
   } catch (error) {
     console.log(error);
   }

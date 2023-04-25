@@ -107,18 +107,31 @@ export default function Recipes(props) {
     return <div>Loading...</div>;
   }
   // sort the recipes array in descending order based on rating
-  const sortedRecipes = recipes.slice().sort((a, b) => b.ratings - a.ratings);
+  
 
-  // // get only the top 4 rated recipes
-  const topRecipes = sortedRecipes.slice(0, 4);
-  console.log("topRecipes", topRecipes);
   function getAverageRating(ratings) {
     if (ratings.length === 0) {
       return 0;
     }
+
     const sum = ratings.reduce((acc, cur) => acc + cur, 0);
     return (sum / ratings.length).toFixed(1);
   }
+  console.log("-->"+recipes.map(test=>console.log(test.ratingszzzzzzzzzzzzzz)))
+  console.log("**"+getAverageRating(recipes.map(test=>{return(test.ratings)})))
+
+  const sortedRecipes =  recipes.sort((a, b) => b.ratings - a.ratings);
+
+  // // get only the top 4 rated recipes
+  const topRecipes = sortedRecipes.slice(0, 4);
+  console.log("topRecipes", topRecipes);
+
+
+
+
+
+
+
   if (props.user.isConnected && props.user.role == "PARTICULAR") {
   } else {
     return <NoAccess />;
@@ -133,6 +146,7 @@ export default function Recipes(props) {
           backgroundImage: `url(${patternReact})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "100%",
+          marginTop:"1%"
         }}
       >
                 {/* <div className={[classes.container ,"mx-auto items-center flex flex-wrap"]}  > */}
@@ -152,7 +166,8 @@ export default function Recipes(props) {
           {" "}
           <Button
             style={{
-              marginLeft: "-450%",
+              marginLeft: "-540%",
+              marginTop:"10%",
               width: "200px",
               backgroundColor: "#3a9a61",
               border: "#3a9a61",
