@@ -154,10 +154,14 @@ router.get('/verify/:user_id/:token', async function(req,res){
 router.post("/LoginFbGoogle",LoginFbGoogle)
 
 
-router.post("/addTrashSpot",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN),addTrashSpot);
-router.get("/getAllTrashSpots",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN),getAllTrashSpots);
-router.post("/deleteATrashSpot",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN),deleteATrashSpot)
-router.post("/collectTrash",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN),collectTrash)
-router.get("/getTrashRanks",passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN),getTrashRanks)
-
+router.post("/addTrashSpot",addTrashSpot);
+router.get("/getAllTrashSpots",getAllTrashSpots);
+router.post("/deleteATrashSpot",deleteATrashSpot)
+router.post("/collectTrash",collectTrash)
+router.get("/getTrashRanks",getTrashRanks)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN)
+// ,passport.authenticate('jwt', { session: false }),inRole(ROLES.PARTICULAR,ROLES.ADMIN)
 module.exports = router;

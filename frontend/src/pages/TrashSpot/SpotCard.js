@@ -4,8 +4,29 @@ import axios from "axios";
 import DeleteAcceptModal from "./DeleteAcceptModal";
 import CollectModal from "./CollectModal";
 import { format } from 'date-fns'
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 function SpotCard(props) {
+  const [temp ,setTemp] = useState(0)
+  const [iconWeather ,setIconWeather] = useState(null)
+  const [addressName, setAddressName] = useState("")
+  
+  useEffect(() => {
+    //   setCurrLat(position.coords.latitude);
+    //   setCurrLong(position.coords.longitude);
+    if (props.trashSpots.location.coordinates[0]){
+      const lat = props.trashSpots.location.coordinates[0];
+      const long = props.trashSpots.location.coordinates[1]
+       axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=ed214b2a0a7749d0323ba717326fc4a7&units=metric`).then((res) => {
+        if (res.data){
+            setTemp(res.data.main.temp)
+            setIconWeather(res.data.weather[0].icon)
+            setAddressName(res.data.name)
+        }
+    });
+    }
+  }, []);
+
   function formatDate(date) {
     date = new Date(date)
     const currentMonth = date.getMonth()+1;
@@ -110,6 +131,7 @@ function SpotCard(props) {
                 href={"/formTrash/" + props.trashSpots.ownerId._id}
                 style={{ textDecoration: "none", color: "black" }}
               >
+                
                 <img
                   src={props.trashSpots.ownerId.image.url}
                   style={{ borderRadius: "50%", width: "70px" }}
@@ -163,6 +185,12 @@ function SpotCard(props) {
                 {props.trashSpots.description}
               </p>
             )}
+            
+            <div className="d-flex justify-content-end">
+                <h6>{addressName}</h6>
+                <div className="weather-icon" style={{marginTop:"-15px"}}><img src={`http://openweathermap.org/img/w/${iconWeather}.png`} /></div>
+                <h6>{temp}Deg</h6>
+                </div>
             {id != props.trashSpots.ownerId._id ? (
               <div className="d-flex justify-content-between">
                 {props.trashSpots.collected ? (

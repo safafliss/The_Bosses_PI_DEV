@@ -192,6 +192,7 @@ export default function Navbar() {
                         src={userConnected.image?.url}
                         alt=""
                         style={{ height: '50px', width: '50px' }}
+                        referrerPolicy="no-referrer"
                       />
                     </Menu.Button>
                   </div>
