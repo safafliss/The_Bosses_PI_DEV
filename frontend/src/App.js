@@ -85,10 +85,7 @@ if (window.localStorage.jwt) {
   }
 }
 
-
 function App() {
-
-
   const auth = useSelector((state) => state.auth);
   const user = {
     isConnected: auth.isConnected,
@@ -285,7 +282,7 @@ function App() {
             path="/logged"
             element={
               // <ForceRedirect user={user}>
-              <LoggedFBG  user1={user1}/>
+              <LoggedFBG user1={user1} />
               // </ForceRedirect>
             }
           />
@@ -334,6 +331,7 @@ function App() {
               // </ForceRedirect>
             }
           />
+
           <Route path="/formTrash/:id" element={<FormTrash user={user} />} />
           {/* <Route path="/profile" element={<Profile user={user} />} />*/}
           <Route path="/admin/profiles/" element={<Profile user={user} />} />

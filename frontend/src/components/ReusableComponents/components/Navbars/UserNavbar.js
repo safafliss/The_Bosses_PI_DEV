@@ -93,7 +93,10 @@ export default function Navbar() {
     <Disclosure
       as="nav"
       className=" txt-white"
-      style={{ boxShadow: '0 2px 4px rgba(0,0,0,.2)' }}
+      style={{ boxShadow: '0 2px 4px rgba(0,0,0,.2)' ,position: "sticky",
+    top: 0,
+    zIndex: 2,
+    background: "white"}}
     >
       {({ open }) => (
         <>
