@@ -37,7 +37,6 @@ router.put('/create-payment-intent/:userId', async (req, res) => {
     console.log(paymentIntent);
     res.send({
       clientSecret: paymentIntent.client_secret,
-      
     });
     
   } catch (e) {

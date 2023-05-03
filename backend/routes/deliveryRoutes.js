@@ -16,10 +16,11 @@ router.put('/add/:userId/:method', async (req, res) => {
 
   try {
     if (method == 1) {
+      console.log('dkhal shih')
       const delivery = await addToDelivery({
-        userId: userId,
-        adress: user.adress,
-        totalPrice: 0,
+        'userId': userId,
+        'adress': user.adress,
+        'totalPrice': 0,
       });
       let deletedDocument = await Basket.findOneAndDelete({
         user: userId,
