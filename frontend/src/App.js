@@ -74,6 +74,8 @@ import BasketPage from './pages/Basket/BasketPage';
 import Checkout from './pages/Basket/Checkout';
 import Completion from './pages/Basket/Completion';
 
+import GetPosition from './pages/GetMyPosition/GetPosition';
+
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
   store.dispatch(setUser(decode));
@@ -129,6 +131,13 @@ function App() {
             path="/"
             element={<PrivateRouter user1={user1} user={user}></PrivateRouter>}
           />
+
+          
+          <Route
+            path="/getpos"
+            element={<GetPosition></GetPosition>}
+          />
+
           {/* <Route
             path="/profile"
             element={<PrivateRouter user={user}></PrivateRouter>}
@@ -152,6 +161,7 @@ function App() {
             <Route path="/associpage" element={<Associationpage />} />
             <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}
+
 
           <Route
             path="/admin/profile/:id"

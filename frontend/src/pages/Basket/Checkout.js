@@ -27,6 +27,7 @@ import {
 } from '@material-ui/core';
 import IndexNavbar from '../../components/ReusableComponents/components/Navbars/IndexNavbar';
 import BasketPage from './BasketPage';
+import GetPosition from '../GetMyPosition/GetPosition';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -261,6 +262,7 @@ function Checkout() {
                         </Button>
                       </Box>
                     )}
+                    <GetPosition></GetPosition>
                   </form>
                   <>
                     {clientSecret && payMethod === 'bank' && stripePromise && (
