@@ -38,7 +38,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://the-bosses-pi-dev-h2f8.vercel.app',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })

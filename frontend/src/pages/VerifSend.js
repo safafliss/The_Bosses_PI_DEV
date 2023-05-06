@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import backgroundImage from '../assets/img/register_bg_2.png';
 function VerifSend() {
-//url  = http://localhost:3000/main/ride?type=send
+//url  = https://the-bosses-pi-dev-h2f8.vercel.app/main/ride?type=send
 let [searchParams, setSearchParams] = useSearchParams();
 // console.log(searchParams.get('email'));
 const email  = searchParams.get('email');

@@ -36,7 +36,7 @@ const usersModels = require('../models/users.models');
 var router = express.Router();
 
 const jwt = require('jsonwebtoken');
-const CLIENT_URL = 'http://localhost:3000/';
+const CLIENT_URL = 'https://the-bosses-pi-dev-h2f8.vercel.app/';
 
 /* users routes. */
 

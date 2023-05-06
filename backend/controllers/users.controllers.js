@@ -45,7 +45,7 @@ const generateResetToken = async (userid, email) => {
   tokken = crypto.randomBytes(32).toString('hex');
   await resetPasswordToken.create({ userId: userid, token: tokken });
 
-  const url = `http://localhost:3000/verify?id=${userid}&token=${tokken}`
+  const url = `https://the-bosses-pi-dev-h2f8.vercel.app/verify?id=${userid}&token=${tokken}`
   if (sendMail(email, url)) {
     console.log('mchet');
   } else {
@@ -461,7 +461,7 @@ const forgotpassword = async (req, res, next) => {
       process.env.PRIVATE_KEY,
       { expiresIn: '90h' }
     );
-    const url = `http://localhost:3000/resetPassword/${token}`;
+    const url = `https://the-bosses-pi-dev-h2f8.vercel.app/resetPassword/${token}`;
     if (sendMail(email, url)) {
       res.status(200).json({
         success: true,

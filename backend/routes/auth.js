@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const passportSetup = require("../security/passport");
-const CLIENT_URL = "http://localhost:3000/logged";
+const CLIENT_URL = "https://the-bosses-pi-dev-h2f8.vercel.app/logged";
 
 router.get("/login/success", (req, res) => {
   // console.log("req.user", req.user)
