@@ -267,7 +267,7 @@ function Checkout() {
                   <>
                     {clientSecret && payMethod === 'bank' && stripePromise && (
                       <>
-                      <GetPosition></GetPosition>
+                      
                       <Elements
                         stripe={stripePromise}
                         options={{ clientSecret }}
