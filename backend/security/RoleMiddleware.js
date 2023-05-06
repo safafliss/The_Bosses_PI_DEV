@@ -1,37 +1,36 @@
 const ROLES = {
     "USER": {
-        "PARTICULIER":"PARTICULIER",
+        "PARTICULAR":"PARTICULAR",
         "PROFESSIONAL":"PROFESSIONAL",
         "ASSOCIATION":"ASSOCIATION",
         "LIVREUR":"LIVREUR",
         "TRASHSPOTTER":"TRASHSPOTTER",
     },
     "ADMIN": {
-        "ADMIN":"ADMIN"},
+        "ADMIN":"ADMIN"}, 
 
-    "PARTICULIER":{"PARTICULIER":"PARTICULIER"},
-    "PROFESSIONAL":{"PROFESSIONAL":"PROFESSIONAL"},
-    "ASSOCIATION":{"ASSOCIATION":"ASSOCIATION"},
-    "LIVREUR":{"LIVREUR":"LIVREUR"},
-    "TRASHSPOTTER":{"TRASHSPOTTER":"TRASHSPOTTER"},
+  "PARTICULAR": { "PARTICULAR": 'PARTICULAR' },
+  "PROFESSIONAL": { "PROFESSIONAL": 'PROFESSIONAL' },
+  "ASSOCIATION": { "ASSOCIATION": 'ASSOCIATION' },
+  "LIVREUR": { "LIVREUR": 'LIVREUR' },
+  "TRASHSPOTTER": { "TRASHSPOTTER": 'TRASHSPOTTER' },
+};
 
-    
-}
-
-const inRole  = (...roles)=>(req, res, next)=>{
-    var role = false    
-    for (let check of roles){
-        role = role|| (Object.keys(check).indexOf(req.user.role )!=-1)
-        if (role)
-        break
+const inRole =
+  (...roles) =>
+  (req, res, next) => {
+    var role = false;
+    for (let check of roles) {
+      role = role || Object.keys(check).indexOf(req.user.role) != -1;
+      if (role) break;
     }
-    if(!role){
-      return res.status(401).json({message: "Unauthorized"})
+    if (!role) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
-    next()
-}
+    next();
+  };
 
 module.exports = {
-    inRole,
-    ROLES
-}
+  inRole,
+  ROLES,
+};

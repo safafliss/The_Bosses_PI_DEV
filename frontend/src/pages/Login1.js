@@ -1,4 +1,3 @@
-import "../css/style.css";
 import "../fonts/material-icon/css/material-design-iconic-font.min.css";
 import imageSignin from "../images/signin-image.jpg";
 import React, { useState } from "react";
@@ -90,12 +89,12 @@ function Login1() {
                   <span class="social-label">Or login with</span>
                   <ul class="socials">
                     <li>
-                      <a href="http://localhost:3600/auth/facebook/callback">
+                      <a href="https://he-bosses-pi-dev-api.onrender.com/auth/facebook/callback">
                         <i class="display-flex-center zmdi zmdi-facebook"></i>
                       </a>
                     </li>
                     <li>
-                      <a href="http://localhost:3600/auth/google">
+                      <a href="https://he-bosses-pi-dev-api.onrender.com/auth/google">
                         <i class="display-flex-center zmdi zmdi-google"></i>
                       </a>
                     </li>

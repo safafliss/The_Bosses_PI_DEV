@@ -1,6 +1,11 @@
 import React from "react";
 import './Notfound.css';
 function NotFound() {
+  const handleClick = () => {
+    window.history.back();
+  }
+      
+
   return (
     <>
    
@@ -14,7 +19,7 @@ or requesting a page that's no longer here. </p>
   <span class="four"><span class="screen-reader-text">4</span></span>
 </section>
 <div class="link-container">
-  <a target="_blank" href="https://www.silocreativo.com/en/creative-examples-404-error-css/" class="more-link">Back to the previous page</a>
+  <a target="_blank"  class="more-link" onClick={handleClick}>Back to the previous page</a>
 </div>
     </>
   );

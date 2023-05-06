@@ -1,22 +1,21 @@
 import React from "react";
-import Classnames from 'classnames'
+import Classnames from "classnames";
 
-function Inputs({name, label,  type, icon, onChangeHandler,errors}) {
+function Inputs({ name, label, type, icon, onChangeHandler, errors, value }) {
   return (
-    <div class=" mb-3">
-      <label class="form-label">{label}</label>
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class={icon}></i>
-        </span>
-        <input type={type}  name={name} class={Classnames("form-control", {"is-invalid": errors})} onChange={onChangeHandler} placeholder={name}/>
-        {
-          errors && (<div  className="invalid-feedback">
-          {errors}
-        </div>)
-        }
+    <>
+      <div>
+        <input
+          type={type}
+          name={name}
+          class={Classnames("form-control", { "is-invalid": errors })}
+          onChange={onChangeHandler}
+          placeholder={name}
+          value={value}
+        />
+        {errors && <div className="invalid-feedback">{errors}</div>}
       </div>
-    </div>
+    </>
   );
 }
 
