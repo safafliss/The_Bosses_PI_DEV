@@ -24,7 +24,7 @@ function GetPosition() {
     <>
     {delayed &&
         <div className='d-flex'>
-        <p> <b>Note: </b> Due to weather conditions in your current location!</p>
+        <p> <b>Note: </b> Due to weather conditions in your current location, the delivery will be delayed!</p>
         <div className="weather-icon" style={{marginTop:"-15px"}}><img src={`http://openweathermap.org/img/w/${iconWeather}.png`} /></div>
         </div>
     }

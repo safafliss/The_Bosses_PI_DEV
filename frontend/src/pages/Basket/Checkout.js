@@ -262,21 +262,16 @@ function Checkout() {
                         </Button>
                       </Box>
                     )}
-                    
+                    <GetPosition></GetPosition>
                   </form>
                   <>
                     {clientSecret && payMethod === 'bank' && stripePromise && (
-                      <>
-                      
                       <Elements
                         stripe={stripePromise}
                         options={{ clientSecret }}
                       >
                         <CheckoutForm />
-                        
                       </Elements>
-                      </>
-
                     )}
                   </>
                 </div>
