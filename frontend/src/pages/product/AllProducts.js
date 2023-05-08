@@ -319,7 +319,7 @@ function AllProducts() {
           </div>
         </div>
       </div>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -339,7 +339,7 @@ function AllProducts() {
             </Button>
           );
         })}
-      </Box>
+      </Box> */}
       <section
         style={{
           backgroundImage: `url(${doc})`,
