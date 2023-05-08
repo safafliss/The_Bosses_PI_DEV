@@ -1,81 +1,82 @@
-import './App.css';
-import Associationpage from './pages/Associationpage';
-import Particularpage from './pages/Particularpage';
-import Proffpage from './pages/Proffpage';
+import "./App.css";
+import Associationpage from "./pages/Associationpage";
+import Particularpage from "./pages/Particularpage";
+import Proffpage from "./pages/Proffpage";
 // Dashboard imports
-import CardListRatings from './components/ReusableComponents/components/Cards/CardListRatings';
-import CardListReports from './components/ReusableComponents/components/Cards/CardListReports';
-import TrashSpotHome from './pages/TrashSpot/TrashSpotHome';
+import CardListRatings from "./components/ReusableComponents/components/Cards/CardListRatings";
+import CardListReports from "./components/ReusableComponents/components/Cards/CardListReports";
+import TrashSpotHome from "./pages/TrashSpot/TrashSpotHome";
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import './assets/styles/tailwind.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./assets/styles/tailwind.css";
 
-import SupportCenter from './pages/SupportCenter';
-import SideButton from './pages/sideButton';
-import Stat from './components/ReusableComponents/components/Cards/Stat';
-import './App.css';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import RegisterPartner from './pages/RegisterPartner';
-import Admin from './pages/Dashboard';
-import PrivateRouter from './components/PrivateRouter';
-import store from './redux/store';
-import jwt_decode from 'jwt-decode';
-import NotFound from './pages/NotFound';
-import NoAccess from './pages/NoAccess';
-import AdminRouter from './components/AdminRouter';
-import ForceRedirect from './components/ForceRedirect';
-import { setUser } from './redux/actions/authActions';
-import { useSelector } from 'react-redux';
-import VerifSend from './pages/VerifSend';
-import VerifSuccess from './pages/VerifSuccess';
-import VerifFail from './pages/VerifFail';
-import CheckVerif from './pages/CheckVerif';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SupportCenter from "./pages/SupportCenter";
+import SideButton from "./pages/sideButton";
+import Stat from "./components/ReusableComponents/components/Cards/Stat";
+import "./App.css";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import RegisterPartner from "./pages/RegisterPartner";
+import Admin from "./pages/Dashboard";
+import PrivateRouter from "./components/PrivateRouter";
+import store from "./redux/store";
+import jwt_decode from "jwt-decode";
+import NotFound from "./pages/NotFound";
+import NoAccess from "./pages/NoAccess";
+import AdminRouter from "./components/AdminRouter";
+import ForceRedirect from "./components/ForceRedirect";
+import { setUser } from "./redux/actions/authActions";
+import { useSelector } from "react-redux";
+import VerifSend from "./pages/VerifSend";
+import VerifSuccess from "./pages/VerifSuccess";
+import VerifFail from "./pages/VerifFail";
+import CheckVerif from "./pages/CheckVerif";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Dashboard imports
-import Sidebar from './components/ReusableComponents/components/Sidebar/Sidebar';
-import AdminNavbar from './components/ReusableComponents/components/Navbars/AdminNavbar';
-import HeaderStats from './components/ReusableComponents/components/Headers/HeaderStats';
-import FooterAdmin from './components/ReusableComponents/components/Footers/FooterAdmin';
-import { setAuth } from './util/setAuth';
-import { Logout } from './redux/actions/authActions';
-import Profile from './pages/Profile';
+import Sidebar from "./components/ReusableComponents/components/Sidebar/Sidebar";
+import AdminNavbar from "./components/ReusableComponents/components/Navbars/AdminNavbar";
+import HeaderStats from "./components/ReusableComponents/components/Headers/HeaderStats";
+import FooterAdmin from "./components/ReusableComponents/components/Footers/FooterAdmin";
+import { setAuth } from "./util/setAuth";
+import { Logout } from "./redux/actions/authActions";
+import Profile from "./pages/Profile";
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import './assets/styles/tailwind.css';
-import RecipeList from './pages/RecipesList';
-import RecipesList from './pages/RecipesList';
-import Recipes from './pages/Recipes';
-import FormRecipe from './pages/FormRecipe';
-import AddRecipe from './pages/AddRecipe';
-import RecipeDetails from './pages/RecipeDetails';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import FormParticulier from './pages/FormParticulier';
-import FormProfessional from './pages/FormProfessional';
-import FormAssociation from './pages/FormAssociation';
-import FormLivreur from './pages/FormLivreur';
-import FormTrash from './pages/FormTrash';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import LoggedFBG from './pages/LoggedFBG';
-import { useEffect, useState } from 'react';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./assets/styles/tailwind.css";
+import RecipeList from "./pages/RecipesList";
+import RecipesList from "./pages/RecipesList";
+import Recipes from "./pages/Recipes";
+import FormRecipe from "./pages/FormRecipe";
+import AddRecipe from "./pages/AddRecipe";
+import RecipeDetails from "./pages/RecipeDetails";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import FormParticulier from "./pages/FormParticulier";
+import FormProfessional from "./pages/FormProfessional";
+import FormAssociation from "./pages/FormAssociation";
+import FormLivreur from "./pages/FormLivreur";
+import FormTrash from "./pages/FormTrash";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import LoggedFBG from "./pages/LoggedFBG";
+import { useEffect, useState } from "react";
 
 //product
-import FormProduct from './pages/product/FormProduct';
-import ProductsCreated from './pages/product/ProductsCreated';
-import FormUpdateProduct from './pages/product/FormUpdateProduct';
-import AllProducts from './pages/product/AllProducts';
-import Gallery from './pages/product/Gallery';
-import Popup from './pages/product/Popup';
-import Favoris from './pages/product/Favoris';
-import ProductSlideShowAndDetails from './pages/product/ProductSlideShowAndDetails';
-import Test from './pages/product/Test';
-import BasketPage from './pages/Basket/BasketPage';
-import Checkout from './pages/Basket/Checkout';
-import Completion from './pages/Basket/Completion';
+import FormProduct from "./pages/product/FormProduct";
+import ProductsCreated from "./pages/product/ProductsCreated";
+import FormUpdateProduct from "./pages/product/FormUpdateProduct";
+import AllProducts from "./pages/product/AllProducts";
+import Gallery from "./pages/product/Gallery";
+import Popup from "./pages/product/Popup";
+import Favoris from "./pages/product/Favoris";
+import ProductSlideShowAndDetails from "./pages/product/ProductSlideShowAndDetails";
+import Test from "./pages/product/Test";
+import BasketPage from "./pages/Basket/BasketPage";
+import Checkout from "./pages/Basket/Checkout";
+import Completion from "./pages/Basket/Completion";
 
-import GetPosition from './pages/GetMyPosition/GetPosition';
-import ProfessionalPage from './pages/ProfessionalPage';
+import GetPosition from "./pages/GetMyPosition/GetPosition";
+import ProfessionalPage from "./pages/ProfessionalPage";
+import ProfPage from "./pages/ProfPage";
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -98,25 +99,25 @@ function App() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch('https://he-bosses-pi-dev-api.onrender.com/auth/login/success', {
-        method: 'GET',
-        credentials: 'include',
+      fetch("https://he-bosses-pi-dev-api.onrender.com/auth/login/success", {
+        method: "GET",
+        credentials: "include",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
         },
       })
         .then((response) => {
           if (response.status === 200) return response.json();
-          throw new Error('authentication has been failed!');
+          throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log('hedha res', resObject.user);
+          console.log("hedha res", resObject.user);
           setUser(resObject.user);
         })
         .catch((err) => {
-          console.log('fama erreur', err);
+          console.log("fama erreur", err);
         });
     };
     getUser();
@@ -124,8 +125,8 @@ function App() {
   console.log(user1);
   return (
     <BrowserRouter>
-      <div className="bg-light" style={{ height: 'fit-content' }}>
-        {' '}
+      <div className="bg-light" style={{ height: "fit-content" }}>
+        {" "}
         {/* kent style={{ height: '100vh' }} */}
         <Routes>
           <Route
@@ -134,14 +135,18 @@ function App() {
           />
           <Route
             path="/professionalPage"
-            element={<ProfessionalPage user1={user1} user={user}></ProfessionalPage>}
+            element={
+              <ProfessionalPage user1={user1} user={user}></ProfessionalPage>
+            }
+          />
+          <Route
+            path="/profPage"
+            element={
+              <ProfPage user1={user1} user={user}></ProfPage>
+            }
           />
 
-          
-          <Route
-            path="/getpos"
-            element={<GetPosition></GetPosition>}
-          />
+          <Route path="/getpos" element={<GetPosition></GetPosition>} />
 
           {/* <Route
             path="/profile"
@@ -166,7 +171,6 @@ function App() {
             <Route path="/associpage" element={<Associationpage />} />
             <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}
-
 
           <Route
             path="/admin/profile/:id"
