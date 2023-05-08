@@ -110,7 +110,7 @@ function AllProducts() {
       <section id="hero" className="clearfix">
         <div className="container">
           <div
-            className="hero-img"
+            className="hero-img" style={{"width":"100%"}}
           ></div>
           {/* <div className="hero-info">
             <h2 style={{fontSize: "60px"}}>
