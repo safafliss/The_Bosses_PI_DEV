@@ -303,8 +303,6 @@ function AllProducts() {
         >
           <div>
             <div className="container">
-              <br></br>
-              <br />
               <div className="row">
                 {products &&
                   DataPerPage.map((product) => (
