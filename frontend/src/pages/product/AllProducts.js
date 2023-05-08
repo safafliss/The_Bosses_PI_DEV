@@ -110,9 +110,9 @@ function AllProducts() {
       <section id="hero" className="clearfix">
         <div className="container">
           <div
-            className="hero-img" style={{"width":"100%"}}
+            className="hero-img"
           ></div>
-          {/* <div className="hero-info">
+          <div className="hero-info">
             <h2 style={{fontSize: "60px"}}>
               We provide
               <br />
@@ -120,7 +120,7 @@ function AllProducts() {
               <br />
               for food waste!
             </h2>
-          </div> */}
+          </div>
         </div>
       </section>
 
@@ -329,7 +329,7 @@ function AllProducts() {
           marginLeft: "650px",
         }}
       >
-        {/* {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
+        {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
           return (
             <Button
               onClick={() => setCurrent(page)}
@@ -338,7 +338,7 @@ function AllProducts() {
               {page}
             </Button>
           );
-        })} */}
+        })}
       </Box>
       <section
         style={{
