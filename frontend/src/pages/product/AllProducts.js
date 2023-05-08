@@ -112,7 +112,7 @@ function AllProducts() {
           <div
             className="hero-img"
           ></div>
-          <div className="hero-info">
+          {/* <div className="hero-info">
             <h2 style={{fontSize: "60px"}}>
               We provide
               <br />
@@ -120,7 +120,7 @@ function AllProducts() {
               <br />
               for food waste!
             </h2>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -333,7 +333,7 @@ function AllProducts() {
           return (
             <Button
               onClick={() => setCurrent(page)}
-              style={{ backgroundColor: "#efefef"}}
+              style={{ backgroundColor: "#efefef", marginLeft: "5px" }}
             >
               {page}
             </Button>
