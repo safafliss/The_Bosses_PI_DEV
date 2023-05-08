@@ -14,7 +14,7 @@ function ProfPage() {
         src={foodImage}
       ></img>
       <br />
-      <div className="d-flex exp">
+      <div className="exp">
         <div>
           <div
             className="partiProducts d-flex justify-content-center"

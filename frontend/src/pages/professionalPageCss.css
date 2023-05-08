@@ -3,6 +3,9 @@
     margin:10px;
     min-width:300px;
 }
+.exp{
+    display: flex;
+}
 @media screen and (max-width: 1024px) {
 .exp{
     grid-template-columns: 1fr;
