@@ -121,3 +121,15 @@
     opacity: 0.2;
     transform: translateY(-50%);
   }
+
+  @media (max-width:725px)  {
+    .map-container{
+      left: 0;
+      bottom: 0;
+    height:40%;
+    width:100%;
+    top: auto;
+    z-index: 3;
+    }
+
+  }

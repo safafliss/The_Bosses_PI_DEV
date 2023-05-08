@@ -75,6 +75,7 @@ import Checkout from './pages/Basket/Checkout';
 import Completion from './pages/Basket/Completion';
 
 import GetPosition from './pages/GetMyPosition/GetPosition';
+import ProfessionalPage from './pages/ProfessionalPage';
 
 if (window.localStorage.jwt) {
   const decode = jwt_decode(window.localStorage.jwt);
@@ -130,6 +131,10 @@ function App() {
           <Route
             path="/"
             element={<PrivateRouter user1={user1} user={user}></PrivateRouter>}
+          />
+          <Route
+            path="/professionalPage"
+            element={<ProfessionalPage user1={user1} user={user}></ProfessionalPage>}
           />
 
           
