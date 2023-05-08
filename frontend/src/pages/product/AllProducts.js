@@ -303,6 +303,8 @@ function AllProducts() {
         >
           <div>
             <div className="container">
+              <br></br>
+              <br />
               <div className="row">
                 {products &&
                   DataPerPage.map((product) => (
@@ -317,14 +319,14 @@ function AllProducts() {
           </div>
         </div>
       </div>
-      {/* <Box
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           mt: 1,
           border: "solid 0.5px",
           width: "500px",
-          marginLeft: "650px",
+          //marginLeft: "650px",
         }}
       >
         {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
@@ -337,7 +339,7 @@ function AllProducts() {
             </Button>
           );
         })}
-      </Box> */}
+      </Box>
       <section
         style={{
           backgroundImage: `url(${doc})`,
