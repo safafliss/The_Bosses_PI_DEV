@@ -329,7 +329,7 @@ function AllProducts() {
           marginLeft: "650px",
         }}
       >
-        {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
+        {/* {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
           return (
             <Button
               onClick={() => setCurrent(page)}
@@ -338,7 +338,7 @@ function AllProducts() {
               {page}
             </Button>
           );
-        })}
+        })} */}
       </Box>
       <section
         style={{
