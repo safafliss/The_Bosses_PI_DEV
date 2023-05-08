@@ -109,9 +109,11 @@ function AllProducts() {
 
       <section id="hero" className="clearfix">
         <div className="container">
-          <div className="hero-img"></div>
+          <div
+            className="hero-img"
+          ></div>
           <div className="hero-info">
-            <h2 style={{ fontSize: "60px" }}>
+            <h2 style={{fontSize: "60px"}}>
               We provide
               <br />
               <span style={{ color: "rgb(173, 199, 234)" }}>solutions</span>
@@ -122,7 +124,7 @@ function AllProducts() {
         </div>
       </section>
 
-      <div style={{ display: "flex", flexWrap: "wrap", marginTop: "-200px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", marginTop:"-200px" }}>
         <div
           style={{
             flex: "0 1 auto",
@@ -327,25 +329,16 @@ function AllProducts() {
           marginLeft: "650px",
         }}
       >
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
-            return (
-              <Button
-                key={page}
-                onClick={() => setCurrent(page)}
-                style={{
-                  backgroundColor: "#efefef",
-                  margin: "5px",
-                  flex: "1 1 auto",
-                  minWidth: "100px",
-                  maxWidth: "200px",
-                }}
-              >
-                {page}
-              </Button>
-            );
-          })}
-        </div>
+        {Array.from({ length: NbPage }, (_, i) => i + 1).map((page) => {
+          return (
+            <Button
+              onClick={() => setCurrent(page)}
+              style={{ backgroundColor: "#efefef"}}
+            >
+              {page}
+            </Button>
+          );
+        })}
       </Box>
       <section
         style={{
