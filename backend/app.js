@@ -77,5 +77,17 @@ app.use('/stripe', stripe);
 
 app.use('/recipe', recipeRoute);
 
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailProduct();
+//   console.log("heyy1");
+// });
+// cron.schedule("*/0.3 * * * *", () => {
+//   automaticUpdateProduct();
+//   console.log("heyy2");
+// });
+// cron.schedule("*/2 * * * *", () => {
+//   sendEmailToUsers();
+//   console.log("heyy3");
+// });
 
 module.exports = app;
