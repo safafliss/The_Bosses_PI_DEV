@@ -4,6 +4,7 @@ import grocery from "../assets/img/walmart-groceries-1.jpg";
 import Navbar from "../components/ReusableComponents/components/Navbars/UserNavbar";
 import professionalPagecss from "./professionalPageCss.css";
 import ProfileAddProduct from "./product/ProfileAddProduct";
+import ProfessionalNavbar from "../components/ReusableComponents/components/Navbars/ProfessionalNavbar";
 function ProfPage() {
   return (
     <div className="wholePage" style={{ background: "white" }}>
