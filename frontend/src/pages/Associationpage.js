@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import backgroundImage from "../assets/img/associ.png";
 import jwt_decode from "jwt-decode"
+import AssociationBar from "../components/ReusableComponents/components/Navbars/AssociationBar";
 function Associationpage() {
   const dispatch = useDispatch();
   const LogoutHanlder = () => {
@@ -17,16 +18,7 @@ function Associationpage() {
     <>
       {/* <Navbar transparent /> */}
       <main>
-        <Link
-          className="btn btn-outline-primary"
-          to="/login"
-          onClick={LogoutHanlder}
-        >
-          Logout
-        </Link>
-        <Link className="btn btn-outline-primary" to={`/formAssoc/${id}`}>
-          Profile
-        </Link>
+        <AssociationBar/>
         <div
           className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75  top-0 w-full h-full bg-center bg-cove"
           style={{
