@@ -7,7 +7,7 @@ import ProfileAddProduct from "./product/ProfileAddProduct";
 function ProfPage() {
   return (
     <div className="wholePage" style={{ background: "white" }}>
-      <Navbar></Navbar>
+      <ProfessionalNavbar/>
       <img
         className="firstImage"
         style={{ width: "100%" }}
