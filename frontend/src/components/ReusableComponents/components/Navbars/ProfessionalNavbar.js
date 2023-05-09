@@ -18,7 +18,7 @@ import './nav.css';
 import BasketPage from '../../../../pages//Basket/BasketPage';
 import { GetProfile } from '../../../../redux/actions/profileActions';
 
-export default function Navbar() {
+export default function ProfessionalNavbar() {
   let location = useLocation();
   const languages = [
     {
@@ -75,11 +75,9 @@ export default function Navbar() {
     { name: t('Home'), href: '/', current: true },
     { name: t('Profile'), href: `/formPart/${id}`, current: false },
     { name: t('Recepies'), href: '/recipes', current: false },
-    { name: t('Products'), href: `/allProducts`, current: false },
+    { name: t('Stock'), href: `/profPage`, current: false },
     { name: t('TrashSpot'), href: '/trashSpot', current: false },
     { name: t('Support Center'), href: '/support', current: false },
-    { name: t('Basket'), href: '/basket', current: false },
-    { name: t('Restaurants'), href: `/professionalPage`, current: false },
   ];
   const userConnected = useSelector((state) => state.profiles.profile);
   useEffect(() => {
